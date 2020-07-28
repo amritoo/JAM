@@ -1,0 +1,70 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- App -->
+    <string name="app_name">JAM</string>
+    <string name="jam_logo">JAM_Logo</string>
+    <string name="app_motto">Your secured messaging app</string>
+
+    <!-- Login -->
+    <string name="sign_in">Sign in</string>
+    <string name="prompt_email">Enter your email address</string>
+    <string name="prompt_password">Enter your password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="text_forgot_password">Forgot your password?</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="text_no_account">Don\'t have an account?</string>
+    <string name="text_create_account">Create an account</string>
+    <string name="start_offline">Start in offline mode instead</string>
+
+    <string name="login_success">Sign in successful</string>
+    <string name="login_failed">Sign in failed</string>
+    <string name="invalid_email">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+
+    <!--  Create Account  -->
+    <string name="create_account">Create account</string>
+
+
+    <!-- Offline -->
+    <string name="contacts_not_found_offline">No more contacts found. Scan and pair for more contacts.</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="contacts_none_offline">No more contacts found. Scan and pair for more contacts.</string>
+    <string name="scan_instruction">Scan for devices to find your partner or make your device discoverable and he/she will be able to find you.</string>
+    <string name="no_devices_paired">No device is paired</string>
+    <string name="no_devices_found">No other devices found nearby</string>
+    <string name="scan">Scan</string>
+    <string name="make_discoverable">Make Discoverable</string>
+    <string name="send">Send</string>
+    <string name="not_connected">No device is connected</string>
+    <string name="title_connecting">Connecting…</string>
+    <string name="title_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="title_not_connected">not connected</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_paired_devices">Paired devices</string>
+    <string name="title_other_devices">Other available devices</string>
+
+    <!--  Chat  -->
+    <string name="message_prompt">Type a message</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="wait_message">Please wait...</string>
+    <string name="hint_create_password">Enter a password of at least 6 character (including at least one upper-case letter and number)</string>
+    <string name="password">Password</string>
+    <string name="hint_create_email">Enter your email address</string>
+    <string name="email_address">Email address</string>
+    <string name="hint_username">Enter your user name(must be unique)</string>
+    <string name="user_name">User Name</string>
+
+</resources>
