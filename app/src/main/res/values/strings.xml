@@ -5,10 +5,25 @@
     <string name="jam_logo">JAM_Logo</string>
     <string name="app_motto">Your secured messaging app</string>
 
+
+    <!--  Button texts  -->
+    <string name="button_text_recover">Recover</string>
+    <string name="button_text_ok">OK</string>
+    <string name="button_text_cancel">Cancel</string>
+
+
     <!--  Hint texts  -->
     <string name="hint_email">Email address</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
+
+    <!--  Help texts  -->
+    <string name="help_recover_email">Enter your email</string>
+
+
+    <!--  Error texts  -->
+    <string name="error_login_email">Email is not correct</string>
+    <string name="error_login_password">Password is not correct</string>
 
 
 
@@ -25,8 +40,6 @@
     <string name="text_create_account">Create an account</string>
     <string name="text_start_offline">Start in offline mode instead</string>
     <string name="wait_message">Please wait…</string>
-    <string name="error_login_email">Email is not correct</string>
-    <string name="error_login_password">Password is not correct</string>
 
     <string name="login_success">Sign in successful</string>
     <string name="login_failed">Sign in failed</string>
@@ -39,8 +52,10 @@
     <string name="warning_email">Email address must not be already registered</string>
     <string name="warning_password">Enter a password of at least 6 character (including at least one upper-case letter and number)</string>
 
-    <string name="button_text_recover">Recover</string>
-    <string name="message_recover_password">If you forgot your password, then enter the email address you used to create the account.</string>
+    <string name="message_recover_password">Don\'t worry. Just tell us the email address you registered with.</string>
+
+    <!--  Recover Password  -->
+    <string name="message_reset_password_email_check">We have sent a reset password email to\n<xliff:g id="email">%s</xliff:g>. Please click the reset password link to set your new password.</string>
 
     <!-- Offline -->
     <string name="contacts_not_found_offline">No more contacts found. Scan and pair for more contacts.</string>
@@ -62,6 +77,7 @@
 
     <!--  Chat  -->
     <string name="message_prompt">Type a message</string>
+    <string name="text_reset_password">Reset your password</string>
 
 
 </resources>

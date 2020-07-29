@@ -1,16 +1,13 @@
 package app.jam.jam;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -223,51 +221,48 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startRecoverPassword() {
-        // TODO: set margin to edit text
-        final EditText emailEditText = new EditText(this);
-        emailEditText.setHint(R.string.hint_email);
-        emailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(R.dimen.margin_horizontal, 0, R.dimen.margin_horizontal, 0);
-        emailEditText.setLayoutParams(params);
-
         // Creating Dialog class to show recover dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.text_recover_password);
-        builder.setMessage(R.string.message_recover_password);
-        builder.setView(emailEditText);
-        builder.setPositiveButton(R.string.button_text_recover, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String userEmail = emailEditText.getText().toString();
-                mProgressDialog.setTitle(R.string.text_recover_password);
-                mProgressDialog.show();
-                if (!Manager.isValidEmail(userEmail)) {
-                    Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                } else {
-                    mAuth.sendPasswordResetEmail(userEmail)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(LoginActivity.this, "Please Check Your Email Account\n and Reset Your Password", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(LoginActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-                mProgressDialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", null);
+        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_recover_password, null);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.text_forgot_password)
+                .setMessage(R.string.message_recover_password)
+                .setView(view)
+                .setPositiveButton(R.string.button_text_recover, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TextInputLayout textInputLayout = view.findViewById(R.id.recover_email_textInputLayout);
+                        final String userEmail = textInputLayout.getEditText().getText().toString();
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+                        mProgressDialog.setTitle(R.string.text_recover_password);
+                        mProgressDialog.show();
+
+                        if (!Manager.isValidEmail(userEmail)) {
+                            Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        // sending password reset request to server
+                        mAuth.sendPasswordResetEmail(userEmail)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        new MaterialAlertDialogBuilder(LoginActivity.this)
+                                                .setTitle(R.string.text_reset_password)
+                                                .setMessage(getString(R.string.message_reset_password_email_check, userEmail))
+                                                .setPositiveButton(R.string.button_text_ok, null)
+                                                .show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(LoginActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        mProgressDialog.dismiss();
+                    }
+                })
+                .setNeutralButton(R.string.button_text_cancel, null)
+                .show();
     }
 
 }
