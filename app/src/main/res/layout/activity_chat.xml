@@ -37,17 +37,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:hint="@string/message_prompt"
-            android:autofillHints="@string/message_prompt"
+            android:hint="@string/hint_type_message"
+            android:autofillHints="@string/hint_type_message"
             android:inputType="text" />
 
         <ImageButton
             android:id="@+id/button_send"
             android:src="@drawable/ic_baseline_send_24"
-            android:contentDescription="@string/send"
+            android:contentDescription="@string/button_text_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/send" />
+            android:text="@string/button_text_send" />
 
     </LinearLayout>
 

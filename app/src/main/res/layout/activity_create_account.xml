@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:text="@string/text_create_account" />
+            android:text="@string/title_text_create_account" />
 
     </androidx.appcompat.widget.Toolbar>
 

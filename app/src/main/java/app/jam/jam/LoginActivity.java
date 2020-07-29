@@ -132,30 +132,30 @@ public class LoginActivity extends AppCompatActivity {
         if (!Manager.isValidEmail(email)) {
             mEmailTextInputLayout.setError(getString(R.string.error_login_email));
             mEmailTextInputLayout.setErrorEnabled(true);
-            Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.warning_email, Toast.LENGTH_SHORT).show();
             return;
         } else if (!Manager.isValidPassword(password)) {
             mPasswordTextInputLayout.setError(getString(R.string.error_login_password));
             mPasswordTextInputLayout.setErrorEnabled(true);
-            Toast.makeText(this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.warning_password, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mProgressDialog.setTitle(R.string.text_sign_in);
+        mProgressDialog.setTitle(R.string.button_text_sign_in);
         mProgressDialog.show();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.i(TAG, "signInWithEmail:success");
-                    Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_login_success, Toast.LENGTH_SHORT).show();
                     saveLoginInfo(mRememberCheckBox.isChecked() ? email : EMAIL, password);
                     // Goto online activity
                     startOnlineActivity();
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
 
-                    Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.toast_login_failed, Toast.LENGTH_SHORT).show();
                 }
                 mProgressDialog.dismiss();
             }
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         mOfflineButton = findViewById(R.id.offline_button);
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(getString(R.string.wait_message));
+        mProgressDialog.setMessage(getString(R.string.message_wait));
         mProgressDialog.setCanceledOnTouchOutside(true);
 
         mToolbar = findViewById(R.id.login_toolbar);
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
         // Creating Dialog class to show recover dialog
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_recover_password, null);
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.text_forgot_password)
+                .setTitle(R.string.title_text_forgot_password)
                 .setMessage(R.string.message_recover_password)
                 .setView(view)
                 .setPositiveButton(R.string.button_text_recover, new DialogInterface.OnClickListener() {
@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
                         TextInputLayout textInputLayout = view.findViewById(R.id.recover_email_textInputLayout);
                         final String userEmail = textInputLayout.getEditText().getText().toString();
 
-                        mProgressDialog.setTitle(R.string.text_recover_password);
+                        mProgressDialog.setTitle(R.string.title_text_reset_password);
                         mProgressDialog.show();
 
                         if (!Manager.isValidEmail(userEmail)) {
@@ -246,7 +246,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         new MaterialAlertDialogBuilder(LoginActivity.this)
-                                                .setTitle(R.string.text_reset_password)
+                                                .setTitle(R.string.title_text_reset_password)
                                                 .setMessage(getString(R.string.message_reset_password_email_check, userEmail))
                                                 .setPositiveButton(R.string.button_text_ok, null)
                                                 .show();

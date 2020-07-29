@@ -149,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             // User did not enable Bluetooth or an error occurred
             Log.d(TAG, "BT not enabled");
-            Toast.makeText(getApplicationContext(), R.string.bt_not_enabled_leaving,
+            Toast.makeText(getApplicationContext(), R.string.message_bluetooth_disabled_exit,
                     Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -267,15 +267,15 @@ public class ChatActivity extends AppCompatActivity {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
-                            setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            setStatus(getString(R.string.status_connected_to, mConnectedDeviceName));
                             mConversationArrayAdapter.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
-                            setStatus(R.string.title_connecting);
+                            setStatus(R.string.status_connecting);
                             break;
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
-                            setStatus(R.string.title_not_connected);
+                            setStatus(R.string.not_connected);
                             break;
                     }
                     break;

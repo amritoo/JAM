@@ -6,78 +6,72 @@
     <string name="app_motto">Your secured messaging app</string>
 
 
+    <!--  Toolbar/Title texts  -->
+    <string name="title_text_create_account">Create account</string>
+    <string name="title_text_forgot_password">Forgot your password?</string>
+    <string name="title_text_reset_password">Reset password</string>
+    <string name="title_text_settings">Settings</string>
+
     <!--  Button texts  -->
-    <string name="button_text_recover">Recover</string>
     <string name="button_text_ok">OK</string>
     <string name="button_text_cancel">Cancel</string>
-
+    <string name="button_text_sign_in">Sign in</string>
+    <string name="button_text_create_account">Create account</string>
+    <string name="button_text_recover">Recover</string>
+    <string name="button_text_scan">Scan</string>
+    <string name="button_text_make_discoverable">Make discoverable</string>
+    <string name="button_text_send">Send</string>
 
     <!--  Hint texts  -->
     <string name="hint_email">Email address</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
+    <string name="hint_type_message">Type a message</string>
 
     <!--  Help texts  -->
     <string name="help_recover_email">Enter your email</string>
-
+    <string name="help_login_email">Enter your verified email address</string>
+    <string name="help_login_password">Enter your account password</string>
+    <string name="help_offline_scan">Scan for devices to find your partner or make your device discoverable and he/she will be able to find you.</string>
 
     <!--  Error texts  -->
     <string name="error_login_email">Email is not correct</string>
     <string name="error_login_password">Password is not correct</string>
 
-
-
-
-
-    <!-- Login -->
-    <string name="text_sign_in">Sign in</string>
-    <string name="help_login_email">Enter your verified email address</string>
-    <string name="help_login_password">Enter your account password</string>
-    <string name="text_remember_me">Remember me</string>
-    <string name="text_forgot_password">Forgot your password?</string>
-    <string name="text_recover_password">Recover Password</string>
-    <string name="text_no_account">Don\'t have an account?</string>
-    <string name="text_create_account">Create an account</string>
-    <string name="text_start_offline">Start in offline mode instead</string>
-    <string name="wait_message">Please wait…</string>
-
-    <string name="login_success">Sign in successful</string>
-    <string name="login_failed">Sign in failed</string>
-    <string name="invalid_email">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-
-    <!--  Create Account  -->
-    <string name="button_text_create_account">Create account</string>
+    <!--  Warning texts  -->
     <string name="warning_username">Enter your user name (must be >2 characters)</string>
-    <string name="warning_email">Email address must not be already registered</string>
+    <string name="warning_create_email">Email address must not be already registered</string>
+    <string name="warning_email">Email address must be verified</string>
     <string name="warning_password">Enter a password of at least 6 character (including at least one upper-case letter and number)</string>
 
+    <!--  Message texts  -->
     <string name="message_recover_password">Don\'t worry. Just tell us the email address you registered with.</string>
-
-    <!--  Recover Password  -->
     <string name="message_reset_password_email_check">We have sent a reset password email to\n<xliff:g id="email">%s</xliff:g>. Please click the reset password link to set your new password.</string>
+    <string name="message_bluetooth_disabled_exit">Bluetooth was not enabled. Leaving JAM.</string>
+    <string name="message_wait">Please wait…</string>
 
-    <!-- Offline -->
-    <string name="contacts_not_found_offline">No more contacts found. Scan and pair for more contacts.</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="contacts_none_offline">No more contacts found. Scan and pair for more contacts.</string>
-    <string name="scan_instruction">Scan for devices to find your partner or make your device discoverable and he/she will be able to find you.</string>
+    <!--  Subheading texts  -->
+    <string name="subheading_recover_password">Recover Password</string>
+    <string name="subheading_create_account">Create an account</string>
+    <string name="subheading_start_offline">Start in offline mode instead</string>
+    <string name="subheading_no_account">Don\'t have an account?</string>
+    <string name="subheading_paired_devices">Paired devices</string>
+    <string name="subheading_discovered_devices">Other available devices</string>
+
+    <!--  Status texts  -->
+    <string name="status_connecting">Connecting…</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_disconnected">Connected</string>
+    <string name="status_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+
+    <!--  Toast texts  -->
+    <string name="toast_login_success">Sign in successful</string>
+    <string name="toast_login_failed">Could not sign in</string>
+
+    <!--  Others texts  -->
+    <string name="text_remember_me">Remember me</string>
     <string name="no_devices_paired">No device is paired</string>
     <string name="no_devices_found">No other devices found nearby</string>
-    <string name="scan">Scan</string>
-    <string name="make_discoverable">Make Discoverable</string>
-    <string name="send">Send</string>
     <string name="not_connected">No device is connected</string>
-    <string name="title_connecting">Connecting…</string>
-    <string name="title_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
-    <string name="title_not_connected">not connected</string>
-    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
-    <string name="title_paired_devices">Paired devices</string>
-    <string name="title_other_devices">Other available devices</string>
-
-    <!--  Chat  -->
-    <string name="message_prompt">Type a message</string>
-    <string name="text_reset_password">Reset your password</string>
-
 
 </resources>

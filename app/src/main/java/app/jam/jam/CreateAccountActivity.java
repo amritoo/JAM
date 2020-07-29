@@ -92,7 +92,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
             return;
         } else if (!Manager.isValidEmail(email)) {
-            mUsername.setError(getString(R.string.warning_email));
+            mUsername.setError(getString(R.string.warning_create_email));
             mEmail.setErrorEnabled(true);
             Toast.makeText(this, "Incorrect Email", Toast.LENGTH_SHORT).show();
             return;

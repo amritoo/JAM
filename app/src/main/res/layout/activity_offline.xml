@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="@string/title_paired_devices" />
+        android:text="@string/subheading_paired_devices" />
 
     <ListView
         android:id="@+id/paired_devices"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="@string/title_other_devices" />
+        android:text="@string/subheading_discovered_devices" />
 
     <ListView
         android:id="@+id/new_devices"
