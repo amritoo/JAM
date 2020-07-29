@@ -4,9 +4,16 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <!-- Custom -->
-    <dimen name="margin_horizontal">24dp</dimen>
-    <dimen name="button_padding">16dp</dimen>
+    <!--  Button  -->
+    <dimen name="button_padding_vertical">12dp</dimen>
+    <dimen name="button_padding_horizontal">30dp</dimen>
     <dimen name="button_text_size">20sp</dimen>
+
+    <!-- Custom -->
+    <dimen name="subheading_text_size">20sp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="margin_horizontal">24dp</dimen>
+    <dimen name="login_margin_top">50dp</dimen>
+    <dimen name="login_divider_height">2dp</dimen>
 
 </resources>

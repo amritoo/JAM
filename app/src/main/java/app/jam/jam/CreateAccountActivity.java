@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,8 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,8 +29,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mRootReference;
 
-    private EditText mEmail, mPassword, mUsername;
-    private Button createAccountButton;
+    private TextInputLayout mUsername, mEmail, mPassword;
+    private MaterialButton createAccountButton;
     private ProgressDialog loadingBar;
     private Toolbar mToolbar;
 
@@ -48,9 +49,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = mUsername.getText().toString();
-                String email = mEmail.getText().toString();
-                String password = mPassword.getText().toString();
+                String username = mUsername.getEditText().getText().toString();
+                String email = mEmail.getEditText().getText().toString();
+                String password = mPassword.getEditText().getText().toString();
                 createNewAccount(username, email, password);
             }
         });
@@ -58,10 +59,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     // for initializing views from layout
     private void InitializeViews() {
+        mUsername = findViewById(R.id.username_textInputLayout);
+        mEmail = findViewById(R.id.email_textInputLayout);
+        mPassword = findViewById(R.id.password_textInputLayout);
         createAccountButton = findViewById(R.id.create_account_button);
-        mEmail = findViewById(R.id.email_editText);
-        mPassword = findViewById(R.id.password_editText);
-        mUsername = findViewById(R.id.username_editText);
 
         loadingBar = new ProgressDialog(this);
         loadingBar.setTitle("Creating new account");
@@ -71,8 +72,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.create_account_toolbar);
         setSupportActionBar(mToolbar);
 //        getSupportActionBar().setTitle(R.string.app_name);
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
@@ -84,35 +87,45 @@ public class CreateAccountActivity extends AppCompatActivity {
      */
     private void createNewAccount(String username, String email, String password) {
         if (!Manager.isValidUsername(username)) {
-            Toast.makeText(this, "Please Enter Username", Toast.LENGTH_SHORT).show();
+            mUsername.setError(getString(R.string.warning_username));
+            mUsername.setErrorEnabled(true);
+            Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
             return;
         } else if (!Manager.isValidEmail(email)) {
-            Toast.makeText(this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+            mUsername.setError(getString(R.string.warning_email));
+            mEmail.setErrorEnabled(true);
+            Toast.makeText(this, "Incorrect Email", Toast.LENGTH_SHORT).show();
             return;
         } else if (!Manager.isValidPassword(password)) {
-            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+            mUsername.setError(getString(R.string.warning_password));
+            mPassword.setErrorEnabled(true);
+            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         loadingBar.show();
         //TODO: make username unique
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                String currentUserID;
-                if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
-                    currentUserID = mAuth.getCurrentUser().getUid();
-                    mRootReference.child(ROOT_CHILD).child(currentUserID).setValue("");
-                    Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
-                    goToLoginActivity();
-                } else {
-                    currentUserID = String.valueOf(task.getException());
-                    Log.e(TAG, currentUserID);
-                    Toast.makeText(CreateAccountActivity.this, "New account create unsuccessful!", Toast.LENGTH_SHORT).show();
-                }
-                loadingBar.dismiss();
-            }
-        });
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
+                            Log.i(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            //TODO: set name
+                            String currentUserID = mAuth.getCurrentUser().getUid();
+                            mRootReference.child(ROOT_CHILD).child(currentUserID).setValue("");
+
+                            Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                            goToLoginActivity();
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        }
+                        loadingBar.dismiss();
+                    }
+                });
 
     }
 
@@ -120,7 +133,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private void goToLoginActivity() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        loginIntent.putExtra(LoginActivity.EMAIL, mEmail.getText());
+        loginIntent.putExtra(LoginActivity.EMAIL, mEmail.getEditText().getText().toString());
         startActivity(loginIntent);
     }
 

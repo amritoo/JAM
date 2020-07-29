@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"
+        android:elevation="@dimen/toolbar_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,61 +29,89 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!--  Login  -->
-    <EditText
-        android:id="@+id/email_editText"
-        android:layout_width="0dp"
+    <!--  Email  -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_email_textInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/login_margin_top"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:hint="@string/hint_email"
+        app:hintTextColor="@color/black"
+        app:startIconDrawable="@drawable/ic_email_24"
+        app:startIconContentDescription="Lock"
+        app:endIconMode="clear_text"
+        app:helperText="@string/help_login_email"
+        app:helperTextEnabled="true"
+        app:errorTextColor="@color/design_default_color_error"
         app:layout_constraintTop_toBottomOf="@id/login_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/password_editText"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/password_editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/sign_in"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/login_password_textInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_editText"
-        app:layout_constraintBottom_toTopOf="@+id/remember_me_checkbox"
-        android:importantForAutofill="no" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-    <CheckBox
-        android:id="@+id/remember_me_checkbox"
-        android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--  Password  -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_password_textInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/remember_me"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/password_editText"
-        app:layout_constraintBottom_toTopOf="@id/login_button"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:hint="@string/hint_password"
+        app:hintTextColor="@color/black"
+        app:startIconDrawable="@drawable/ic_lock_24"
+        app:startIconContentDescription="Lock"
+        app:endIconMode="password_toggle"
+        app:helperText="@string/help_login_password"
+        app:helperTextEnabled="true"
+        app:errorTextColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@+id/remember_me_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/login_email_textInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--  Remember me checkbox  -->
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/remember_me_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="@string/text_remember_me"
+        app:buttonTint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/login_password_textInputLayout"
+        app:layout_constraintBottom_toTopOf="@id/sign_in_materialButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/login_button"
+    <!--  Sign In button  -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sign_in_materialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/button_padding"
-        android:text="@string/sign_in"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintTop_toBottomOf="@+id/password_editText"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingVertical="@dimen/button_padding_vertical"
+        android:paddingHorizontal="@dimen/button_padding_horizontal"
+        android:text="@string/text_sign_in"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/remember_me_checkbox"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -92,11 +120,12 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_height="@dimen/login_divider_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/login_button"
+        app:layout_constraintTop_toBottomOf="@id/sign_in_materialButton"
         app:layout_constraintBottom_toTopOf="@+id/textView1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -106,62 +135,64 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:text="@string/text_forgot_password"
-        android:textSize="24sp"
+        android:textSize="@dimen/subheading_text_size"
+        android:textStyle="bold|italic"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintBottom_toTopOf="@id/recover_password_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/recover_password_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="@string/recover_password"
+        android:text="@string/text_recover_password"
         app:layout_constraintTop_toBottomOf="@id/textView1"
         app:layout_constraintBottom_toTopOf="@id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     <!--  Create account  -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_no_account"
-        android:textSize="24sp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/recover_password_button"
-        app:layout_constraintBottom_toTopOf="@id/create_account_button"
+        android:layout_marginTop="@dimen/login_margin_top"
+        android:text="@string/text_no_account"
+        android:textSize="@dimen/subheading_text_size"
+        android:textStyle="bold|italic"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"
+        app:layout_constraintBottom_toTopOf="@id/login_create_account_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/create_account_button"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_create_account_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="?android:attr/selectableItemBackground"
         android:text="@string/text_create_account"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintBottom_toBottomOf="@+id/offline_button"
+        app:layout_constraintBottom_toTopOf="@id/offline_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     <!--  Start in offline mode  -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/offline_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="@string/start_offline"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_button"
+        android:text="@string/text_start_offline"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@+id/login_create_account_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
