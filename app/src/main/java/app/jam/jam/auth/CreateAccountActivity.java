@@ -1,5 +1,6 @@
 package app.jam.jam.auth;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,7 +79,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         mToolbar = findViewById(R.id.create_account_toolbar);
         setSupportActionBar(mToolbar);
-//        getSupportActionBar().setTitle(R.string.app_name);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,7 +92,7 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @param email    email address
      * @param password password of the account
      */
-    private void createNewAccount(final String username, String email, String password) {
+    private void createNewAccount(final String username, final String email, final String password) {
         if (!Manager.isValidUsername(username)) {
             mUsername.setError(getString(R.string.warning_username));
             mUsername.setErrorEnabled(true);
@@ -110,8 +110,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             return;
         }
 
-        //TODO progress bar not showing
         mProgressDialog.show();
+        // Create account with email and password
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -145,7 +145,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
-                        goToLoginActivity();
+                        setActivityResult(email);
                         mProgressDialog.dismiss();
                     }
                 })
@@ -159,6 +159,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
     }
 
+    // Updates firebase user's username
     private void updateUsername(FirebaseUser user, String username) {
         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username)
@@ -176,12 +177,22 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        setActivityResult(null);
+        return true;
+    }
+
     // For going to login activity
-    private void goToLoginActivity() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        loginIntent.putExtra(LoginActivity.EMAIL, mEmail.getEditText().getText().toString());
-        startActivity(loginIntent);
+    private void setActivityResult(String email) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(LoginActivity.EMAIL, email);
+        if (email != null) {
+            setResult(Activity.RESULT_OK, resultIntent);
+        } else {
+            setResult(Activity.RESULT_CANCELED, resultIntent);
+        }
+        finish();
     }
 
 }

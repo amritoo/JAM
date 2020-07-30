@@ -112,10 +112,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_EMAIL && data != null) {
+        if (resultCode == RESULT_OK && data != null) {
             String email = data.getStringExtra(EMAIL);
-            if (Manager.isValidEmail(email))
-                mEmailTextInputLayout.getEditText().setText(email);
+            mEmailTextInputLayout.getEditText().setText(email);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
