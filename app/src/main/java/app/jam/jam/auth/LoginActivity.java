@@ -1,4 +1,4 @@
-package app.jam.jam;
+package app.jam.jam.auth;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,10 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -26,6 +24,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import app.jam.jam.Manager;
+import app.jam.jam.R;
 import app.jam.jam.offline.OfflineActivity;
 import app.jam.jam.online.OnlineActivity;
 
@@ -143,23 +143,26 @@ public class LoginActivity extends AppCompatActivity {
 
         mProgressDialog.setTitle(R.string.button_text_sign_in);
         mProgressDialog.show();
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "signInWithEmail:success");
-                    Toast.makeText(getApplicationContext(), R.string.toast_login_success, Toast.LENGTH_SHORT).show();
-                    saveLoginInfo(mRememberCheckBox.isChecked() ? email : EMAIL, password);
-                    // Goto online activity
-                    startOnlineActivity();
-                } else {
-                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-
-                    Toast.makeText(getApplicationContext(), R.string.toast_login_failed, Toast.LENGTH_SHORT).show();
-                }
-                mProgressDialog.dismiss();
-            }
-        });
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Log.i(TAG, "signInWithEmail:success");
+                        Toast.makeText(getApplicationContext(), R.string.toast_login_success, Toast.LENGTH_SHORT).show();
+                        saveLoginInfo(mRememberCheckBox.isChecked() ? email : EMAIL, password);
+                        // Goto online activity
+                        startOnlineActivity();
+                        mProgressDialog.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "signInWithEmail:failure", e);
+                        Toast.makeText(getApplicationContext(), R.string.toast_login_failed, Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
+                    }
+                });
     }
 
     // For saving email and password if remember me is selected
@@ -204,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
     // From login to online activity
     private void startOnlineActivity() {
         Intent onlineActivityIntent = new Intent(this, OnlineActivity.class);
+        onlineActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(onlineActivityIntent);
     }
 
@@ -217,9 +221,13 @@ public class LoginActivity extends AppCompatActivity {
     // From login to Offline Activity
     private void startOfflineActivity() {
         Intent offlineActivityIntent = new Intent(this, OfflineActivity.class);
+        offlineActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(offlineActivityIntent);
     }
 
+    /**
+     * Shows password recover dialog with a TextInputLayout
+     */
     private void startRecoverPassword() {
         // Creating Dialog class to show recover dialog
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_recover_password, null);
@@ -232,37 +240,46 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         TextInputLayout textInputLayout = view.findViewById(R.id.recover_email_textInputLayout);
                         final String userEmail = textInputLayout.getEditText().getText().toString();
-
-                        mProgressDialog.setTitle(R.string.title_text_reset_password);
-                        mProgressDialog.show();
-
-                        if (!Manager.isValidEmail(userEmail)) {
-                            Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        // sending password reset request to server
-                        mAuth.sendPasswordResetEmail(userEmail)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        new MaterialAlertDialogBuilder(LoginActivity.this)
-                                                .setTitle(R.string.title_text_reset_password)
-                                                .setMessage(getString(R.string.message_reset_password_email_check, userEmail))
-                                                .setPositiveButton(R.string.button_text_ok, null)
-                                                .show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LoginActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        mProgressDialog.dismiss();
+                        passwordResetEmail(userEmail);
                     }
                 })
                 .setNeutralButton(R.string.button_text_cancel, null)
                 .show();
+    }
+
+    /**
+     * Sends password reset request to server
+     *
+     * @param userEmail email used to create the account
+     */
+    private void passwordResetEmail(final String userEmail) {
+        mProgressDialog.setTitle(R.string.title_text_reset_password);
+        mProgressDialog.show();
+
+        if (!Manager.isValidEmail(userEmail)) {
+            Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mAuth.sendPasswordResetEmail(userEmail)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mProgressDialog.dismiss();
+                        new MaterialAlertDialogBuilder(LoginActivity.this)
+                                .setTitle(R.string.title_text_reset_password)
+                                .setMessage(getString(R.string.message_reset_password_email_check, userEmail))
+                                .setPositiveButton(R.string.button_text_ok, null)
+                                .show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
 }

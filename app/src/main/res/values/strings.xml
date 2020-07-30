@@ -49,6 +49,7 @@
     <string name="message_reset_password_email_check">We have sent a reset password email to\n<xliff:g id="email">%s</xliff:g>. Please click the reset password link to set your new password.</string>
     <string name="message_bluetooth_disabled_exit">Bluetooth was not enabled. Leaving JAM.</string>
     <string name="message_wait">Please wait…</string>
+    <string name="message_create_account">Creating new account</string>
 
     <!--  Subheading texts  -->
     <string name="subheading_recover_password">Recover Password</string>

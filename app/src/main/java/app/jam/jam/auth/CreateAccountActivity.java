@@ -1,4 +1,4 @@
-package app.jam.jam;
+package app.jam.jam.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,14 +12,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import app.jam.jam.Manager;
+import app.jam.jam.R;
+import app.jam.jam.data.User;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -31,7 +38,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private TextInputLayout mUsername, mEmail, mPassword;
     private MaterialButton createAccountButton;
-    private ProgressDialog loadingBar;
+    private ProgressDialog mProgressDialog;
     private Toolbar mToolbar;
 
     @Override
@@ -64,10 +71,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_textInputLayout);
         createAccountButton = findViewById(R.id.create_account_button);
 
-        loadingBar = new ProgressDialog(this);
-        loadingBar.setTitle("Creating new account");
-        loadingBar.setMessage("Please wait,while we are creating new account");
-        loadingBar.setCanceledOnTouchOutside(true);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setTitle(getString(R.string.message_create_account));
+        mProgressDialog.setMessage(getString(R.string.message_wait));
+        mProgressDialog.setCanceledOnTouchOutside(true);
 
         mToolbar = findViewById(R.id.create_account_toolbar);
         setSupportActionBar(mToolbar);
@@ -85,7 +92,7 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @param email    email address
      * @param password password of the account
      */
-    private void createNewAccount(String username, String email, String password) {
+    private void createNewAccount(final String username, String email, String password) {
         if (!Manager.isValidUsername(username)) {
             mUsername.setError(getString(R.string.warning_username));
             mUsername.setErrorEnabled(true);
@@ -103,30 +110,70 @@ public class CreateAccountActivity extends AppCompatActivity {
             return;
         }
 
-        loadingBar.show();
-        //TODO: make username unique
+        //TODO progress bar not showing
+        mProgressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
-                            Log.i(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                    public void onSuccess(AuthResult authResult) {
+                        Log.i(TAG, "createUserWithEmail:success");
 
-                            //TODO: set name
-                            String currentUserID = mAuth.getCurrentUser().getUid();
-                            mRootReference.child(ROOT_CHILD).child(currentUserID).setValue("");
+                        User user = new User();
+                        user.setUserName(username);
 
-                            Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
-                            goToLoginActivity();
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if (currentUser != null) {
+                            // Update username
+                            updateUsername(currentUser, username);
+
+                            //update user database
+                            String currentUserID = currentUser.getUid();
+                            mRootReference.child(ROOT_CHILD).child(currentUserID)
+                                    .setValue(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.i(TAG, "Update successful");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e(TAG, "Update failed: " + e);
+                                        }
+                                    });
                         }
-                        loadingBar.dismiss();
+
+                        Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                        goToLoginActivity();
+                        mProgressDialog.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "createUserWithEmail:failure", e);
+                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
                     }
                 });
+    }
 
+    private void updateUsername(FirebaseUser user, String username) {
+        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .build();
+        user.updateProfile(profileChangeRequest)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "User profile updated.");
+                        } else {
+                            Log.e(TAG, "User profile update failed!");
+                        }
+                    }
+                });
     }
 
     // For going to login activity

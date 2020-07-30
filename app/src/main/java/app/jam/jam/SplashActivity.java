@@ -3,9 +3,10 @@ package app.jam.jam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import app.jam.jam.auth.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Handler handler = new Handler(Looper.myLooper());
+        Handler handler = new Handler(this.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

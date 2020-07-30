@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "368938216620",
-    "firebase_url": "https://jam-app-8091d.firebaseio.com",
-    "project_id": "jam-app-8091d",
-    "storage_bucket": "jam-app-8091d.appspot.com"
+    "project_number": "515005101535",
+    "firebase_url": "https://jam-app-e8887.firebaseio.com",
+    "project_id": "jam-app-e8887",
+    "storage_bucket": "jam-app-e8887.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:368938216620:android:d59c2fef6ccd3bdefd0309",
+        "mobilesdk_app_id": "1:515005101535:android:9bb488dc7bebe16b37806a",
         "android_client_info": {
           "package_name": "app.jam.jam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "368938216620-jg85qropjk4qg1e97cq01n675b95bu8f.apps.googleusercontent.com",
+          "client_id": "515005101535-j78vhf4i21jes2qenj0cojc6g8tbaeia.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDvnZqnZ_USk6ta46kXFPCg5oqvt79cp44"
+          "current_key": "AIzaSyB7k0QZ-AOup-SUL4CJp8g5DpuSLhV2L40"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "368938216620-jg85qropjk4qg1e97cq01n675b95bu8f.apps.googleusercontent.com",
+              "client_id": "515005101535-j78vhf4i21jes2qenj0cojc6g8tbaeia.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

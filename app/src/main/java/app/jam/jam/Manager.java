@@ -21,7 +21,7 @@ public class Manager {
      * @return true if target is valid, false otherwise
      */
     public static boolean isValidPassword(CharSequence target) {
-        return !TextUtils.isEmpty(target) && target.length() >= 6;
+        return target != null && target.length() >= 6;
     }
 
     /**
@@ -31,8 +31,7 @@ public class Manager {
      * @return true if target is valid, false otherwise
      */
     public static boolean isValidUsername(CharSequence target) {
-        // TODO: validity check from server
-        return !TextUtils.isEmpty(target);
+        return target != null && target.length() > 2 ;
     }
 
 }
