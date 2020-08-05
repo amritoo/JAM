@@ -10,12 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -27,20 +27,21 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import app.jam.jam.Manager;
 import app.jam.jam.R;
+import app.jam.jam.data.Constants;
 import app.jam.jam.data.User;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private static final String TAG = "Login Activity";
-    private static final String ROOT_CHILD = "users";
+    private static final String TAG = "Create Account";
 
     private FirebaseAuth mAuth;
     private DatabaseReference mRootReference;
 
+    private MaterialToolbar mToolbar;
     private TextInputLayout mUsername, mEmail, mPassword;
     private MaterialButton createAccountButton;
+
     private ProgressDialog mProgressDialog;
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,35 +79,34 @@ public class CreateAccountActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(true);
 
         mToolbar = findViewById(R.id.create_account_toolbar);
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setActivityResult(null);
+            }
+        });
     }
 
     /**
-     * For creating a new account
+     * For creating a new account using {@link FirebaseAuth}
      *
-     * @param username the name of user
-     * @param email    email address
+     * @param username the name of the user
+     * @param email    email address of the user
      * @param password password of the account
      */
     private void createNewAccount(final String username, final String email, final String password) {
-        if (!Manager.isValidUsername(username)) {
+        // validating parameter data
+        if (!Manager.isValidUsername(this, username)) {
             mUsername.setError(getString(R.string.warning_username));
             mUsername.setErrorEnabled(true);
-            Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
             return;
         } else if (!Manager.isValidEmail(email)) {
-            mUsername.setError(getString(R.string.warning_create_email));
+            mEmail.setError(getString(R.string.warning_create_email));
             mEmail.setErrorEnabled(true);
-            Toast.makeText(this, "Incorrect Email", Toast.LENGTH_SHORT).show();
             return;
-        } else if (!Manager.isValidPassword(password)) {
-            mUsername.setError(getString(R.string.warning_password));
+        } else if (!Manager.isValidPassword(this, password)) {
+            mPassword.setError(getString(R.string.warning_create_password));
             mPassword.setErrorEnabled(true);
-            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -116,7 +116,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Log.i(TAG, "createUserWithEmail:success");
+                        Log.i(TAG, "createUserWithEmail: success");
 
                         User user = new User();
                         user.setUserName(username);
@@ -128,7 +128,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             //update user database
                             String currentUserID = currentUser.getUid();
-                            mRootReference.child(ROOT_CHILD).child(currentUserID)
+                            mRootReference.child(Constants.ROOT_USER).child(currentUserID)
                                     .setValue(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -144,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     });
                         }
 
-                        Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, R.string.toast_create_account_success, Toast.LENGTH_SHORT).show();
                         setActivityResult(email);
                         mProgressDialog.dismiss();
                     }
@@ -153,17 +153,23 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "createUserWithEmail:failure", e);
-                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, R.string.toast_create_account_failed, Toast.LENGTH_SHORT).show();
                         mProgressDialog.dismiss();
                     }
                 });
     }
 
-    // Updates firebase user's username
+    /**
+     * Updates firebase user's username
+     *
+     * @param user     the user instance of {@link FirebaseUser}
+     * @param username the name to set to user
+     */
     private void updateUsername(FirebaseUser user, String username) {
         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username)
                 .build();
+
         user.updateProfile(profileChangeRequest)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -177,17 +183,17 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        setActivityResult(null);
-        return true;
-    }
-
-    // For going to login activity
+    /**
+     * For going from this activity, {@link CreateAccountActivity}, to {@link LoginActivity}
+     *
+     * @param email the value to pass to login activity,
+     *              if null then result will be set to {@link Activity#RESULT_CANCELED};
+     *              otherwise it'll be {@link Activity#RESULT_OK}
+     */
     private void setActivityResult(String email) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(LoginActivity.EMAIL, email);
         if (email != null) {
+            resultIntent.putExtra(Constants.EMAIL, email);
             setResult(Activity.RESULT_OK, resultIntent);
         } else {
             setResult(Activity.RESULT_CANCELED, resultIntent);

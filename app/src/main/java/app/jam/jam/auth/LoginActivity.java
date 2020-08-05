@@ -13,66 +13,47 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import app.jam.jam.Manager;
 import app.jam.jam.R;
+import app.jam.jam.data.Constants;
 import app.jam.jam.offline.OfflineActivity;
 import app.jam.jam.online.OnlineActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "Sign in";
+
     private FirebaseAuth mAuth;
 
-    private static final String TAG = "Login Activity";
-    private static final int REQUEST_EMAIL = 1;
-
-    private static final String PREFERENCE_FILE_NAME = "login_activity";
-
-    public static final String EMAIL = "email";
-    private static final String PASSWORD = "password";
-    private static final String REMEMBER_ME = "remember";
-
-    private static final String TRUE = Boolean.TRUE.toString();
-    private static final String FALSE = Boolean.FALSE.toString();
-
-    private MaterialButton mSignInButton, mRecoverPasswordButton, mCreateAccountButton, mOfflineButton;
+    private MaterialToolbar mToolbar;
     private TextInputLayout mEmailTextInputLayout, mPasswordTextInputLayout;
     private MaterialCheckBox mRememberCheckBox;
-    private ProgressDialog mProgressDialog;
-    private Toolbar mToolbar;
+    private MaterialButton mSignInButton, mRecoverPasswordButton, mCreateAccountButton, mOfflineButton;
 
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Log.i(TAG, "activity creating");
-
         // Setting up firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // for initializing views from layout
+        // For initializing views from layout
         InitializeViews();
-
-        //for checking preference for saved data
-        SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
-        String checkbox = preferences.getString(REMEMBER_ME, FALSE);
-        if (checkbox != null && checkbox.equals(TRUE)) {
-            String email = preferences.getString(EMAIL, "");
-            String password = preferences.getString(PASSWORD, "");
-            login(email, password);
-        }
 
         // For login button action
         mSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +61,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = mEmailTextInputLayout.getEditText().getText().toString();
                 String password = mPasswordTextInputLayout.getEditText().getText().toString();
-                login(email, password);
+                login(email, password, true);
             }
         });
 
-        // for recover password button action
+        // For recover password button action
         mRecoverPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // for create account button action
+        // For create account button action
         mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // for offline button action
+        // For offline button action
         mOfflineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,9 +92,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        //for checking preference for saved data
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        boolean checkbox = preferences.getBoolean(Constants.REMEMBER_ME, false);
+        if (checkbox) {
+            if (user != null) {
+                startOnlineActivity();
+            }
+            String email = preferences.getString(Constants.PREFERENCE_EMAIL, "");
+            String password = preferences.getString(Constants.PREFERENCE_PASSWORD, "");
+            login(email, password, false);
+        }
+        super.onStart();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK && data != null) {
-            String email = data.getStringExtra(EMAIL);
+        if (requestCode == Constants.CREATE_ACCOUNT_CODE &&
+                resultCode == RESULT_OK && data != null) {
+            String email = data.getStringExtra(Constants.EMAIL);
             mEmailTextInputLayout.getEditText().setText(email);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -126,32 +125,34 @@ public class LoginActivity extends AppCompatActivity {
      * @param email    the email to use in login
      * @param password the password to use in login
      */
-    private void login(final String email, final String password) {
+    private void login(final String email, final String password, final boolean flag) {
         // validity checking
         if (!Manager.isValidEmail(email)) {
-            mEmailTextInputLayout.setError(getString(R.string.error_login_email));
+            mEmailTextInputLayout.setError(getString(R.string.warning_email));
             mEmailTextInputLayout.setErrorEnabled(true);
-            Toast.makeText(this, R.string.warning_email, Toast.LENGTH_SHORT).show();
             return;
-        } else if (!Manager.isValidPassword(password)) {
-            mPasswordTextInputLayout.setError(getString(R.string.error_login_password));
+        } else if (!Manager.isValidPassword(this, password)) {
+            mPasswordTextInputLayout.setError(getString(R.string.warning_password));
             mPasswordTextInputLayout.setErrorEnabled(true);
-            Toast.makeText(this, R.string.warning_password, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mProgressDialog.setTitle(R.string.button_text_sign_in);
-        mProgressDialog.show();
+        if (flag) {
+            mProgressDialog.setTitle(R.string.title_text_sign_in);
+            mProgressDialog.show();
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Log.i(TAG, "signInWithEmail:success");
                         Toast.makeText(getApplicationContext(), R.string.toast_login_success, Toast.LENGTH_SHORT).show();
-                        saveLoginInfo(mRememberCheckBox.isChecked() ? email : EMAIL, password);
+                        saveLoginInfo(mRememberCheckBox.isChecked() ? email : null, password);
                         // Goto online activity
                         startOnlineActivity();
-                        mProgressDialog.dismiss();
+                        if (flag)
+                            mProgressDialog.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -159,27 +160,33 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "signInWithEmail:failure", e);
                         Toast.makeText(getApplicationContext(), R.string.toast_login_failed, Toast.LENGTH_SHORT).show();
-                        mProgressDialog.dismiss();
+                        if (flag)
+                            mProgressDialog.dismiss();
                     }
                 });
     }
 
-    // For saving email and password if remember me is selected
+    /**
+     * For saving email and password to Preference if remember me is selected
+     *
+     * @param email    the email address to save, if email is null then it removes preferences
+     * @param password the password to save
+     */
     private void saveLoginInfo(String email, String password) {
-        SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if (!email.equals(EMAIL)) {
-            editor.putString(REMEMBER_ME, TRUE);
-            editor.putString(EMAIL, email);
-            editor.putString(PASSWORD, password);
+        if (email == null) {
+            editor.putBoolean(Constants.REMEMBER_ME, false);
+            editor.remove(Constants.PREFERENCE_EMAIL);
+            editor.remove(Constants.PREFERENCE_PASSWORD);
+            Log.i(TAG, "Login data cleared");
         } else {
-            editor.putString(REMEMBER_ME, FALSE);
-            editor.remove(EMAIL);
-            editor.remove(PASSWORD);
+            editor.putBoolean(Constants.REMEMBER_ME, true);
+            editor.putString(Constants.PREFERENCE_EMAIL, email);
+            editor.putString(Constants.PREFERENCE_PASSWORD, password);
+            Log.i(TAG, "Login data saved");
         }
         editor.apply();
-
-        Log.i(TAG, email.equals(EMAIL) ? "Login data cleared" : "Login data saved");
     }
 
     // For initializing views from layout
@@ -187,7 +194,8 @@ public class LoginActivity extends AppCompatActivity {
         mEmailTextInputLayout = findViewById(R.id.login_email_textInputLayout);
         mPasswordTextInputLayout = findViewById(R.id.login_password_textInputLayout);
         mRememberCheckBox = findViewById(R.id.remember_me_checkbox);
-        mSignInButton = findViewById(R.id.sign_in_materialButton);
+        mSignInButton = findViewById(R.id.sign_in_button);
+
         mRecoverPasswordButton = findViewById(R.id.recover_password_button);
         mCreateAccountButton = findViewById(R.id.login_create_account_button);
         mOfflineButton = findViewById(R.id.offline_button);
@@ -197,31 +205,35 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(true);
 
         mToolbar = findViewById(R.id.login_toolbar);
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
     }
 
-    // From login to online activity
+    /**
+     * For going from this activity, {@link LoginActivity}, to {@link OnlineActivity} and set it as new root
+     */
     private void startOnlineActivity() {
         Intent onlineActivityIntent = new Intent(this, OnlineActivity.class);
         onlineActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(onlineActivityIntent);
+        finish();
     }
 
-    // From login to create account activity
+    /**
+     * For going from this activity, {@link LoginActivity}, to {@link CreateAccountActivity}
+     * After this activity returns, auto fills email EditText if new user is successfully registered.
+     */
     private void startCreateAccountActivity() {
-        // auto fill email EditText in onActivityResult after this activity returns
         Intent createAccountIntent = new Intent(this, CreateAccountActivity.class);
-        startActivityForResult(createAccountIntent, REQUEST_EMAIL);
+        startActivityForResult(createAccountIntent, Constants.CREATE_ACCOUNT_CODE);
     }
 
-    // From login to Offline Activity
+    /**
+     * For going from this activity, {@link LoginActivity}, to {@link OfflineActivity} and set it as new root
+     */
     private void startOfflineActivity() {
         Intent offlineActivityIntent = new Intent(this, OfflineActivity.class);
         offlineActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(offlineActivityIntent);
+        finish();
     }
 
     /**
@@ -239,7 +251,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         TextInputLayout textInputLayout = view.findViewById(R.id.recover_email_textInputLayout);
                         final String userEmail = textInputLayout.getEditText().getText().toString();
-                        passwordResetEmail(userEmail);
+                        if (Manager.isValidEmail(userEmail)) {
+                            passwordResetEmail(userEmail);
+                        } else {
+                            textInputLayout.setError(getString(R.string.warning_email));
+                            textInputLayout.setErrorEnabled(true);
+                        }
                     }
                 })
                 .setNeutralButton(R.string.button_text_cancel, null)
@@ -247,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends password reset request to server
+     * Sends password reset request to server using {@link FirebaseAuth#sendPasswordResetEmail}
      *
      * @param userEmail email used to create the account
      */
@@ -256,7 +273,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog.show();
 
         if (!Manager.isValidEmail(userEmail)) {
-            Toast.makeText(LoginActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.warning_email, Toast.LENGTH_SHORT).show();
             return;
         }
         mAuth.sendPasswordResetEmail(userEmail)
@@ -274,8 +291,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(LoginActivity.this, R.string.toast_reset_password_failed, Toast.LENGTH_SHORT).show();
                         mProgressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
