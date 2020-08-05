@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  Letters count  -->
+    <integer name="password_min_length">6</integer>
+    <integer name="password_max_length">20</integer>
+
+    <integer name="username_min_length">3</integer>
+    <integer name="username_max_length">20</integer>
+
+    <integer name="about_max_length">250</integer>
+    <integer name="work_max_length">20</integer>
+    <integer name="address_max_length">30</integer>
+
+
+    <!--  Lines count  -->
+    <integer name="min_lines">1</integer>
+    <integer name="about_max_lines">10</integer>
+    <integer name="username_max_lines">3</integer>
+    <integer name="work_max_lines">3</integer>
+    <integer name="address_max_lines">3</integer>
+    <integer name="birthday_max_lines">3</integer>
+    <integer name="profile_picture_max_size">192</integer>
+
+</resources>
