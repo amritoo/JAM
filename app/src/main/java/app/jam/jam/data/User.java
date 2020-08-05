@@ -1,6 +1,8 @@
 package app.jam.jam.data;
 
+import com.google.firebase.database.IgnoreExtraProperties;
 
+@IgnoreExtraProperties
 public class User {
 
     private String userName;
@@ -8,16 +10,18 @@ public class User {
     private String work;
     private String address;
     private String birthDate;
+    private String imageUri;
 
     public User() {
     }
 
-    public User(String userName, String about, String work, String address, String birthDate) {
+    public User(String userName, String about, String work, String address, String birthDate, String imageUri) {
         this.userName = userName;
         this.about = about;
         this.work = work;
         this.address = address;
         this.birthDate = birthDate;
+        this.imageUri = imageUri;
     }
 
     @Override
@@ -28,6 +32,7 @@ public class User {
                 ", work='" + work + '\'' +
                 ", address='" + address + '\'' +
                 ", birthDate='" + birthDate + '\'' +
+                ", imageUrl='" + imageUri + '\'' +
                 '}';
     }
 
@@ -69,5 +74,13 @@ public class User {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 }
