@@ -8,21 +8,28 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import app.jam.jam.R;
+import app.jam.jam.data.Constants;
+import app.jam.jam.settings.SettingsActivity;
 
 public class OfflineActivity extends AppCompatActivity {
 
@@ -30,13 +37,6 @@ public class OfflineActivity extends AppCompatActivity {
      * Tag for Log
      */
     private static final String TAG = "DeviceListActivity";
-
-    private static final int REQUEST_ENABLE_BT = 1;
-
-    /**
-     * Return Intent extra
-     */
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
     /**
      * Member fields
@@ -57,12 +57,16 @@ public class OfflineActivity extends AppCompatActivity {
      */
     private Set<BluetoothDevice> mPairedDevices;
 
-    private Button scanButton;
+    private MaterialButton mScanButton, mDiscoverableButton;
+    private ListView mPairedListView, mNewDevicesListView;
+    private MaterialToolbar mMaterialToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline);
+
+        initializeViews();
 
         // initializing set for discovered devices address
         discoveredSet = new HashSet<>();
@@ -74,19 +78,17 @@ public class OfflineActivity extends AppCompatActivity {
             finish();
         } else if (!mBtAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            startActivityForResult(enableBtIntent, Constants.REQUEST_ENABLE_BT);
         }
 
         // Initialize the buttons to perform device discovery and make discoverable
-        scanButton = findViewById(R.id.scan_button);
-        scanButton.setOnClickListener(new View.OnClickListener() {
+        mScanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
                 v.setEnabled(false);
             }
         });
-        Button makeDiscoverButton = findViewById(R.id.make_discoverable_button);
-        makeDiscoverButton.setOnClickListener(new View.OnClickListener() {
+        mDiscoverableButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ensureDiscoverable();
             }
@@ -98,14 +100,12 @@ public class OfflineActivity extends AppCompatActivity {
         mNewDevicesArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.list_item_format);
 
         // Find and set up the ListView for paired devices
-        ListView pairedListView = findViewById(R.id.paired_devices);
-        pairedListView.setAdapter(pairedDevicesArrayAdapter);
-        pairedListView.setOnItemClickListener(mDeviceClickListener);
+        mPairedListView.setAdapter(pairedDevicesArrayAdapter);
+        mPairedListView.setOnItemClickListener(mDeviceClickListener);
 
         // Find and set up the ListView for newly discovered devices
-        ListView newDevicesListView = findViewById(R.id.new_devices);
-        newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
-        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+        mNewDevicesListView.setAdapter(mNewDevicesArrayAdapter);
+        mNewDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -150,6 +150,7 @@ public class OfflineActivity extends AppCompatActivity {
         this.unregisterReceiver(mReceiver);
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (resultCode) {
             case RESULT_OK:
@@ -162,6 +163,46 @@ public class OfflineActivity extends AppCompatActivity {
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    // For initializing views from layout file
+    private void initializeViews() {
+        mScanButton = findViewById(R.id.scan_button);
+        mDiscoverableButton = findViewById(R.id.make_discoverable_button);
+        mPairedListView = findViewById(R.id.paired_devices);
+        mNewDevicesListView = findViewById(R.id.new_devices);
+
+        mMaterialToolbar = findViewById(R.id.offline_topAppBar);
+        // TODO: set my devices bluetooth name
+//        mMaterialToolbar.setTitle();
+        mMaterialToolbar.getMenu().add(Menu.NONE, Constants.ONLINE_MENU_ID, 1, R.string.menu_title_online);
+        mMaterialToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case Constants.ONLINE_MENU_ID:
+                        Toast.makeText(getApplicationContext(), "Go online selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_settings:
+                        Toast.makeText(getApplicationContext(), "Settings selected", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.item_help:
+                        Toast.makeText(getApplicationContext(), "Help selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_logout:
+                        Toast.makeText(getApplicationContext(), "Logout selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_about:
+                        Toast.makeText(getApplicationContext(), "About selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -191,7 +232,7 @@ public class OfflineActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
             mBtAdapter.cancelDiscovery();
-            scanButton.setEnabled(true);    // in case connecting failed and still in this view
+            mScanButton.setEnabled(true);    // in case connecting failed and still in this view
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
@@ -202,8 +243,8 @@ public class OfflineActivity extends AppCompatActivity {
             String address = info.substring(info.length() - 17);
 
             // Create the result Intent and include the MAC address
-            Intent chatIntent = new Intent(getApplicationContext(), ChatActivity.class);
-            chatIntent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            Intent chatIntent = new Intent(getApplicationContext(), OfflineChatActivity.class);
+            chatIntent.putExtra(Constants.EXTRA_DEVICE_ADDRESS, address);
             // Connect and open chat activity
             startActivity(chatIntent);
             // Set result and finish this Activity
@@ -235,7 +276,7 @@ public class OfflineActivity extends AppCompatActivity {
                 }
                 // When discovery is finished, enable scan button
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                scanButton.setEnabled(true);
+                mScanButton.setEnabled(true);
                 if (mNewDevicesArrayAdapter.getCount() == 0) {
                     String noDevices = getString(R.string.no_devices_found);
                     mNewDevicesArrayAdapter.add(noDevices);

@@ -11,32 +11,33 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import app.jam.jam.R;
+import app.jam.jam.data.Constants;
 
-public class ChatActivity extends AppCompatActivity {
+public class OfflineChatActivity extends AppCompatActivity {
 
     private static final String TAG = "BluetoothChatFragment";
-
-    // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    private static final int REQUEST_ENABLE_BT = 3;
 
     // Layout Views
     private ListView mConversationView;
     private EditText mOutEditText;
-    private ImageButton mSendButton;
+    private FloatingActionButton mSendButton, mSendImageButton;
+    private MaterialToolbar mToolbar;
 
     /**
      * Name of the connected device
@@ -66,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_offline_chat);
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -77,10 +78,7 @@ public class ChatActivity extends AppCompatActivity {
             finish();
         }
 
-        mConversationView = findViewById(R.id.in);
-        mOutEditText = findViewById(R.id.edit_text_out);
-        mSendButton = findViewById(R.id.button_send);
-
+        initializeViews();
     }
 
 
@@ -94,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
         // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
             // Otherwise, setup the chat session
         } else if (mChatService == null) {
             setupChat();
@@ -121,7 +119,7 @@ public class ChatActivity extends AppCompatActivity {
         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
         if (mChatService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
+            if (mChatService.getState() == Constants.STATE_NONE) {
                 // Start the Bluetooth chat services
                 mChatService.start();
             }
@@ -130,13 +128,13 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            case REQUEST_CONNECT_DEVICE_SECURE:
+//            case Constants.REQUEST_CONNECT_DEVICE_SECURE:
 //                // When DeviceListActivity returns with a device to connect
 //                if (resultCode == Activity.RESULT_OK) {
 //                    connectDevice(data, true);
 //                }
 //                break;
-//            case REQUEST_CONNECT_DEVICE_INSECURE:
+//            case Constants.REQUEST_CONNECT_DEVICE_INSECURE:
 //                // When DeviceListActivity returns with a device to connect
 //                if (resultCode == Activity.RESULT_OK) {
 //                    connectDevice(data, false);
@@ -157,6 +155,20 @@ public class ChatActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void initializeViews() {
+        mConversationView = findViewById(R.id.in);
+        mOutEditText = findViewById(R.id.edit_text_out);
+        mSendButton = findViewById(R.id.send_floatingButton);
+        mSendImageButton = findViewById(R.id.image_floatingButton);
+
+        mToolbar = findViewById(R.id.offline_chat_topAppBar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishThisActivity();
+            }
+        });
+    }
 
     /**
      * Set up the UI and background operations for chat.
@@ -165,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
         Log.d(TAG, "setupChat()");
 
         // Initialize the array adapter for the conversation thread
-        mConversationArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.chat_message);
+        mConversationArrayAdapter = new ArrayAdapter<>(this, R.layout.chat_message);
 
         mConversationView.setAdapter(mConversationArrayAdapter);
 
@@ -183,7 +195,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         // Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothChatService(getApplicationContext(), mHandler);
+        mChatService = new BluetoothChatService(this, mHandler);
 
         // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer();
@@ -197,7 +209,7 @@ public class ChatActivity extends AppCompatActivity {
      */
     private void sendMessage(String message) {
         // Check that we're actually connected before trying anything
-        if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+        if (mChatService.getState() != Constants.STATE_CONNECTED) {
             Toast.makeText(getApplicationContext(), R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -235,12 +247,13 @@ public class ChatActivity extends AppCompatActivity {
      * @param resId a string resource ID
      */
     private void setStatus(int resId) {
-        final ActionBar actionBar = getActionBar();
-        if (null == actionBar) {
-            Toast.makeText(getApplicationContext(), "No actionbar found.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        actionBar.setSubtitle(resId);
+//        final ActionBar actionBar = getActionBar();
+//        if (null == actionBar) {
+//            Toast.makeText(getApplicationContext(), "No actionbar found.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        actionBar.setSubtitle(resId);
+        mToolbar.setSubtitle(resId);
     }
 
     /**
@@ -249,12 +262,13 @@ public class ChatActivity extends AppCompatActivity {
      * @param subTitle status
      */
     private void setStatus(CharSequence subTitle) {
-        final ActionBar actionBar = getActionBar();
-        if (null == actionBar) {
-            Toast.makeText(getApplicationContext(), "No actionbar found.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        actionBar.setSubtitle(subTitle);
+//        final ActionBar actionBar = getActionBar();
+//        if (null == actionBar) {
+//            Toast.makeText(getApplicationContext(), "No actionbar found.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        actionBar.setSubtitle(subTitle);
+        mToolbar.setSubtitle(subTitle);
     }
 
     /**
@@ -266,15 +280,16 @@ public class ChatActivity extends AppCompatActivity {
             switch (msg.what) {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
-                        case BluetoothChatService.STATE_CONNECTED:
-                            setStatus(getString(R.string.status_connected_to, mConnectedDeviceName));
+                        case Constants.STATE_CONNECTED:
+//                            setStatus(getString(R.string.status_connected_to, mConnectedDeviceName));
+                            setStatus(R.string.status_connected);
                             mConversationArrayAdapter.clear();
                             break;
-                        case BluetoothChatService.STATE_CONNECTING:
+                        case Constants.STATE_CONNECTING:
                             setStatus(R.string.status_connecting);
                             break;
-                        case BluetoothChatService.STATE_LISTEN:
-                        case BluetoothChatService.STATE_NONE:
+                        case Constants.STATE_LISTEN:
+                        case Constants.STATE_NONE:
                             setStatus(R.string.not_connected);
                             break;
                     }
@@ -296,6 +311,7 @@ public class ChatActivity extends AppCompatActivity {
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
                     Toast.makeText(getApplicationContext(), "Connected to "
                             + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    mToolbar.setTitle(mConnectedDeviceName);
                     break;
                 case Constants.MESSAGE_TOAST:
                     Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
@@ -308,7 +324,7 @@ public class ChatActivity extends AppCompatActivity {
     /**
      * Establish connection with other device
      *
-     * @param data   An {@link Intent} with {@link OfflineActivity#EXTRA_DEVICE_ADDRESS} extra.
+     * @param data   An {@link Intent} with {@link Constants#EXTRA_DEVICE_ADDRESS} extra.
      * @param secure Socket Security type - Secure (true) , Insecure (false)
      */
     private void connectDevice(Intent data, boolean secure) {
@@ -317,12 +333,17 @@ public class ChatActivity extends AppCompatActivity {
         if (extras == null) {
             return;
         }
-        String address = extras.getString(OfflineActivity.EXTRA_DEVICE_ADDRESS);
+        String address = extras.getString(Constants.EXTRA_DEVICE_ADDRESS);
         // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         setTitle(device.getName());
         // Attempt to connect to the device
         mChatService.connect(device, secure);
+    }
+
+    private void finishThisActivity() {
+        // TODO
+        finish();
     }
 
 }
