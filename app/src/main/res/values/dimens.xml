@@ -13,7 +13,9 @@
     <dimen name="subheading_text_size">20sp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="margin_horizontal">24dp</dimen>
-    <dimen name="login_margin_top">50dp</dimen>
-    <dimen name="login_divider_height">2dp</dimen>
+    <dimen name="margin_vertical_large">50dp</dimen>
+    <dimen name="divider_height">2dp</dimen>
+    <dimen name="update_profile_picture_size">192dp</dimen>
+    <dimen name="view_profile_picture_size">150dp</dimen>
 
 </resources>
