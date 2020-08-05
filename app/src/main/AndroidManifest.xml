@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.jam.jam">
 
-    <!--  Permission required  -->
+    <!-- Permission required -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,27 +16,38 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-
-        <!--    Main    -->
+        android:theme="@style/AppTheme">
+        <activity android:name=".online.OnlineChatActivity" />
+        <activity android:name=".profile.UpdateProfileActivity" />
+        <activity android:name=".profile.ProfileActivity" />
+        <activity android:name=".settings.SettingsActivity" /> <!-- Main -->
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--    Authentication    -->
+        </activity> <!-- Authentication -->
         <activity android:name=".auth.LoginActivity" />
-        <activity android:name=".auth.CreateAccountActivity" />
-
-        <!--    Online    -->
-        <activity android:name=".online.OnlineActivity" />
-
-        <!--    Offline    -->
+        <activity android:name=".auth.CreateAccountActivity" /> <!-- Online -->
+        <activity android:name=".online.OnlineActivity" /> <!-- Offline -->
         <activity android:name=".offline.OfflineActivity" />
-        <activity android:name=".offline.ChatActivity" />
+        <activity android:name=".offline.OfflineChatActivity" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
 
