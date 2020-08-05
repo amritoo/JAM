@@ -1,130 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".auth.CreateAccountActivity">
 
     <!--  Toolbar  -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/create_account_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/toolbar_elevation"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:text="@string/title_text_create_account" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <!--  Username  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username_textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:hint="@string/hint_username"
-        app:hintTextColor="@color/black"
-        app:startIconDrawable="@drawable/ic_account_circle_24"
-        app:startIconContentDescription="Lock"
-        app:endIconMode="clear_text"
-        app:helperText="@string/warning_username"
-        app:helperTextEnabled="true"
-        app:errorTextColor="@color/design_default_color_error"
-        app:layout_constraintTop_toBottomOf="@id/create_account_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/email_textInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/create_account_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            app:title="@string/title_text_create_account"
+            app:navigationIcon="@drawable/ic_arrow_back_24"
+            app:navigationContentDescription="@string/content_text_back"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--  Email  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_textInputLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:hint="@string/hint_email"
-        app:hintTextColor="@color/black"
-        app:startIconDrawable="@drawable/ic_email_24"
-        app:startIconContentDescription="Lock"
-        app:endIconMode="clear_text"
-        app:helperText="@string/warning_email"
-        app:helperTextEnabled="true"
-        app:errorTextColor="@color/design_default_color_error"
-        app:layout_constraintTop_toBottomOf="@id/username_textInputLayout"
-        app:layout_constraintBottom_toTopOf="@id/password_textInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            android:gravity="center">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <!--  Username  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_vertical_large"
+                android:hint="@string/hint_username"
+                app:hintTextColor="@color/black"
+                app:startIconDrawable="@drawable/ic_account_circle_24"
+                app:startIconContentDescription="@string/content_text_user"
+                app:endIconMode="clear_text"
+                app:helperText="@string/warning_username"
+                app:helperTextEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/username_max_length"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-    <!--  Password  -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:hint="@string/hint_password"
-        app:hintTextColor="@color/black"
-        app:startIconDrawable="@drawable/ic_lock_24"
-        app:startIconContentDescription="Lock"
-        app:endIconMode="password_toggle"
-        app:helperText="@string/warning_password"
-        app:helperTextEnabled="true"
-        app:errorTextColor="@color/design_default_color_error"
-        app:layout_constraintTop_toBottomOf="@id/email_textInputLayout"
-        app:layout_constraintBottom_toTopOf="@id/create_account_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <!--  Email  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:hint="@string/hint_email"
+                app:hintTextColor="@color/black"
+                app:startIconDrawable="@drawable/ic_email_24"
+                app:startIconContentDescription="@string/content_text_email"
+                app:endIconMode="clear_text"
+                app:helperText="@string/warning_create_email"
+                app:helperTextEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-    <!--  Create account button  -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/create_account_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:paddingVertical="@dimen/button_padding_vertical"
-        android:paddingHorizontal="@dimen/button_padding_horizontal"
-        android:text="@string/button_text_create_account"
-        app:layout_constraintTop_toBottomOf="@id/password_textInputLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.Button" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Password  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:hint="@string/hint_password"
+                app:hintTextColor="@color/black"
+                app:startIconDrawable="@drawable/ic_lock_24"
+                app:startIconContentDescription="@string/content_text_lock"
+                app:endIconMode="password_toggle"
+                app:helperText="@string/warning_create_password"
+                app:helperTextEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/password_max_length"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Create account button  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_account_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_vertical_large"
+                android:paddingVertical="@dimen/button_padding_vertical"
+                android:paddingHorizontal="@dimen/button_padding_horizontal"
+                android:text="@string/button_text_create_account"
+                style="@style/Widget.MaterialComponents.Button" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
