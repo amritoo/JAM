@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".profile.UpdateProfileActivity">
+
+    <!--  Toolbar  -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/update_profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Update Profile"
+            app:navigationIcon="@drawable/ic_arrow_back_24"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!--  Profile picture  -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/update_profile_circleImage"
+                android:layout_width="@dimen/update_profile_picture_size"
+                android:layout_height="@dimen/update_profile_picture_size"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:src="@drawable/profile_pic" />
+
+            <!--  Update picture button  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_picture_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/button_text_upload_picture"
+                style="@style/Widget.MaterialComponents.Button" />
+            <!--  Username  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_profile_username_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:hint="@string/hint_username"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:hintTextColor="@color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  About  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_profile_about_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:hint="@string/hint_about"
+                app:counterEnabled="true"
+                app:counterMaxLength="200"
+                app:hintTextColor="@color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="1"
+                    android:maxLines="5"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Work  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_profile_work_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:hint="@string/hint_work"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:hintTextColor="@color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Address  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_profile_address_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:hint="@string/hint_address"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:hintTextColor="@color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Date of birth  -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_profile_birth_date_textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:hint="@string/hint_date_of_birth"
+                app:hintTextColor="@color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--  Update profile button  -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_profile_update_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/margin_vertical_large"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:text="@string/button_text_update"
+                style="@style/Widget.MaterialComponents.Button" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
