@@ -7,10 +7,9 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import app.jam.jam.auth.LoginActivity;
+import app.jam.jam.data.Constants;
 
 public class SplashActivity extends AppCompatActivity {
-
-    private static final long SPLASH_OUT_TIME = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, SPLASH_OUT_TIME);
+        }, Constants.SPLASH_OUT_TIME);
 
     }
 
