@@ -87,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (user.getBirthDate() != null)
             mBirthDateTextView.setText(user.getBirthDate());
 
-        mProfileImageView.setImageDrawable(getDrawable(R.drawable.profile_pic));
+        mProfileImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
     }
 
     private void initializeViews() {

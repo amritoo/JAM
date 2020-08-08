@@ -233,7 +233,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             mBirthDateTextInputLayout.getEditText().setText(user.getBirthDate());
 
         //TODO set picture
-        mProfileImageView.setImageDrawable(getDrawable(R.drawable.profile_pic));
+        mProfileImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
     }
 
     private void initializeViews() {

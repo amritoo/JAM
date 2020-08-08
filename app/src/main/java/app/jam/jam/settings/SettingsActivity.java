@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         initializeViews();
         setListeners();
 
-        mImageView.setImageDrawable(getDrawable(R.drawable.profile_pic));
+        mImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
     }
 
     private void initializeViews() {
