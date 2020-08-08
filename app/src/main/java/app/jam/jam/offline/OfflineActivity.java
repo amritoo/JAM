@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,7 +29,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import app.jam.jam.R;
+import app.jam.jam.auth.LoginActivity;
 import app.jam.jam.data.Constants;
+import app.jam.jam.online.OnlineActivity;
 import app.jam.jam.settings.SettingsActivity;
 
 public class OfflineActivity extends AppCompatActivity {
@@ -181,21 +184,24 @@ public class OfflineActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case Constants.ONLINE_MENU_ID:
-                        Toast.makeText(getApplicationContext(), "Go online selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OfflineActivity.this, "Go online selected", Toast.LENGTH_SHORT).show();
+                        goToOnlineActivity();
                         break;
                     case R.id.item_settings:
-                        Toast.makeText(getApplicationContext(), "Settings selected", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                        startActivity(intent);
+                        Toast.makeText(OfflineActivity.this, "Settings selected", Toast.LENGTH_SHORT).show();
+                        goToSettingsActivity();
                         break;
                     case R.id.item_help:
-                        Toast.makeText(getApplicationContext(), "Help selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OfflineActivity.this, "Help selected", Toast.LENGTH_SHORT).show();
+                        goToHelpActivity();
                         break;
                     case R.id.item_logout:
-                        Toast.makeText(getApplicationContext(), "Logout selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OfflineActivity.this, "Logout selected", Toast.LENGTH_SHORT).show();
+                        logoutUser();
                         break;
                     case R.id.item_about:
-                        Toast.makeText(getApplicationContext(), "About selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OfflineActivity.this, "About selected", Toast.LENGTH_SHORT).show();
+                        goToAboutActivity();
                         break;
                     default:
                         return false;
@@ -295,8 +301,49 @@ public class OfflineActivity extends AppCompatActivity {
             discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             startActivity(discoverableIntent);
         } else {
-            Toast.makeText(getApplicationContext(), "This device is already in discoverable mode.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OfflineActivity.this, "This device is already in discoverable mode.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void logoutUser() {
+        // forget login info
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Constants.REMEMBER_ME, false);
+        editor.remove(Constants.PREFERENCE_EMAIL);
+        editor.remove(Constants.PREFERENCE_PASSWORD);
+        editor.apply();
+
+        Log.i(TAG, "Login data cleared");
+        goToLogin();
+    }
+
+    // For going back to Sign In
+    private void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToOnlineActivity() {
+        // when going online login required again
+        goToLogin();
+    }
+
+    private void goToSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToHelpActivity() {
+//        Intent intent = new Intent(this, OfflineActivity.class);
+//        startActivity(intent);
+    }
+
+    private void goToAboutActivity() {
+//        Intent intent = new Intent(this, OfflineActivity.class);
+//        startActivity(intent);
     }
 
 }

@@ -1,7 +1,9 @@
 package app.jam.jam.online;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -25,6 +27,8 @@ import app.jam.jam.offline.OfflineActivity;
 import app.jam.jam.settings.SettingsActivity;
 
 public class OnlineActivity extends AppCompatActivity {
+
+    private static final String TAG = "Online";
 
     FirebaseAuth mAuth;
     FirebaseUser mCurrentUser;
@@ -95,23 +99,23 @@ public class OnlineActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case Constants.OFFLINE_MENU_ID:
-                        Toast.makeText(getApplicationContext(), "Go offline selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineActivity.this, "Go offline selected", Toast.LENGTH_SHORT).show();
                         goToOfflineActivity();
                         break;
                     case R.id.item_settings:
-                        Toast.makeText(getApplicationContext(), "Settings selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineActivity.this, "Settings selected", Toast.LENGTH_SHORT).show();
                         goToSettingsActivity();
                         break;
                     case R.id.item_help:
-                        Toast.makeText(getApplicationContext(), "Help selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineActivity.this, "Help selected", Toast.LENGTH_SHORT).show();
                         goToHelpActivity();
                         break;
                     case R.id.item_logout:
-                        Toast.makeText(getApplicationContext(), "Logout selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineActivity.this, "Logout selected", Toast.LENGTH_SHORT).show();
                         logoutUser();
                         break;
                     case R.id.item_about:
-                        Toast.makeText(getApplicationContext(), "About us selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineActivity.this, "About us selected", Toast.LENGTH_SHORT).show();
                         goToAboutActivity();
                         break;
                     default:
@@ -161,12 +165,21 @@ public class OnlineActivity extends AppCompatActivity {
     // For going back to Sign In
     private void goToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
     private void logoutUser() {
-        // TODO forget login info
+        // forget login info
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Constants.REMEMBER_ME, false);
+        editor.remove(Constants.PREFERENCE_EMAIL);
+        editor.remove(Constants.PREFERENCE_PASSWORD);
+        editor.apply();
+
+        Log.i(TAG, "Login data cleared");
         goToLogin();
     }
 
