@@ -1,16 +1,22 @@
 package app.jam.jam.profile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import app.jam.jam.Manager;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.User;
@@ -44,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // FOr initializing and setting listener for all views
         initializeViews();
         setListeners();
 
@@ -75,6 +83,11 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    /**
+     * This method reads data from user object and set it to corresponding views
+     *
+     * @param user the user object that represents the user information to display
+     */
     private void setData(User user) {
         if (user.getUserName() != null)
             mUsernameTextView.setText(user.getUserName());
@@ -90,6 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
         mProfileImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
     }
 
+    // For initializing views from layout
     private void initializeViews() {
         mToolbar = findViewById(R.id.profile_toolbar);
 
@@ -104,6 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
         mChangePasswordButton = findViewById(R.id.profile_change_password_button);
     }
 
+    // For setting listeners to views
     private void setListeners() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,22 +137,70 @@ public class ProfileActivity extends AppCompatActivity {
         mChangePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changePassword();
+                startChangePassword();
             }
         });
     }
 
+    /**
+     * Called to finish this activity and return to the caller activity.
+     */
     private void finishThisActivity() {
         finish();
     }
 
+    /**
+     * For going from this activity, {@link ProfileActivity}, to {@link UpdateProfileActivity}
+     */
     private void goToUpdateProfile() {
         Intent updateIntent = new Intent(this, UpdateProfileActivity.class);
         startActivityForResult(updateIntent, Constants.UPDATE_PROFILE_CODE);
     }
 
-    private void changePassword() {
-        // TODO
+    /**
+     * For change password option. This method creates and shows the dialog to enter new password.
+     */
+    private void startChangePassword() {
         Toast.makeText(this, "Change password selected", Toast.LENGTH_SHORT).show();
+        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_change_password, null);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.title_text_change_password)
+                .setMessage(R.string.message_change_password)
+                .setView(view)
+                .setPositiveButton(R.string.button_text_change, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TextInputLayout textInputLayout = view.findViewById(R.id.change_password_textInputLayout);
+                        final String newPassword = textInputLayout.getEditText().getText().toString();
+                        if (Manager.isValidPassword(ProfileActivity.this, newPassword)) {
+                            changePassword(newPassword);
+                        } else {
+                            textInputLayout.setError(getString(R.string.warning_create_password));
+                            textInputLayout.setErrorEnabled(true);
+                        }
+                    }
+                })
+                .setNeutralButton(R.string.button_text_cancel, null)
+                .show();
+    }
+
+    /**
+     * Sends password update request to server using {@link FirebaseUser#updatePassword}
+     *
+     * @param newPassword the new password
+     */
+    private void changePassword(String newPassword) {
+        mCurrentUser.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(ProfileActivity.this, R.string.toast_change_password_success, Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "updatePassword:failure", e);
+                Toast.makeText(ProfileActivity.this, R.string.toast_change_password_failed, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
