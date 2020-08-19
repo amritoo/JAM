@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -231,9 +232,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
             mAddressTextInputLayout.getEditText().setText(user.getAddress());
         if (user.getBirthDate() != null)
             mBirthDateTextInputLayout.getEditText().setText(user.getBirthDate());
-
-        //TODO set picture
-        mProfileImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
+        // Setting profile picture
+        Picasso.get().load(user.getImageUri()).placeholder(R.drawable.profile_image).into(mProfileImageView);
     }
 
     private void initializeViews() {

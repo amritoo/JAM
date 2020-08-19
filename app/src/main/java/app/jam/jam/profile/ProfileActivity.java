@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import app.jam.jam.Manager;
 import app.jam.jam.R;
@@ -100,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (user.getBirthDate() != null)
             mBirthDateTextView.setText(user.getBirthDate());
 
-        mProfileImageView.setImageDrawable(getDrawable(R.drawable.ic_user_108));
+        Picasso.get().load(user.getImageUri()).placeholder(R.drawable.profile_image).into(mProfileImageView);
     }
 
     // For initializing views from layout

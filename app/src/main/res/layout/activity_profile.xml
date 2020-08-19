@@ -45,7 +45,7 @@
                     android:id="@+id/profile_circleImage"
                     android:layout_width="@dimen/view_profile_picture_size"
                     android:layout_height="@dimen/view_profile_picture_size"
-                    android:src="@drawable/ic_user_108" />
+                    android:src="@drawable/profile_image" />
 
                 <!--  Username  -->
                 <LinearLayout
