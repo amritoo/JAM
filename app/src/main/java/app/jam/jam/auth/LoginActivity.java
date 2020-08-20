@@ -100,10 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         if (checkbox) {
             if (user != null) {
                 startOnlineActivity();
+            } else {
+                String email = preferences.getString(Constants.PREFERENCE_EMAIL, "");
+                String password = preferences.getString(Constants.PREFERENCE_PASSWORD, "");
+                login(email, password, false);
             }
-            String email = preferences.getString(Constants.PREFERENCE_EMAIL, "");
-            String password = preferences.getString(Constants.PREFERENCE_PASSWORD, "");
-            login(email, password, false);
         }
         super.onStart();
     }
