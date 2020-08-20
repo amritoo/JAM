@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/button_padding_vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_picture"
+        android:layout_width="@dimen/list_user_picture_size"
+        android:layout_height="@dimen/list_user_picture_size"
+        android:src="@drawable/profile_image" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_tiny"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_username"
+            android:textAlignment="textStart"
+            android:textSize="@dimen/subheading_text_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_about"
+            android:minLines="@integer/min_lines"
+            android:maxLines="2"
+            android:layout_margin="@dimen/margin_tiny"
+            android:textAlignment="textStart"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/request_accept_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="@string/button_text_accept"
+                android:textAllCaps="false"
+                android:background="@android:color/holo_green_light"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/request_cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/button_text_cancel"
+                android:textAllCaps="false"
+                android:background="@android:color/holo_red_dark"
+                android:textColor="@android:color/background_light"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

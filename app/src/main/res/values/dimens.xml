@@ -17,5 +17,8 @@
     <dimen name="divider_height">2dp</dimen>
     <dimen name="update_profile_picture_size">192dp</dimen>
     <dimen name="view_profile_picture_size">150dp</dimen>
+    <dimen name="list_user_picture_size">72dp</dimen>
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
 
 </resources>

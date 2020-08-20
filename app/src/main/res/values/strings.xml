@@ -120,5 +120,8 @@
     <string name="placeholder_text_not_given">Not given</string>
     <string name="toast_upload_image_success">Image uploaded</string>
     <string name="toast_upload_image_failed">Failed image upload</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_text_accept">Accept</string>
 
 </resources>

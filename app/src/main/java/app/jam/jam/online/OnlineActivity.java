@@ -38,7 +38,7 @@ public class OnlineActivity extends AppCompatActivity {
     private LinearLayout mContainer;
 
     private ItemFragment mContactsFragment;
-    private ItemFragment mExploreFragment;
+    private ExploreFragment mExploreFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class OnlineActivity extends AppCompatActivity {
         setToolbarAction();
 
         mContactsFragment = new ItemFragment();
-        mExploreFragment = new ItemFragment();
+        mExploreFragment = new ExploreFragment();
 
         replaceFragment(mContactsFragment);
     }
