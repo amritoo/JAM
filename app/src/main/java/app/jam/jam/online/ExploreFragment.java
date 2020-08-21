@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.Contact;
-import app.jam.jam.profile.ProfileActivity;
+import app.jam.jam.profile.ViewProfileActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -33,7 +33,9 @@ public class ExploreFragment extends Fragment {
 
     private View mExploreView;
     private RecyclerView mExploreRecyclerView;
-    private DatabaseReference mUsersRef;
+
+    private DatabaseReference mUsersReference;
+    private String mCurrentUserId;
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -60,7 +62,7 @@ public class ExploreFragment extends Fragment {
         // Inflate the layout for this fragment
         mExploreView = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        mUsersRef = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER);
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER);
         mExploreRecyclerView = mExploreView.findViewById(R.id.explore_recyclerView);
 
         mExploreRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,7 +76,7 @@ public class ExploreFragment extends Fragment {
 
         FirebaseRecyclerOptions<Contact> options =
                 new FirebaseRecyclerOptions.Builder<Contact>()
-                        .setQuery(mUsersRef, Contact.class)
+                        .setQuery(mUsersReference, Contact.class)
                         .build();
 
         FirebaseRecyclerAdapter<Contact, ExploreViewHolder> adapter =
@@ -109,8 +111,8 @@ public class ExploreFragment extends Fragment {
     }
 
     private void goToProfileView(String visitUserId) {
-        Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
-        profileIntent.putExtra("visit_user_id", visitUserId);
+        Intent profileIntent = new Intent(getContext(), ViewProfileActivity.class);
+        profileIntent.putExtra(Constants.RECEIVER_USER_ID, visitUserId);
         startActivity(profileIntent);
     }
 
@@ -127,4 +129,5 @@ public class ExploreFragment extends Fragment {
             userPicture = itemView.findViewById(R.id.user_picture);
         }
     }
+
 }
