@@ -1,6 +1,7 @@
 package app.jam.jam.online;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -23,6 +24,16 @@ public class OnlineChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_online_chat);
 
         initializeViews();
+        setListeners();
+    }
+
+    private void setListeners() {
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO send message
+            }
+        });
     }
 
     private void initializeViews() {
