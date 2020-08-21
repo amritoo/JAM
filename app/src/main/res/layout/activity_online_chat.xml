@@ -15,15 +15,14 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/offline_chat_topAppBar"
+            android:id="@+id/online_chat_topAppBar"
             app:title="Username"
             app:menu="@menu/menu_chat_options"
             style="@style/Widget.MaterialComponents.Toolbar.Primary" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--  TODO: use recycler view  -->
     <!--  Chat history list  -->
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/in"
         android:layout_width="match_parent"
         android:layout_height="0dp"
