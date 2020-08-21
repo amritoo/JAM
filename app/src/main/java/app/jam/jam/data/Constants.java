@@ -69,8 +69,22 @@ public interface Constants {
     String PASSWORD = "password";
     String REMEMBER_ME = "remember";
 
-    // Firebase
+    // Firebase paths. Very important! *** Don't change them **
     String ROOT_USER = "users";
+    String ROOT_CONTACTS = "contacts";
+    String ROOT_USER_STATES = "userStates";
+    String ROOT_REQUESTS = "friendRequests";
     String ROOT_PROFILE_IMAGE = "profileImages";
+    String CHILD_REQUEST_TYPE = "requestType";
+    String CHILD_USERNAME = "userName";
+    String CHILD_USER_ABOUT = "about";
+    String CHILD_USER_IMAGE = "imageUri";
+    String CHILD_REQUEST_TYPE_SENT = "sent";
+    String CHILD_REQUEST_TYPE_RECEIVED = "received";
+    String CHILD_CONTACT = "contacts";
+    String CHILD_CONTACT_SAVED = "saved";
+
+    String RECEIVER_USER_ID = "receiver_user_id";
+    String USER_STATE_NEW = "new";
 
 }
