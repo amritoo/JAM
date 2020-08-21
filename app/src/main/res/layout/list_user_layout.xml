@@ -19,14 +19,30 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/user_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hint_username"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/subheading_text_size"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_username"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/subheading_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/user_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_gravity="center_vertical"
+                android:visibility="invisible"
+                android:src="@drawable/ic_online_16"
+                android:contentDescription="@string/content_text_active" />
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/user_about"
@@ -38,6 +54,7 @@
             android:layout_margin="@dimen/margin_tiny"
             android:textAlignment="textStart"
             android:textStyle="italic" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +69,7 @@
                 android:text="@string/button_text_accept"
                 android:textAllCaps="false"
                 android:background="@android:color/holo_green_light"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/request_cancel_btn"
@@ -63,7 +80,7 @@
                 android:textAllCaps="false"
                 android:background="@android:color/holo_red_dark"
                 android:textColor="@android:color/background_light"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 
