@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".profile.ViewProfileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <!--  Profile picture  -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/view_profile_circleImage"
+                android:layout_width="@dimen/view_profile_picture_size"
+                android:layout_height="@dimen/view_profile_picture_size"
+                android:layout_margin="@dimen/margin_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profile_image" />
+
+            <!--  Username  -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_username"
+                    android:textSize="@dimen/subheading_text_size"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/view_profile_username_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:minLines="@integer/min_lines"
+                    android:maxLines="@integer/username_max_lines"
+                    android:text="@string/placeholder_text_not_given"
+                    android:textSize="@dimen/subheading_text_size" />
+            </LinearLayout>
+
+            <!--  About  -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_about"
+                    android:textSize="@dimen/subheading_text_size"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/view_profile_about_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:minLines="@integer/min_lines"
+                    android:maxLines="@integer/about_max_lines"
+                    android:text="@string/placeholder_text_not_given"
+                    android:textSize="@dimen/subheading_text_size" />
+            </LinearLayout>
+
+            <!--  Work  -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_work"
+                    android:textSize="@dimen/subheading_text_size"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/view_profile_work_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:minLines="@integer/min_lines"
+                    android:maxLines="@integer/work_max_lines"
+                    android:text="@string/placeholder_text_not_given"
+                    android:textSize="@dimen/subheading_text_size" />
+            </LinearLayout>
+
+            <!--  Address  -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_address"
+                    android:textSize="@dimen/subheading_text_size"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/view_profile_address_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:minLines="@integer/min_lines"
+                    android:maxLines="@integer/address_max_lines"
+                    android:text="@string/placeholder_text_not_given"
+                    android:textSize="@dimen/subheading_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_vertical_large"
+                android:orientation="vertical">
+
+                <!--  Request button  -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/view_profile_request_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="@string/button_text_send_request" />
+
+                <!--  Cancel button button  -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/view_profile_cancel_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="@string/button_text_cancel_request" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
