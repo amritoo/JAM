@@ -16,9 +16,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/online_topAppBar"
-            app:title="Username"
             app:menu="@menu/menu_options"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/online_imageView"
+                android:layout_width="@dimen/chat_image_size"
+                android:layout_height="@dimen/chat_image_size"
+                android:layout_marginVertical="@dimen/margin_tiny"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:cropToPadding="true"
+                android:src="@drawable/profile_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/online_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_username"
+                android:textSize="@dimen/subheading_text_size"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--  Tabs  -->

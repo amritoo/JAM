@@ -70,10 +70,10 @@ public interface Constants {
     String REMEMBER_ME = "remember";
 
     // Firebase paths. Very important! *** Don't change them **
-    String ROOT_USER = "users";
+    String ROOT_USERS = "users";
     String ROOT_CONTACTS = "contacts";
-    String ROOT_USER_STATES = "userStates";
     String ROOT_REQUESTS = "friendRequests";
+    String ROOT_MESSAGES = "messages";
     String ROOT_PROFILE_IMAGE = "profileImages";
     String CHILD_REQUEST_TYPE = "requestType";
     String CHILD_USERNAME = "userName";
@@ -83,8 +83,10 @@ public interface Constants {
     String CHILD_REQUEST_TYPE_RECEIVED = "received";
     String CHILD_CONTACT = "contacts";
     String CHILD_CONTACT_SAVED = "saved";
+    String MESSAGE_TYPE_TEXT = "text";
 
     String RECEIVER_USER_ID = "receiver_user_id";
-    String USER_STATE_NEW = "new";
+    String RECEIVER_USER_NAME = "receiver_username";
+    String RECEIVER_USER_IMAGE = "receiver_user_image";
 
 }

@@ -45,17 +45,16 @@ public class ViewProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_profile);
 
         // getting references from server
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER);
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS);
         mRequestReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_REQUESTS);
         mContactReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_CONTACTS);
 
         // Checking whether user is logged in or not.
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mCurrentUser != null) {
-            mCurrentUserId = mCurrentUser.getUid();
-        } else {
+        if (mCurrentUser == null) {
             finishThisActivity();
         }
+        mCurrentUserId = mCurrentUser.getUid();
         mReceiverUserId = getIntent().getStringExtra(Constants.RECEIVER_USER_ID);
 
         // For initializing and setting listener for all views
@@ -66,7 +65,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         // For managing request and setting buttons text accordingly
         manageRequests();
 
-        if(mCurrentUserId.equals(mReceiverUserId)) {
+        if (mCurrentUserId.equals(mReceiverUserId)) {
             setButtonText(States.SELF);
         }
     }

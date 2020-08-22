@@ -80,7 +80,7 @@ public class ContactsFragment extends Fragment {
         }
 
         mContactsReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_CONTACTS).child(currentUserID);
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER);
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS);
 
         return mContactsView;
     }
@@ -104,22 +104,24 @@ public class ContactsFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
                                     // TODO active status
-                                    String userName = snapshot.child(Constants.CHILD_USERNAME).getValue().toString();
+                                    final String userName = snapshot.child(Constants.CHILD_USERNAME).getValue().toString();
                                     String userAbout = getString(R.string.placeholder_text_not_given);
+                                    String userImage = Constants.RECEIVER_USER_IMAGE;
                                     if (snapshot.hasChild(Constants.CHILD_USER_ABOUT)) {
                                         userAbout = snapshot.child(Constants.CHILD_USER_ABOUT).getValue().toString();
                                     }
                                     if (snapshot.hasChild(Constants.CHILD_USER_IMAGE)) {
-                                        String userImage = snapshot.child(Constants.CHILD_USER_IMAGE).getValue().toString();
+                                        userImage = snapshot.child(Constants.CHILD_USER_IMAGE).getValue().toString();
                                         Picasso.get().load(userImage).placeholder(R.drawable.profile_image).into(holder.userPicture);
                                     }
                                     holder.userName.setText(userName);
                                     holder.userAbout.setText(userAbout);
 
+                                    final String finalUserImage = userImage;
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            startChatActivity(userId);
+                                            startChatActivity(userId, userName, finalUserImage);
                                         }
                                     });
                                 }
@@ -145,9 +147,11 @@ public class ContactsFragment extends Fragment {
         adapter.startListening();
     }
 
-    private void startChatActivity(String visitUserId) {
+    private void startChatActivity(String visitUserId, String userName, String userImage) {
         Intent chatIntent = new Intent(getContext(), OnlineChatActivity.class);
         chatIntent.putExtra(Constants.RECEIVER_USER_ID, visitUserId);
+        chatIntent.putExtra(Constants.RECEIVER_USER_NAME, userName);
+        chatIntent.putExtra(Constants.RECEIVER_USER_IMAGE, userImage);
         startActivity(chatIntent);
     }
 

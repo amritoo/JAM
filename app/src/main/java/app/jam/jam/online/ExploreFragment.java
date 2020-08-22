@@ -62,7 +62,7 @@ public class ExploreFragment extends Fragment {
         // Inflate the layout for this fragment
         mExploreView = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER);
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS);
         mExploreRecyclerView = mExploreView.findViewById(R.id.explore_recyclerView);
 
         mExploreRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

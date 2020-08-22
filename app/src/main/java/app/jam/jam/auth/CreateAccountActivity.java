@@ -128,7 +128,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             //update user database
                             String currentUserID = currentUser.getUid();
-                            mRootReference.child(Constants.ROOT_USER).child(currentUserID)
+                            mRootReference.child(Constants.ROOT_USERS).child(currentUserID)
                                     .setValue(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

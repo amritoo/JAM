@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         setListeners();
 
         String currentUserId = mCurrentUser.getUid();
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USER).child(currentUserId);
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS).child(currentUserId);
         mUsersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

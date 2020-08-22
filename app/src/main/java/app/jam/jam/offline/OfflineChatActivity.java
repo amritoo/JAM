@@ -1,6 +1,5 @@
 package app.jam.jam.offline;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,7 +10,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -156,10 +153,10 @@ public class OfflineChatActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        mConversationView = findViewById(R.id.in);
-        mOutEditText = findViewById(R.id.edit_text_out);
-        mSendButton = findViewById(R.id.send_floatingButton);
-        mSendImageButton = findViewById(R.id.image_floatingButton);
+        mConversationView = findViewById(R.id.online_chat_messages);
+        mOutEditText = findViewById(R.id.online_chat_editText);
+        mSendButton = findViewById(R.id.online_chat_send_floatingButton);
+        mSendImageButton = findViewById(R.id.online_chat_image_floatingButton);
 
         mToolbar = findViewById(R.id.offline_chat_topAppBar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -188,7 +185,7 @@ public class OfflineChatActivity extends AppCompatActivity {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send a message using content of the edit text widget
-                TextView textView = findViewById(R.id.edit_text_out);
+                TextView textView = findViewById(R.id.online_chat_editText);
                 String message = textView.getText().toString();
                 sendMessage(message);
             }

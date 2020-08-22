@@ -22,7 +22,7 @@
 
     <!--  Chat history list  -->
     <ListView
-        android:id="@+id/in"
+        android:id="@+id/online_chat_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -39,7 +39,7 @@
         android:background="@color/colorAccent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/image_floatingButton"
+            android:id="@+id/online_chat_image_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_image_selector"
@@ -48,7 +48,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton" />
 
         <EditText
-            android:id="@+id/edit_text_out"
+            android:id="@+id/online_chat_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,7 +62,7 @@
             android:background="@drawable/edittext_round" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/send_floatingButton"
+            android:id="@+id/online_chat_send_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_text_send"

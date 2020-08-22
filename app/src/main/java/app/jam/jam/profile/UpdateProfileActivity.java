@@ -78,7 +78,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         // Setting database reference to retrieve and update user data
         mUserReference = FirebaseDatabase.getInstance()
                 .getReference()
-                .child(Constants.ROOT_USER)
+                .child(Constants.ROOT_USERS)
                 .child(currentUserId);
         mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
