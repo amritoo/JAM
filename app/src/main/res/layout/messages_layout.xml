@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/receiver_message_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:text="receiver message"
+        android:textColor="@color/black"
+        android:textSize="@dimen/message_text_size"
+        android:background="@drawable/message_their_style"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sender_message_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/white"
+        android:text="sender message"
+        android:textSize="@dimen/message_text_size"
+        android:background="@drawable/message_mine_style"/>
+
+</RelativeLayout>
