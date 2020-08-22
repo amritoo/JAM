@@ -13,17 +13,38 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/online_chat_topAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/online_chat_topAppBar"
-            app:title="Username"
+            android:gravity="center_vertical"
             app:menu="@menu/menu_chat_options"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+            app:navigationIcon="@drawable/ic_arrow_back_24"
+            app:navigationContentDescription="@string/content_text_back"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/online_chat_imageView"
+                android:layout_width="@dimen/chat_image_size"
+                android:layout_height="@dimen/chat_image_size"
+                android:layout_marginVertical="@dimen/margin_tiny"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:cropToPadding="true"
+                android:src="@drawable/profile_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/online_chat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_username"
+                android:textSize="@dimen/subheading_text_size"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--  Chat history list  -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/in"
+        android:id="@+id/online_chat_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -40,16 +61,16 @@
         android:background="@color/colorAccent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/image_floatingButton"
+            android:id="@+id/online_chat_image_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_image_selector"
             app:maxImageSize="35dp"
             app:srcCompat="@drawable/ic_photo_24"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
 
         <EditText
-            android:id="@+id/edit_text_out"
+            android:id="@+id/online_chat_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -60,16 +81,16 @@
             android:hint="@string/hint_type_message"
             android:inputType="textMultiLine"
             android:importantForAutofill="no"
-            android:background="@drawable/edittext_round"/>
+            android:background="@drawable/edittext_round" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/send_floatingButton"
+            android:id="@+id/online_chat_send_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_text_send"
             app:maxImageSize="35dp"
             app:srcCompat="@drawable/ic_baseline_send_24"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
     </LinearLayout>
 
 </LinearLayout>
