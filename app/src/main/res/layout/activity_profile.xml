@@ -59,8 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/hint_username"
-                        android:textSize="@dimen/subheading_text_size"
-                        android:textColor="@color/black" />
+                        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/profile_username_textView"
@@ -70,7 +69,7 @@
                         android:minLines="@integer/min_lines"
                         android:maxLines="@integer/username_max_lines"
                         android:text="@string/placeholder_text_not_given"
-                        android:textSize="@dimen/subheading_text_size" />
+                        android:textAppearance="@android:style/TextAppearance.Material.Large" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -85,8 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_about"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/profile_about_textView"
@@ -96,7 +94,7 @@
                     android:minLines="@integer/min_lines"
                     android:maxLines="@integer/about_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
             </LinearLayout>
 
             <!--  Work  -->
@@ -110,8 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_work"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/profile_work_textView"
@@ -121,7 +118,7 @@
                     android:minLines="@integer/min_lines"
                     android:maxLines="@integer/work_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
             </LinearLayout>
 
             <!--  Address  -->
@@ -135,8 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_address"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/profile_address_textView"
@@ -146,7 +142,7 @@
                     android:minLines="@integer/min_lines"
                     android:maxLines="@integer/address_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
             </LinearLayout>
 
             <!--  Date of birth  -->
@@ -160,8 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_date_of_birth"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/profile_birth_date_textView"
@@ -171,7 +166,7 @@
                     android:minLines="@integer/min_lines"
                     android:maxLines="@integer/birthday_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
             </LinearLayout>
 
             <!--  Update profile button  -->

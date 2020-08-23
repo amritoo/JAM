@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import app.jam.jam.Manager;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
@@ -35,10 +38,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "View Profile";
+    /**
+     * Tag to use to {@link Log} messages
+     */
+    private static final String TAG = "Profile";
 
     private FirebaseUser mCurrentUser;
-    private DatabaseReference mUsersReference;
 
     private MaterialToolbar mToolbar;
     private CircleImageView mProfileImageView;
@@ -52,12 +57,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        // FOr initializing and setting listener for all views
+        // For initializing and setting listener for all views
         initializeViews();
         setListeners();
 
         String currentUserId = mCurrentUser.getUid();
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS).child(currentUserId);
+        DatabaseReference mUsersReference = FirebaseDatabase.getInstance().getReference()
+                .child(Constants.ROOT_USERS).child(currentUserId);
         mUsersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -68,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "loadUser:onCancelled", error.toException());
+                Log.e(TAG, "onCreate:addValueEventListener:onCancelled", error.toException());
             }
         });
     }
@@ -100,8 +106,11 @@ public class ProfileActivity extends AppCompatActivity {
             mAddressTextView.setText(user.getAddress());
         if (user.getBirthDate() != null)
             mBirthDateTextView.setText(user.getBirthDate());
-
-        Picasso.get().load(user.getImageUri()).placeholder(R.drawable.profile_image).into(mProfileImageView);
+        if (user.getImageUri() != null)
+            Picasso.get()
+                    .load(user.getImageUri())
+                    .placeholder(R.drawable.profile_image)
+                    .into(mProfileImageView);
     }
 
     // For initializing views from layout
@@ -172,11 +181,13 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         TextInputLayout textInputLayout = view.findViewById(R.id.change_password_textInputLayout);
-                        final String newPassword = textInputLayout.getEditText().getText().toString();
+                        final String newPassword = Objects
+                                .requireNonNull(textInputLayout.getEditText())
+                                .getText().toString();
                         if (Manager.isValidPassword(ProfileActivity.this, newPassword)) {
                             changePassword(newPassword);
                         } else {
-                            textInputLayout.setError(getString(R.string.warning_create_password));
+                            textInputLayout.setError(getString(R.string.help_create_password));
                             textInputLayout.setErrorEnabled(true);
                         }
                     }
@@ -191,17 +202,28 @@ public class ProfileActivity extends AppCompatActivity {
      * @param newPassword the new password
      */
     private void changePassword(String newPassword) {
-        mCurrentUser.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(ProfileActivity.this, R.string.toast_change_password_success, Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "updatePassword:failure", e);
-                Toast.makeText(ProfileActivity.this, R.string.toast_change_password_failed, Toast.LENGTH_SHORT).show();
-            }
-        });
+        mCurrentUser.updatePassword(newPassword)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i(TAG, "changePassword:success");
+                        Toast.makeText(ProfileActivity.this, R.string.toast_change_password_success, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "changePassword:failure", e);
+                        Snackbar.make(mUsernameTextView, R.string.snackbar_change_password_failed, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.button_text_retry, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        startChangePassword();
+                                    }
+                                })
+                                .show();
+                    }
+                });
     }
+
 }
