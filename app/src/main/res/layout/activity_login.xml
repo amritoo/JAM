@@ -13,7 +13,6 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/login_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/app_name"
@@ -40,11 +39,11 @@
                 android:layout_marginTop="@dimen/margin_vertical_large"
                 android:hint="@string/hint_email"
                 app:hintTextColor="@color/black"
+                app:helperText="@string/help_login_email"
+                app:helperTextEnabled="true"
                 app:startIconDrawable="@drawable/ic_email_24"
                 app:startIconContentDescription="@string/content_text_email"
                 app:endIconMode="clear_text"
-                app:helperText="@string/help_login_email"
-                app:helperTextEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -89,7 +88,7 @@
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_vertical_large"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:paddingVertical="@dimen/button_padding_vertical"
                 android:paddingHorizontal="@dimen/button_padding_horizontal"
                 android:text="@string/button_text_sign_in" />
@@ -105,13 +104,11 @@
 
             <!--  Recover password  -->
             <TextView
-                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="@string/title_text_forgot_password"
-                android:textSize="@dimen/subheading_text_size"
-                android:textStyle="bold|italic" />
+                android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/recover_password_button"
@@ -122,13 +119,11 @@
 
             <!--  Create account  -->
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="@string/subheading_no_account"
-                android:textSize="@dimen/subheading_text_size"
-                android:textStyle="bold|italic" />
+                android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_create_account_button"
@@ -147,7 +142,6 @@
                 android:text="@string/subheading_start_offline"
                 android:textColor="@color/red"
                 style="@style/Widget.MaterialComponents.Button.TextButton" />
-
         </LinearLayout>
 
     </ScrollView>
