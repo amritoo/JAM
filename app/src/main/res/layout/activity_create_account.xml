@@ -35,7 +35,7 @@
 
             <!--  Username  -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_textInputLayout"
+                android:id="@+id/create_account_username_textInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_vertical_large"
@@ -44,7 +44,7 @@
                 app:startIconDrawable="@drawable/ic_account_circle_24"
                 app:startIconContentDescription="@string/content_text_user"
                 app:endIconMode="clear_text"
-                app:helperText="@string/warning_username"
+                app:helperText="@string/help_username"
                 app:helperTextEnabled="true"
                 app:counterEnabled="true"
                 app:counterMaxLength="@integer/username_max_length"
@@ -54,12 +54,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--  Email  -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_textInputLayout"
+                android:id="@+id/create_account_email_textInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -68,7 +67,7 @@
                 app:startIconDrawable="@drawable/ic_email_24"
                 app:startIconContentDescription="@string/content_text_email"
                 app:endIconMode="clear_text"
-                app:helperText="@string/warning_create_email"
+                app:helperText="@string/help_create_email"
                 app:helperTextEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
@@ -76,12 +75,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--  Password  -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_textInputLayout"
+                android:id="@+id/create_account_password_textInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -90,7 +88,7 @@
                 app:startIconDrawable="@drawable/ic_lock_24"
                 app:startIconContentDescription="@string/content_text_lock"
                 app:endIconMode="password_toggle"
-                app:helperText="@string/warning_create_password"
+                app:helperText="@string/help_create_password"
                 app:helperTextEnabled="true"
                 app:counterEnabled="true"
                 app:counterMaxLength="@integer/password_max_length"
@@ -100,7 +98,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--  Create account button  -->
@@ -113,7 +110,6 @@
                 android:paddingHorizontal="@dimen/button_padding_horizontal"
                 android:text="@string/button_text_create_account"
                 style="@style/Widget.MaterialComponents.Button" />
-
         </LinearLayout>
 
     </ScrollView>
