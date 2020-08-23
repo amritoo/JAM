@@ -336,6 +336,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startOnlineActivity() {
         Intent onlineActivityIntent = new Intent(this, OnlineActivity.class);
         onlineActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        onlineActivityIntent.putExtra(Constants.LOGIN_TO_ONLINE, Constants.LOGIN_TO_ONLINE);
         startActivity(onlineActivityIntent);
         finish();
     }

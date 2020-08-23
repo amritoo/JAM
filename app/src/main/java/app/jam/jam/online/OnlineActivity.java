@@ -95,7 +95,9 @@ public class OnlineActivity extends AppCompatActivity {
                                     .requireNonNull(snapshot.child(Constants.CHILD_USERNAME)
                                             .getValue()).toString();
                             mTitleTextView.setText(mUserName);
-                            Toast.makeText(OnlineActivity.this, getString(R.string.toast_welcome_user, mUserName), Toast.LENGTH_SHORT).show();
+                            if (getIntent().hasExtra(Constants.LOGIN_TO_ONLINE)) {
+                                Toast.makeText(OnlineActivity.this, getString(R.string.toast_welcome_user, mUserName), Toast.LENGTH_SHORT).show();
+                            }
 
                             if (snapshot.hasChild(Constants.CHILD_USER_IMAGE)) {
                                 mUserImage = Objects
@@ -221,11 +223,11 @@ public class OnlineActivity extends AppCompatActivity {
 
     /**
      * For going from this activity, {@link OnlineActivity}, to {@link ProfileActivity}.
-     * It passes current user id as string extra.
+     * It passes current user {@code true} as boolean extra.
      */
     private void goToProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(Constants.RECEIVER_USER_ID, mCurrentUser.getUid());
+        intent.putExtra(Constants.CURRENT_USER, true);
         startActivity(intent);
     }
 
