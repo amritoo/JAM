@@ -31,11 +31,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ExploreFragment extends Fragment {
 
-    private View mExploreView;
-    private RecyclerView mExploreRecyclerView;
-
     private DatabaseReference mUsersReference;
-    private String mCurrentUserId;
+
+    private RecyclerView mExploreRecyclerView;
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -60,11 +58,11 @@ public class ExploreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mExploreView = inflater.inflate(R.layout.fragment_explore, container, false);
+        View mExploreView = inflater.inflate(R.layout.fragment_explore, container, false);
 
         mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS);
-        mExploreRecyclerView = mExploreView.findViewById(R.id.explore_recyclerView);
 
+        mExploreRecyclerView = mExploreView.findViewById(R.id.explore_recyclerView);
         mExploreRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return mExploreView;
@@ -79,6 +77,7 @@ public class ExploreFragment extends Fragment {
                         .setQuery(mUsersReference, Contact.class)
                         .build();
 
+        // Creating adapter
         FirebaseRecyclerAdapter<Contact, ExploreViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Contact, ExploreViewHolder>(options) {
                     @Override
@@ -100,8 +99,10 @@ public class ExploreFragment extends Fragment {
                     @NonNull
                     @Override
                     public ExploreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_user_layout, parent, false);
-                        ExploreViewHolder viewHolder = new ExploreViewHolder(view);
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.list_user_layout, parent, false);
+                        ExploreViewHolder viewHolder;
+                        viewHolder = new ExploreViewHolder(view);
                         return viewHolder;
                     }
                 };
@@ -110,12 +111,21 @@ public class ExploreFragment extends Fragment {
         adapter.startListening();
     }
 
+    /**
+     * This method starts {@link ViewProfileActivity} to show user information of the passed user id.
+     *
+     * @param visitUserId the id of visited user
+     */
     private void goToProfileView(String visitUserId) {
         Intent profileIntent = new Intent(getContext(), ViewProfileActivity.class);
         profileIntent.putExtra(Constants.RECEIVER_USER_ID, visitUserId);
         startActivity(profileIntent);
     }
 
+    /**
+     * The view holder class that extends {@link RecyclerView.ViewHolder}
+     * for {@link ExploreFragment} adapter.
+     */
     public static class ExploreViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView userName, userAbout;
