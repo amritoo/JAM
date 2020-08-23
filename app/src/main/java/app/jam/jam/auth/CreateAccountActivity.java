@@ -31,7 +31,9 @@ import java.util.Objects;
 import app.jam.jam.Manager;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
+import app.jam.jam.data.Message;
 import app.jam.jam.data.User;
+import app.jam.jam.online.OnlineChatActivity;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -254,6 +256,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * This method adds current user to {@link FirebaseDatabase}.
+     *
+     * @param currentUser current user instance
+     * @param user the user object to set in database
+     */
     private void addUserToDatabase(FirebaseUser currentUser, User user) {
         //update user database
         String currentUserID = currentUser.getUid();
@@ -276,6 +284,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     /**
      * This method adds the admin account to registered user's contact list.
+     * After success, it calls {@link CreateAccountActivity#sendAdminMessage(String)}
+     * with the {@code currentUserId} passed to this method.
+     *
+     * @param currentUserId the user id of newly registered user
      */
     private void addAdminContact(final String currentUserId) {
         mRootReference.child(Constants.ROOT_CONTACTS)
@@ -292,6 +304,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.i(TAG, "addAdminContact:successStage2");
+                                        sendAdminMessage(currentUserId);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -306,6 +319,57 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e(TAG, "addAdminContact:failureStage1", e);
+                    }
+                });
+    }
+
+    /**
+     * This method sends admin default message to newly registered user.
+     *
+     * @param currentUserId the user id of newly registered user
+     */
+    private void sendAdminMessage(final String currentUserId) {
+        final DatabaseReference messagesReference = mRootReference.child(Constants.ROOT_MESSAGES);
+        DatabaseReference userMessageKeyRef =
+                messagesReference.child(Constants.CHILD_ADMIN_USER_ID).child(currentUserId)
+                        .push();
+        final String messageID = userMessageKeyRef.getKey();
+        if (messageID == null) {
+            Log.e(TAG, "sendAdminMessage:messageId:null");
+            return;
+        }
+
+        final Message message = new Message(Constants.MESSAGE_TYPE_TEXT);
+        message.setFrom(Constants.CHILD_ADMIN_USER_ID);
+        message.setTo(currentUserId);
+        message.setBody(Constants.ADMIN_DEFAULT_MESSAGE);
+
+        messagesReference.child(Constants.CHILD_ADMIN_USER_ID).child(currentUserId)
+                .child(messageID).setValue(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i(TAG, "sendAdminMessage:successStage1");
+                        messagesReference.child(currentUserId).child(Constants.CHILD_ADMIN_USER_ID)
+                                .child(messageID).setValue(message)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.i(TAG, "sendAdminMessage:successStage2");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "sendAdminMessage:failureStage2", e);
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "sendAdminMessage:failureStage1", e);
                     }
                 });
     }
