@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -137,6 +138,13 @@ public class OnlineActivity extends AppCompatActivity {
 
     // Sets actions for tab layout and toolbar menu
     private void setActions() {
+        mCurrentUserImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfileActivity();
+            }
+        });
+
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -163,6 +171,9 @@ public class OnlineActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.online_requests:
+                        goToRequests();
+                        break;
                     case R.id.online_my_profile:
                         goToProfileActivity();
                         break;
@@ -174,6 +185,9 @@ public class OnlineActivity extends AppCompatActivity {
                         break;
                     case R.id.online_help:
                         goToHelpActivity();
+                        break;
+                    case R.id.online_about:
+                        goToAboutActivity();
                         break;
                     case R.id.online_logout:
                         new MaterialAlertDialogBuilder(OnlineActivity.this)
@@ -189,9 +203,6 @@ public class OnlineActivity extends AppCompatActivity {
                                 .setNeutralButton(R.string.button_text_no, null)
                                 .show();
                         break;
-                    case R.id.online_about:
-                        goToAboutActivity();
-                        break;
                     default:
                         return false;
                 }
@@ -201,38 +212,20 @@ public class OnlineActivity extends AppCompatActivity {
     }
 
     /**
-     * This methods logs out user and clears any login info if saved.
-     * Then it calls {@link OnlineActivity#goToLogin()}.
+     * For going from this activity, {@link OnlineActivity}, to {@link RequestsActivity}.
      */
-    private void logoutUser() {
-        // Clear login info
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.REMEMBER_ME, false);
-        editor.remove(Constants.PREFERENCE_EMAIL);
-        editor.remove(Constants.PREFERENCE_PASSWORD);
-        editor.apply();
-        mAuth.signOut();
-
-        Log.i(TAG, "logoutUser:success");
-        goToLogin();
-    }
-
-    /**
-     * For going from this activity, {@link OnlineActivity}, to {@link LoginActivity}.
-     */
-    private void goToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    private void goToRequests() {
+        Intent intent = new Intent(this, RequestsActivity.class);
         startActivity(intent);
-        finish();
     }
 
     /**
      * For going from this activity, {@link OnlineActivity}, to {@link ProfileActivity}.
+     * It passes current user id as string extra.
      */
     private void goToProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(Constants.RECEIVER_USER_ID, mCurrentUser.getUid());
         startActivity(intent);
     }
 
@@ -267,6 +260,34 @@ public class OnlineActivity extends AppCompatActivity {
     private void goToAboutActivity() {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * This methods logs out user and clears any login info if saved.
+     * Then it calls {@link OnlineActivity#goToLogin()}.
+     */
+    private void logoutUser() {
+        // Clear login info
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Constants.REMEMBER_ME, false);
+        editor.remove(Constants.PREFERENCE_EMAIL);
+        editor.remove(Constants.PREFERENCE_PASSWORD);
+        editor.apply();
+        mAuth.signOut();
+
+        Log.i(TAG, "logoutUser:success");
+        goToLogin();
+    }
+
+    /**
+     * For going from this activity, {@link OnlineActivity}, to {@link LoginActivity}.
+     */
+    private void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }
