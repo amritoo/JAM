@@ -1,11 +1,12 @@
 package app.jam.jam.data;
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
 import java.util.UUID;
 
-import app.jam.jam.offline.BluetoothChatService;
-
 /**
- * Defines several constants used between {@link BluetoothChatService} and the UI.
+ * Defines several constants used throughout the project.
  */
 public interface Constants {
 
@@ -25,13 +26,10 @@ public interface Constants {
     int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     int REQUEST_ENABLE_BT = 3;
 
-    int ONLINE_MENU_ID = 601;
-    int OFFLINE_MENU_ID = 795;
-
     /**
      * Return Intent extra
      */
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    String EXTRA_DEVICE_ADDRESS = "device_address";
 
     // Name for the SDP record when creating server socket
     String NAME_SECURE = "BluetoothChatSecure";
@@ -69,12 +67,41 @@ public interface Constants {
     String PASSWORD = "password";
     String REMEMBER_ME = "remember";
 
-    // Firebase paths. Very important! *** Don't change them **
+    /* Firebase paths. Very important! *** Don't change them *** */
+    /**
+     * Root child of all users in {@link FirebaseDatabase#getReference()}
+     */
     String ROOT_USERS = "users";
+    /**
+     * Root child of all friend requests in {@link FirebaseDatabase#getReference()}
+     */
+    String ROOT_REQUESTS = "friend_requests";
+    /**
+     * Root child of all contacts in {@link FirebaseDatabase#getReference()}
+     */
     String ROOT_CONTACTS = "contacts";
-    String ROOT_REQUESTS = "friendRequests";
+    /**
+     * Root child of all messages in {@link FirebaseDatabase#getReference()}
+     */
     String ROOT_MESSAGES = "messages";
-    String ROOT_PROFILE_IMAGE = "profileImages";
+    /**
+     * Root child of all users' profile images in {@link FirebaseStorage#getReference()}
+     */
+    String ROOT_PROFILE_IMAGES = "profile_images";
+    /**
+     * Root child of all users' profile images in {@link FirebaseStorage#getReference()}
+     */
+    String ROOT_IMAGES = "images";
+
+    /**
+     * The user id of admin user at {@link FirebaseDatabase#getReference()}
+     */
+    String CHILD_ADMIN_USER_ID = "CwcuHnHBGOPBqr7NddjbsEYFJCF3";
+    /**
+     * The message that will be sent to all users after successfully adding admin as contact.
+     */
+    String ADMIN_DEFAULT_MESSAGE = "Hello, you can give feedback here.";
+
     String CHILD_REQUEST_TYPE = "requestType";
     String CHILD_USERNAME = "userName";
     String CHILD_USER_ABOUT = "about";
@@ -84,9 +111,19 @@ public interface Constants {
     String CHILD_CONTACT = "contacts";
     String CHILD_CONTACT_SAVED = "saved";
     String MESSAGE_TYPE_TEXT = "text";
+    String MESSAGE_TYPE_IMAGE = "image";
+    String MESSAGE_SEEN_DEFAULT = "unseen";
+    String MESSAGE_SEEN = "seen";
 
     String RECEIVER_USER_ID = "receiver_user_id";
     String RECEIVER_USER_NAME = "receiver_username";
     String RECEIVER_USER_IMAGE = "receiver_user_image";
 
+    String CONNECTION_FLAG = "connection_type";
+    String CONNECTION_ONLINE = "online";
+    String CONNECTION_OFFLINE = "offline";
+
+    String LOGIN_TO_ONLINE = "from_login";
+
+    String START = "start";
 }

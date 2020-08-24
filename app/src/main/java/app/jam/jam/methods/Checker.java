@@ -1,4 +1,4 @@
-package app.jam.jam;
+package app.jam.jam.methods;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,7 +6,9 @@ import android.util.Patterns;
 
 import java.util.regex.Pattern;
 
-public class Manager {
+import app.jam.jam.R;
+
+public class Checker {
 
     /**
      * Checks for validity of an email address
