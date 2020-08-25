@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/button_padding_vertical"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_devices_found"
+        android:textAppearance="@android:style/TextAppearance.Material.WindowTitle" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/device_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_address"
+        android:layout_margin="@dimen/margin_tiny"
+        android:textStyle="italic"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+
+</LinearLayout>
