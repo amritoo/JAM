@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  All resources related to help activity  -->
+    <string name="question_1">Cannot create a new account?</string>
+    <string name="answer_1">Please check if you have already registered with this email. We only allow one account per email.</string>
+    <string name="question_2">Forgot your password?</string>
+    <string name="answer_2">Please select recover password option from ‘Sign In’ menu. After that follow the instruction provided there.</string>
+    <string name="question_3">Did not receive an email to recover password?</string>
+    <string name="answer_3">It takes some time for us to process your request. So, please try again and if after a few minutes you still don’t receive an email, please contact us.</string>
+    <string name="question_4">Can I only use offline mode?</string>
+    <string name="answer_4">Yes, you can.</string>
+
+
+
+    <string name="question_20">Why cannot offline mode find any new devices?</string>
+    <string name="answer_20">To find new devices, you need to give location permission.</string>
+    <string name="question_21">Why cannot offline mode connect?</string>
+    <string name="answer_21">Both you and the device you’re trying to connect must have same client, which is JAM app.\nAlso both devices need to try to connect at same time, which means that, if you are trying to connect to a device using offline chat, then receiver device needs to try to do the same.</string>
+
+
+    <string name="question_40">Can I help you to maintain this project?</string>
+    <string name="answer_40">Yes, you can. Simply go to https://github.com/amritoo/JAM and help us out. :)</string>
+
+</resources>

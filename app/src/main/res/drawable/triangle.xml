@@ -6,8 +6,10 @@
             android:pivotX="135%"
             android:pivotY="15%"
             android:toDegrees="45">
-            <shape android:shape="rectangle">
-                <solid android:color="@color/help_expand_icon_color" />
+            <shape
+                android:shape="rectangle"
+                android:tint="?attr/colorControlNormal">
+                <solid android:color="@android:color/white" />
             </shape>
         </rotate>
     </item>

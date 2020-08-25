@@ -20,7 +20,12 @@
     <dimen name="list_user_picture_size">72dp</dimen>
     <dimen name="margin_tiny">2dp</dimen>
     <dimen name="margin_medium">8dp</dimen>
-    <dimen name="chat_image_size">48dp</dimen>
+    <dimen name="chat_picture_size">48dp</dimen>
     <dimen name="message_text_size">20sp</dimen>
+    <dimen name="splash_logo_size">156dp</dimen>
+    <dimen name="message_image_size">256dp</dimen>
+    <dimen name="text_view_padding_horizontal">10dp</dimen>
+    <dimen name="text_view_padding_vertical">8dp</dimen>
+    <dimen name="image_view_padding">10dp</dimen>
 
 </resources>

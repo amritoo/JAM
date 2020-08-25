@@ -3,8 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".profile.ViewProfileActivity">
+
+    <!--  Toolbar  -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/view_profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/hint_username"
+            app:navigationIcon="@drawable/ic_close_24"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,18 +52,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_username"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/view_profile_username_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:minLines="@integer/min_lines"
-                    android:maxLines="@integer/username_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </LinearLayout>
 
             <!--  About  -->
@@ -62,18 +74,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_about"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/view_profile_about_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:minLines="@integer/min_lines"
-                    android:maxLines="@integer/about_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </LinearLayout>
 
             <!--  Work  -->
@@ -87,18 +96,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_work"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/view_profile_work_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:minLines="@integer/min_lines"
-                    android:maxLines="@integer/work_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </LinearLayout>
 
             <!--  Address  -->
@@ -112,18 +118,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_address"
-                    android:textSize="@dimen/subheading_text_size"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/view_profile_address_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:minLines="@integer/min_lines"
-                    android:maxLines="@integer/address_max_lines"
                     android:text="@string/placeholder_text_not_given"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,6 +141,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:paddingVertical="@dimen/button_padding_vertical"
+                    android:paddingHorizontal="@dimen/button_padding_horizontal"
                     android:text="@string/button_text_send_request" />
 
                 <!--  Cancel button button  -->
@@ -146,6 +151,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:paddingVertical="@dimen/button_padding_vertical"
+                    android:paddingHorizontal="@dimen/button_padding_horizontal"
                     android:text="@string/button_text_cancel_request" />
             </LinearLayout>
 

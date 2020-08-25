@@ -7,4 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--  Custom style for dialog  -->
+    <style name="Theme.Dialog.NoActionBar" parent="@style/Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+    </style>
+    
 </resources>

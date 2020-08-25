@@ -23,72 +23,81 @@
 
     <!--  Profile button  -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/profile_button"
+        android:id="@+id/settings_profile_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingHorizontal="@dimen/button_padding_horizontal"
+        android:paddingVertical="@dimen/button_padding_vertical"
         android:text="@string/button_text_profile"
         android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/black"
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Account"
-        android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
-    <LinearLayout
+    <!--  Theme Checkbox  -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:background="@color/colorAccent">
 
-        <TextView
-            android:id="@+id/textView_theme"
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_dark_theme"
-            android:textSize="@dimen/subheading_text_size"
+            android:layout_alignParentStart="true"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:text="@string/text_theme"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/theme_switch"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:textStyle="normal"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/theme_switch"
+            android:id="@+id/settings_theme_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_vertical_large"
-            android:text="@string/off"
-            app:layout_constraintStart_toEndOf="@id/textView_theme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            app:switchPadding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:text="@string/switch_text_light"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
 
+    <!--  Help button  -->
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_help_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:paddingHorizontal="@dimen/button_padding_horizontal"
+        android:paddingVertical="@dimen/button_padding_vertical"
         android:text="@string/menu_title_help"
+        android:textColor="@color/black"
         android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:backgroundTint="@color/colorAccent" />
 
+    <!--  Contact us button  -->
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_contact_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Share"
+        android:paddingHorizontal="@dimen/button_padding_horizontal"
+        android:paddingVertical="@dimen/button_padding_vertical"
+        android:text="@string/button_text_contact_us"
         android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        android:textColor="@color/black"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:backgroundTint="@color/colorAccent" />
 
 </LinearLayout>

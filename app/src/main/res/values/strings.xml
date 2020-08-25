@@ -9,13 +9,15 @@
 
     <!--  Toolbar/Title texts  -->
     <string name="title_text_create_account">Create account</string>
-    <string name="title_text_sign_in">Sign in</string>
+    <string name="title_text_sign_in">Signing in</string>
     <string name="title_text_forgot_password">Forgot your password?</string>
     <string name="title_text_reset_password">Reset password</string>
     <string name="title_text_change_password">Change password</string>
     <string name="title_text_profile">Profile</string>
     <string name="title_text_settings">Settings</string>
     <string name="title_text_confirmation">Confirmation</string>
+    <string name="title_text_about">About us</string>
+    <string name="title_text_help">Help</string>
 
     <!--  Button texts  -->
     <string name="button_text_ok">OK</string>
@@ -55,18 +57,23 @@
     <string name="help_login_password">Enter your account password</string>
     <string name="help_login_email">Enter your verified email address</string>
     <string name="help_offline_scan">Scan for devices to find your partner or make your device discoverable and he/she will be able to find you.</string>
+    <string name="help_username">User name must be at least 3 characters long</string>
+    <string name="help_create_email">Email address must be valid and not already registered</string>
+    <string name="help_create_password">Password must be at least 6 characters long (including one upper-case letter and number)</string>
+    <string name="snackbar_invalid_email">Email address must be valid</string>
+    <string name="help_password">Password is not valid</string>
 
-    <!--  Warning texts  -->
-    <string name="warning_username">User name must be at least 3 characters long</string>
-    <string name="warning_create_email">Email address must be valid and not already registered</string>
-    <string name="warning_create_password">Password must be at least 6 characters long (including one upper-case letter and number)</string>
-    <string name="warning_email">Email address must be valid</string>
-    <string name="warning_password">Password is not valid</string>
+    <!--  Error texts  -->
+    <string name="error_username">User name must be at least 3 characters long</string>
+    <string name="error_create_email">Email address must be valid and not already registered</string>
+    <string name="error_create_password">Password must be at least 6 characters long (including one upper-case letter and number)</string>
+    <string name="error_email">Email address must be valid</string>
+    <string name="error_password">Password is not valid</string>
 
     <!--  Message texts  -->
     <string name="message_recover_password">Don\'t worry. Just tell us the email address you registered with.</string>
     <string name="message_reset_password_email_check">We have sent a reset password email to\n<xliff:g id="email">%s</xliff:g>. Please click the reset password link to set your new password.</string>
-    <string name="message_bluetooth_disabled_exit">Bluetooth was not enabled. Leaving JAM.</string>
+    <string name="message_bluetooth_disabled_exit">Bluetooth was not enabled! Going back…</string>
     <string name="message_wait">Please wait…</string>
     <string name="message_create_account">Creating new account</string>
     <string name="message_change_password">Want to change your password? Then enter your new password.</string>
@@ -84,18 +91,20 @@
     <string name="status_connecting">Connecting…</string>
     <string name="status_connected">Connected</string>
     <string name="status_disconnected">Connected</string>
-    <string name="status_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
 
     <!--  Toast texts  -->
-    <string name="toast_login_success">Sign in successful.</string>
-    <string name="toast_login_failed">Could not sign in.</string>
-    <string name="toast_reset_password_failed">Password reset failed!</string>
+    <string name="toast_welcome_user">Welcome <xliff:g id="username">%1$s</xliff:g>.</string>
     <string name="toast_create_account_success">Account Created Successfully.</string>
-    <string name="toast_create_account_failed">Authentication failed!</string>
     <string name="toast_update_profile_success">Profile update successful</string>
-    <string name="toast_update_profile_failed">Could not update profile!</string>
+    <string name="toast_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="snackbar_update_profile_failed">Could not update profile!</string>
     <string name="toast_change_password_success">Password changed successfully</string>
-    <string name="toast_change_password_failed">Password change failed!</string>
+    <string name="snackbar_change_password_failed">Password change failed!</string>
+    <string name="toast_upload_image_success">Image uploaded</string>
+    <string name="snackbar_upload_image_failed">Failed image upload</string>
+    <string name="snackbar_reset_password_failed">Password reset failed!</string>
+    <string name="snackbar_login_failed">Could not sign in.</string>
+    <string name="snackbar_create_account_failed">Authentication failed!</string>
 
     <!--  Menu Titles  -->
     <string name="menu_title_online">Go online</string>
@@ -106,6 +115,7 @@
     <string name="menu_title_about">About us</string>
     <string name="menu_title_view_profile">View profile</string>
     <string name="menu_title_unfriend">Unfriend</string>
+    <string name="menu_title_my_profile">My profile</string>
 
     <!--  Content Description texts  -->
     <string name="content_text_user">User</string>
@@ -124,10 +134,42 @@
     <string name="off">OFF</string>
     <string name="on">ON</string>
     <string name="password_pattern_check">^(?=.*[A-Z])(?=.*\\d).+$</string>
-    <string name="text_dark_theme">Dark theme:</string>
+    <string name="text_theme">Theme:</string>
     <string name="button_image_selector">Image Selector</string>
     <string name="placeholder_text_not_given">Not given</string>
-    <string name="toast_upload_image_success">Image uploaded</string>
-    <string name="toast_upload_image_failed">Failed image upload</string>
+    <string name="placeholder_text_question">Question</string>
+    <string name="placeholder_text_answer">Answer</string>
+    <string name="button_text_retry">Retry</string>
+    <string name="message_logout_confirmation">Do you want to logout?</string>
+    <string name="button_text_yes">Yes</string>
+    <string name="button_text_no">No</string>
+    <string name="snackbar_message_send_failed">Couldn\'t send message!</string>
+    <string name="title_text_friend_requests">Friend requests</string>
+    <string name="title_text_done">Done</string>
+    <string name="title_text_select_picture">Select picture</string>
+    <string name="toast_chat_message_empty">First write your message…</string>
+    <string name="toast_unfriend_success">Contact removed!</string>
+    <string name="content_text_image">Image</string>
+    <string name="placeholder_receiver_message">Receiver message</string>
+    <string name="placeholder_sender_message">Sender message</string>
+    <string name="snackbar_unfriend_failed">Unfriend failed!</string>
+    <string name="content_text_seen">Seen</string>
+    <string name="friend_request_received_text">Wants to connect with you.</string>
+    <string name="friend_request_sent_text">you have sent a request to <xliff:g id="username">%1$s</xliff:g></string>
+    <string name="title_text_update_profile">Update Profile</string>
+    <string name="button_text_contact_us">Contact us</string>
+    <string name="switch_text_light">Light</string>
+    <string name="switch_text_dark">Dark</string>
+    <string name="title_text_contact_us">Contact us</string>
+    <string name="message_contact_us">You can give any feedback or review in JAM (Admin) listed in your contact. It\'s our default contact available to all. You can also reach us via email: jamapp1234@gmail.com.</string>
+    <string name="Toast_bluetooth_not_supported">Bluetooth is not supported in this device.</string>
+    <string name="toast_bluetooth_on_success">Bluetooth turned on successfully.</string>
+    <string name="toast_no_new_device_found">No new device found!</string>
+    <string name="toast_already_in_discoverable_mode">This device is already in discoverable mode.</string>
+    <string name="paired_and_discovered_devices_list">Paired and discovered devices list</string>
+    <string name="subtitle_not_connected">Not connected</string>
+    <string name="title_text_location_permisssion">Location permission</string>
+    <string name="meessage_location_access">This feature needs to access location permission to work correctly.</string>
+    <string name="title_text_updating">Updating profile</string>
 
 </resources>
