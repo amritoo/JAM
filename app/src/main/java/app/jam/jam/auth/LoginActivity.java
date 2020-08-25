@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-import app.jam.jam.Manager;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
+import app.jam.jam.methods.Checker;
 import app.jam.jam.offline.OfflineActivity;
 import app.jam.jam.online.OnlineActivity;
 
@@ -186,11 +185,11 @@ public class LoginActivity extends AppCompatActivity {
                 .getText().toString();
 
         // validity checking
-        if (!Manager.isValidEmail(email)) {
+        if (!Checker.isValidEmail(email)) {
             mEmailTextInputLayout.setError(getString(R.string.error_email));
             mEmailTextInputLayout.setErrorEnabled(true);
             return;
-        } else if (!Manager.isValidPassword(this, password)) {
+        } else if (!Checker.isValidPassword(this, password)) {
             mPasswordTextInputLayout.setError(getString(R.string.error_password));
             mPasswordTextInputLayout.setErrorEnabled(true);
             return;
@@ -278,12 +277,17 @@ public class LoginActivity extends AppCompatActivity {
                         final String userEmail = Objects
                                 .requireNonNull(textInputLayout.getEditText())
                                 .getText().toString();
-                        if (Manager.isValidEmail(userEmail)) {
+                        if (Checker.isValidEmail(userEmail)) {
                             passwordResetEmail(userEmail);
                         } else {
-                            textInputLayout.setError(getString(R.string.help_email));
-                            textInputLayout.setErrorEnabled(true);
-                            Toast.makeText(LoginActivity.this, R.string.help_email, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(mEmailTextInputLayout, R.string.snackbar_invalid_email, Snackbar.LENGTH_LONG)
+                                    .setAction(R.string.button_text_retry, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            startRecoverPassword();
+                                        }
+                                    })
+                                    .show();
                         }
                     }
                 })
