@@ -30,6 +30,7 @@ public interface Constants {
      * Return Intent extra
      */
     String EXTRA_DEVICE_ADDRESS = "device_address";
+    String EXTRA_DEVICE_NAME = "device_name";
 
     // Name for the SDP record when creating server socket
     String NAME_SECURE = "BluetoothChatSecure";
@@ -45,10 +46,8 @@ public interface Constants {
     int STATE_CONNECTING = 2; // now initiating an outgoing connection
     int STATE_CONNECTED = 3;  // now connected to a remote device
 
-    String TRUE = Boolean.TRUE.toString();
-    String FALSE = Boolean.FALSE.toString();
-
     long SPLASH_OUT_TIME = 3000;
+    long BLUETOOTH_DISCOVERABLE_TIME = 300;
 
 
     // Preference file name
@@ -97,10 +96,11 @@ public interface Constants {
      * The user id of admin user at {@link FirebaseDatabase#getReference()}
      */
     String CHILD_ADMIN_USER_ID = "CwcuHnHBGOPBqr7NddjbsEYFJCF3";
+
     /**
      * The message that will be sent to all users after successfully adding admin as contact.
      */
-    String ADMIN_DEFAULT_MESSAGE = "Hello, you can give feedback here.";
+    String ADMIN_DEFAULT_MESSAGE = "Hello!\nThis is JAM admin.\nYou can give any feedback or review here. You can also reach us via email: jamapp1234@gmail.com.";
 
     String CHILD_REQUEST_TYPE = "requestType";
     String CHILD_USERNAME = "userName";
@@ -110,6 +110,8 @@ public interface Constants {
     String CHILD_REQUEST_TYPE_RECEIVED = "received";
     String CHILD_CONTACT = "contacts";
     String CHILD_CONTACT_SAVED = "saved";
+    String CHILD_MESSAGE_SEEN = "seen";
+
     String MESSAGE_TYPE_TEXT = "text";
     String MESSAGE_TYPE_IMAGE = "image";
     String MESSAGE_SEEN_DEFAULT = "unseen";
@@ -126,4 +128,9 @@ public interface Constants {
     String LOGIN_TO_ONLINE = "from_login";
 
     String START = "start";
+
+    String CURRENT_THEME = "theme";
+
+    String TITLE_PAIRED = "Paired";
+
 }

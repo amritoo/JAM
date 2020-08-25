@@ -28,6 +28,7 @@ import java.util.Objects;
 
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
+import app.jam.jam.data.Contact;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -39,9 +40,10 @@ public class ContactsFragment extends Fragment {
 
     private String TAG = "Contacts";
 
+    private DatabaseReference mCurrentUserContactsReference, mUsersReference;
+
     private RecyclerView mContactsRecyclerView;
 
-    private DatabaseReference mCurrentUserContactsReference, mUsersReference;
     private String currentUserID;
 
     public ContactsFragment() {
@@ -69,15 +71,15 @@ public class ContactsFragment extends Fragment {
         // Inflate the layout for this fragment
         View mContactsView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
+
         mContactsRecyclerView = mContactsView.findViewById(R.id.contacts_recyclerView);
         mContactsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            currentUserID = mAuth.getCurrentUser().getUid();
+            currentUserID = currentUser.getUid();
         }
-
         mCurrentUserContactsReference = FirebaseDatabase.getInstance().getReference()
                 .child(Constants.ROOT_CONTACTS).child(currentUserID);
         mUsersReference = FirebaseDatabase.getInstance().getReference().child(Constants.ROOT_USERS);
@@ -89,15 +91,15 @@ public class ContactsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<String> options =
-                new FirebaseRecyclerOptions.Builder<String>()
-                        .setQuery(mCurrentUserContactsReference, String.class)
+        FirebaseRecyclerOptions<Contact> options =
+                new FirebaseRecyclerOptions.Builder<Contact>()
+                        .setQuery(mCurrentUserContactsReference, Contact.class)
                         .build();
 
-        FirebaseRecyclerAdapter<String, ContactsViewHolder> adapter =
-                new FirebaseRecyclerAdapter<String, ContactsViewHolder>(options) {
+        FirebaseRecyclerAdapter<Contact, ContactsViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Contact, ContactsViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull final String model) {
+                    protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull final Contact model) {
                         final String userId = Objects.requireNonNull(getRef(position).getKey());
                         mUsersReference.child(userId)
                                 .addValueEventListener(new ValueEventListener() {

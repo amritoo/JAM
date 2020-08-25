@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-import app.jam.jam.Manager;
+import app.jam.jam.methods.Checker;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.User;
@@ -55,13 +55,21 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         // For initializing and setting listener for all views
         initializeViews();
         setListeners();
 
-        String currentUserId = mCurrentUser.getUid();
+        String currentUserId = getIntent().getStringExtra(Constants.RECEIVER_USER_ID);
+        boolean flag = getIntent().getBooleanExtra(Constants.CURRENT_USER, false);
+        if (flag) {
+            mUpdateProfileButton.setVisibility(View.VISIBLE);
+            mChangePasswordButton.setVisibility(View.VISIBLE);
+            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert mCurrentUser != null;
+            currentUserId = mCurrentUser.getUid();
+        }
+
+        assert currentUserId != null;
         DatabaseReference mUsersReference = FirebaseDatabase.getInstance().getReference()
                 .child(Constants.ROOT_USERS).child(currentUserId);
         mUsersReference.addValueEventListener(new ValueEventListener() {
@@ -81,12 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        Intent intent = getIntent();
-        boolean flag = intent.getBooleanExtra(Constants.CURRENT_USER, false);
-        if (flag) {
-            mUpdateProfileButton.setVisibility(View.VISIBLE);
-            mChangePasswordButton.setVisibility(View.VISIBLE);
-        }
+
         super.onStart();
     }
 
@@ -171,7 +174,6 @@ public class ProfileActivity extends AppCompatActivity {
      * For change password option. This method creates and shows the dialog to enter new password.
      */
     private void startChangePassword() {
-        Toast.makeText(this, "Change password selected", Toast.LENGTH_SHORT).show();
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_change_password, null);
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.title_text_change_password)
@@ -184,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
                         final String newPassword = Objects
                                 .requireNonNull(textInputLayout.getEditText())
                                 .getText().toString();
-                        if (Manager.isValidPassword(ProfileActivity.this, newPassword)) {
+                        if (Checker.isValidPassword(ProfileActivity.this, newPassword)) {
                             changePassword(newPassword);
                         } else {
                             textInputLayout.setError(getString(R.string.help_create_password));
