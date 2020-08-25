@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!--  Sent message text view  -->
+    <ImageView
+        android:id="@+id/sender_message_textView_seen2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/sender_message_textView2"
+        android:layout_alignBottom="@id/sender_message_textView2"
+        android:src="@drawable/ic_check_24"
+        android:contentDescription="@string/content_text_seen"
+        android:visibility="gone" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sender_message_textView2"
+        android:layout_width="@dimen/message_image_size"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:text="@string/placeholder_sender_message"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:background="@drawable/message_mine_style"
+        android:visibility="gone"
+        tools:ignore="RelativeOverlap" />
+
+    <!--  Sent message image view  -->
+    <ImageView
+        android:id="@+id/sender_message_imageView_seen2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/sender_message_textView2"
+        android:layout_alignBottom="@id/sender_message_imageView2"
+        android:src="@drawable/ic_check_24"
+        android:contentDescription="@string/content_text_seen"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/sender_message_imageView2"
+        android:layout_width="@dimen/message_image_size"
+        android:layout_height="@dimen/message_image_size"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/image_view_padding"
+        android:background="@color/mine_message_background_color"
+        android:src="@drawable/ic_photo_24"
+        android:contentDescription="@string/content_text_image"
+        android:visibility="gone" />
+
+</RelativeLayout>
