@@ -28,12 +28,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-import app.jam.jam.Manager;
+import app.jam.jam.methods.Checker;
 import app.jam.jam.R;
+import app.jam.jam.methods.Cryptography;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.Message;
 import app.jam.jam.data.User;
-import app.jam.jam.online.OnlineChatActivity;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -166,15 +166,15 @@ public class CreateAccountActivity extends AppCompatActivity {
                 .getText().toString();
 
         // validating parameter data
-        if (!Manager.isValidUsername(this, username)) {
+        if (!Checker.isValidUsername(this, username)) {
             mUsername.setError(getString(R.string.error_username));
             mUsername.setErrorEnabled(true);
             return;
-        } else if (!Manager.isValidEmail(email)) {
+        } else if (!Checker.isValidEmail(email)) {
             mEmail.setError(getString(R.string.error_create_email));
             mEmail.setErrorEnabled(true);
             return;
-        } else if (!Manager.isValidPassword(this, password)) {
+        } else if (!Checker.isValidPassword(this, password)) {
             mPassword.setError(getString(R.string.error_create_password));
             mPassword.setErrorEnabled(true);
             return;
@@ -333,8 +333,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         DatabaseReference userMessageKeyRef =
                 messagesReference.child(Constants.CHILD_ADMIN_USER_ID).child(currentUserId)
                         .push();
-        final String messageID = userMessageKeyRef.getKey();
-        if (messageID == null) {
+        final String messageId = userMessageKeyRef.getKey();
+        if (messageId == null) {
             Log.e(TAG, "sendAdminMessage:messageId:null");
             return;
         }
@@ -342,16 +342,17 @@ public class CreateAccountActivity extends AppCompatActivity {
         final Message message = new Message(Constants.MESSAGE_TYPE_TEXT);
         message.setFrom(Constants.CHILD_ADMIN_USER_ID);
         message.setTo(currentUserId);
-        message.setBody(Constants.ADMIN_DEFAULT_MESSAGE);
+        message.setBody(Cryptography.encrypt(Constants.ADMIN_DEFAULT_MESSAGE));
+        message.setMessageId(messageId);
 
         messagesReference.child(Constants.CHILD_ADMIN_USER_ID).child(currentUserId)
-                .child(messageID).setValue(message)
+                .child(messageId).setValue(message)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i(TAG, "sendAdminMessage:successStage1");
                         messagesReference.child(currentUserId).child(Constants.CHILD_ADMIN_USER_ID)
-                                .child(messageID).setValue(message)
+                                .child(messageId).setValue(message)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
