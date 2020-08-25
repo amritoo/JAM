@@ -17,15 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            app:menu="@menu/menu_chat_options"
+            app:menu="@menu/online_chat_menu_options"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:navigationContentDescription="@string/content_text_back"
             style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/online_chat_imageView"
-                android:layout_width="@dimen/chat_image_size"
-                android:layout_height="@dimen/chat_image_size"
+                android:layout_width="@dimen/chat_picture_size"
+                android:layout_height="@dimen/chat_picture_size"
                 android:layout_marginVertical="@dimen/margin_tiny"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:cropToPadding="true"
@@ -42,15 +42,14 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--  Chat history list  -->
+    <!--  Conversation history list  -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/online_chat_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/chat_message" />
+        android:transcriptMode="normal" />
 
     <!--  Message type box  -->
     <LinearLayout
@@ -74,11 +73,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:minLines="1"
-            android:maxLines="3"
+            android:minLines="@integer/min_lines"
+            android:maxLines="@integer/message_max_lines"
+            android:layout_marginVertical="@dimen/margin_medium"
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:hint="@string/hint_type_message"
+            android:textColor="@color/black"
             android:inputType="textMultiLine"
             android:importantForAutofill="no"
             android:background="@drawable/edittext_round" />

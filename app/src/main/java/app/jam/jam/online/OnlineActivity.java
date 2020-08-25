@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-import app.jam.jam.AboutActivity;
+import app.jam.jam.about.AboutActivity;
 import app.jam.jam.R;
 import app.jam.jam.auth.LoginActivity;
 import app.jam.jam.data.Constants;
@@ -96,6 +96,7 @@ public class OnlineActivity extends AppCompatActivity {
                                             .getValue()).toString();
                             mTitleTextView.setText(mUserName);
                             if (getIntent().hasExtra(Constants.LOGIN_TO_ONLINE)) {
+                                getIntent().removeExtra(Constants.LOGIN_TO_ONLINE);
                                 Toast.makeText(OnlineActivity.this, getString(R.string.toast_welcome_user, mUserName), Toast.LENGTH_SHORT).show();
                             }
 
@@ -195,7 +196,7 @@ public class OnlineActivity extends AppCompatActivity {
                         new MaterialAlertDialogBuilder(OnlineActivity.this)
                                 .setTitle(R.string.title_text_confirmation)
                                 .setMessage(R.string.message_logout_confirmation)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setIcon(R.drawable.ic_warning_24)
                                 .setPositiveButton(R.string.button_text_yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
