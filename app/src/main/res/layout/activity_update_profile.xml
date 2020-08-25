@@ -9,7 +9,6 @@
 
     <!--  Toolbar  -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,7 +16,7 @@
             android:id="@+id/update_profile_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Update Profile"
+            app:title="@string/title_text_update_profile"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             style="@style/Widget.MaterialComponents.Toolbar.Primary" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,6 +47,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="@string/button_text_upload_picture"
                 style="@style/Widget.MaterialComponents.Button" />
+
             <!--  Username  -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/update_profile_username_textInputLayout"
@@ -57,8 +57,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:hint="@string/hint_username"
                 app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:hintTextColor="@color/black"
+                app:counterMaxLength="@integer/username_max_length"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -76,15 +75,14 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:hint="@string/hint_about"
                 app:counterEnabled="true"
-                app:counterMaxLength="200"
-                app:hintTextColor="@color/black"
+                app:counterMaxLength="@integer/about_max_length"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minLines="1"
-                    android:maxLines="5"
+                    android:minLines="@integer/min_lines"
+                    android:maxLines="@integer/about_max_lines"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,8 +95,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:hint="@string/hint_work"
                 app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:hintTextColor="@color/black"
+                app:counterMaxLength="@integer/work_max_length"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -116,8 +113,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:hint="@string/hint_address"
                 app:counterEnabled="true"
-                app:counterMaxLength="30"
-                app:hintTextColor="@color/black"
+                app:counterMaxLength="@integer/address_max_length"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -134,7 +130,6 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:hint="@string/hint_date_of_birth"
-                app:hintTextColor="@color/black"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText

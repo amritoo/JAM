@@ -2,7 +2,9 @@ package app.jam.jam.profile;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.States;
@@ -29,10 +34,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
+    /**
+     * Tag to use to {@link Log} messages
+     */
     private static final String TAG = "View Profile";
 
     private DatabaseReference mUsersReference, mRequestReference, mContactReference;
 
+    private MaterialToolbar mToolbar;
     private CircleImageView mProfileImageView;
     private MaterialTextView mUsernameTextView, mAboutTextView, mWorkTextView, mAddressTextView;
     private MaterialButton mRequestButton, mCancelButton;
@@ -42,6 +51,10 @@ public class ViewProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Make non-modal, so that others can receive touch events.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         setContentView(R.layout.activity_view_profile);
 
         // getting references from server
@@ -54,6 +67,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         if (mCurrentUser == null) {
             finishThisActivity();
         }
+        assert mCurrentUser != null;
         mCurrentUserId = mCurrentUser.getUid();
         mReceiverUserId = getIntent().getStringExtra(Constants.RECEIVER_USER_ID);
 
@@ -64,10 +78,15 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         // For managing request and setting buttons text accordingly
         manageRequests();
+    }
 
-        if (mCurrentUserId.equals(mReceiverUserId)) {
-            setButtonText(States.SELF);
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
+            finishThisActivity();
+            return true;
         }
+        return super.onTouchEvent(event);
     }
 
     // Retrieves receiver user data from server and set it to the view
@@ -107,6 +126,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     // For initializing views from layout
     private void initializeViews() {
+        mToolbar = findViewById(R.id.view_profile_toolbar);
         mProfileImageView = findViewById(R.id.view_profile_circleImage);
         mUsernameTextView = findViewById(R.id.view_profile_username_textView);
         mAboutTextView = findViewById(R.id.view_profile_about_textView);
@@ -119,6 +139,13 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     // For setting listeners to views
     private void setListeners() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishThisActivity();
+            }
+        });
+
         mRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,14 +339,19 @@ public class ViewProfileActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.hasChild(mReceiverUserId)) {
-                            String requestType = snapshot.child(mReceiverUserId).child(Constants.CHILD_REQUEST_TYPE).getValue().toString();
+                            String requestType = Objects
+                                    .requireNonNull(snapshot.child(mReceiverUserId)
+                                            .child(Constants.CHILD_REQUEST_TYPE).getValue()).toString();
                             if (requestType.equals(Constants.CHILD_REQUEST_TYPE_SENT)) {
                                 setButtonText(States.REQUEST_SENT);
                             } else if (requestType.equals(Constants.CHILD_REQUEST_TYPE_RECEIVED)) {
                                 setButtonText(States.REQUEST_RECEIVED);
+                            } else if (mCurrentUserId.equals(mReceiverUserId)) {
+                                setButtonText(States.SELF);
                             } else {
                                 setButtonText(States.NEW);
                             }
+
                         } else {
                             mContactReference.child(mCurrentUserId)
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -327,6 +359,8 @@ public class ViewProfileActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.hasChild(mReceiverUserId)) {
                                                 setButtonText(States.FRIEND);
+                                            } else if (mCurrentUserId.equals(mReceiverUserId)) {
+                                                setButtonText(States.SELF);
                                             } else {
                                                 setButtonText(States.NEW);
                                             }

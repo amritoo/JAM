@@ -1,5 +1,6 @@
 package app.jam.jam.profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,8 +37,8 @@ import java.util.Objects;
 
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
-import app.jam.jam.data.EditTextDatePicker;
 import app.jam.jam.data.User;
+import app.jam.jam.methods.EditTextDatePicker;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UpdateProfileActivity extends AppCompatActivity {
@@ -55,6 +56,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private CircleImageView mProfileImageView;
     private TextInputLayout mUsernameTextInputLayout, mAboutTextInputLayout, mWorkTextInputLayout, mAddressTextInputLayout, mBirthDateTextInputLayout;
     private MaterialButton mUpdateProfileButton, mUploadPictureButton;
+    private ProgressDialog mProgressDialog;
 
     private User mOldUser;
     private Uri mImageUri;
@@ -112,6 +114,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         mUpdateProfileButton = findViewById(R.id.update_profile_update_button);
         mUploadPictureButton = findViewById(R.id.update_picture_button);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setTitle(getString(R.string.title_text_updating));
+        mProgressDialog.setMessage(getString(R.string.message_wait));
+        mProgressDialog.setCanceledOnTouchOutside(true);
     }
 
     // Listeners for all views
@@ -159,6 +166,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         String birthDate = Objects
                 .requireNonNull(mBirthDateTextInputLayout.getEditText())
                 .getText().toString();
+        // TODO check length
 
         User user = new User();
         user.setUserName(username);
@@ -182,6 +190,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
      * @param uri the local file path to the image
      */
     private void uploadImageAndData(Uri uri, final User user) {
+        mProgressDialog.show();
         mProfileImageStorageReference.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -230,6 +239,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i(TAG, "updateData:success");
+                        mProgressDialog.hide();
                         Toast.makeText(UpdateProfileActivity.this, R.string.toast_update_profile_success, Toast.LENGTH_SHORT).show();
                         finishThisActivity();
                     }
@@ -309,7 +319,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private void selectPicture() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setActivityTitle(getString(R.string.title_text_select_profile_picture))
+                .setActivityTitle(getString(R.string.title_text_select_picture))
                 .setCropShape(CropImageView.CropShape.OVAL)
                 .setAspectRatio(1, 1)
                 .setCropMenuCropButtonTitle(getString(R.string.title_text_done))
