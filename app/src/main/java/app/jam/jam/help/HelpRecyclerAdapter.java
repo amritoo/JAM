@@ -47,6 +47,12 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
         final HelpItem item = data.get(position);
         holder.setIsRecyclable(false);
         holder.question_textView.setText(item.getQuestion());
+        holder.question_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickButton(holder.expandableLayout);
+            }
+        });
         holder.answer_textView.setText(item.getAnswer());
         holder.expandableLayout.setInRecyclerView(true);
         holder.expandableLayout.setExpanded(expandState.get(position));
