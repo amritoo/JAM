@@ -10,46 +10,74 @@
     <!--  AppBar  -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/offline_topAppBar"
             app:title="Username"
-            app:menu="@menu/menu_options"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+            app:menu="@menu/offline_menu_options"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--  Offline Buttons  -->
-    <include layout="@layout/offline_options" />
-
-    <TextView
-        android:id="@+id/title_paired_devices"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/subheading_paired_devices" />
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
 
-    <ListView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/scan_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="@string/help_offline_scan"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/scan_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/button_text_scan"
+                style="@style/Widget.MaterialComponents.Button" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/make_discoverable_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/button_text_make_discoverable"
+                style="@style/Widget.MaterialComponents.Button" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--  Devices list  -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/paired_and_discovered_devices_list"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/paired_devices"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        tools:listitem="@layout/list_item_format" />
-
-    <TextView
-        android:id="@+id/title_new_devices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/subheading_discovered_devices" />
-
-    <ListView
-        android:id="@+id/new_devices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        tools:listitem="@layout/list_item_format" />
+        tools:listitem="@layout/list_device_format" />
 
 </LinearLayout>

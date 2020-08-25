@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_settings"
+        android:id="@+id/offline_go_online"
+        android:title="@string/menu_title_online"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/offline_settings"
         android:title="@string/menu_title_settings"
         android:orderInCategory="2"
         app:showAsAction="never" />
     <item
-        android:id="@+id/item_help"
+        android:id="@+id/offline_help"
         android:title="@string/menu_title_help"
         android:orderInCategory="3"
         app:showAsAction="never" />
     <item
-        android:id="@+id/item_logout"
-        android:title="@string/menu_title_logout"
-        android:orderInCategory="4"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/item_about"
+        android:id="@+id/offline_about"
         android:title="@string/menu_title_about"
-        android:orderInCategory="5"
+        android:orderInCategory="4"
         app:showAsAction="never" />
 </menu>

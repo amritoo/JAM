@@ -5,13 +5,14 @@
     android:background="@color/colorAccent"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/scan_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:gravity="center"
-        android:text="@string/help_offline_scan" />
+        android:text="@string/help_offline_scan"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/button_text_scan"
-            style="@style/Widget.MaterialComponents.Button"/>
+            style="@style/Widget.MaterialComponents.Button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/make_discoverable_button"
@@ -34,8 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:text="@string/button_text_make_discoverable"
-            style="@style/Widget.MaterialComponents.Button"/>
-
+            style="@style/Widget.MaterialComponents.Button" />
     </LinearLayout>
 
 </LinearLayout>

@@ -13,22 +13,21 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/offline_chat_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/offline_chat_topAppBar"
-            app:title="Username"
+            app:title="@string/hint_username"
             style="@style/Widget.MaterialComponents.Toolbar.Primary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--  Chat history list  -->
-    <ListView
-        android:id="@+id/online_chat_messages"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/offline_chat_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/chat_message" />
+        android:transcriptMode="alwaysScroll" />
 
     <!--  Message type box  -->
     <LinearLayout
@@ -39,30 +38,32 @@
         android:background="@color/colorAccent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/online_chat_image_floatingButton"
+            android:id="@+id/offline_chat_image_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_image_selector"
             app:maxImageSize="35dp"
             app:srcCompat="@drawable/ic_photo_24"
+            android:visibility="gone"
             style="@style/Widget.MaterialComponents.Button.TextButton" />
 
         <EditText
-            android:id="@+id/online_chat_editText"
+            android:id="@+id/offline_chat_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:minLines="1"
-            android:maxLines="3"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:paddingHorizontal="@dimen/text_view_padding_horizontal"
+            android:paddingVertical="@dimen/text_view_padding_vertical"
             android:hint="@string/hint_type_message"
+            android:minLines="@integer/min_lines"
+            android:maxLines="@integer/message_max_lines"
             android:inputType="textMultiLine"
             android:importantForAutofill="no"
             android:background="@drawable/edittext_round" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/online_chat_send_floatingButton"
+            android:id="@+id/offline_chat_send_floatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/button_text_send"
