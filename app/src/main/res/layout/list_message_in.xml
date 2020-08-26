@@ -8,8 +8,9 @@
     <!--  Received message text view  -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/receiver_message_textView"
-        android:layout_width="@dimen/message_image_size"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="@dimen/message_image_size"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginVertical="@dimen/margin_tiny"
         android:layout_alignParentTop="true"
@@ -54,7 +55,7 @@
         android:layout_alignParentStart="true"
         android:padding="@dimen/image_view_padding"
         android:background="@color/their_message_background_color"
-        android:src="@drawable/ic_photo_24"
+        android:src="@drawable/ic_image_256"
         android:visibility="gone"
         android:contentDescription="@string/content_text_image" />
 

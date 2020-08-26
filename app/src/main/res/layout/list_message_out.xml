@@ -18,8 +18,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sender_message_textView"
-        android:layout_width="@dimen/message_image_size"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="@dimen/message_image_size"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginVertical="@dimen/margin_tiny"
         android:layout_alignParentTop="true"
@@ -67,7 +68,7 @@
         android:layout_alignParentEnd="true"
         android:padding="@dimen/image_view_padding"
         android:background="@color/mine_message_background_color"
-        android:src="@drawable/ic_photo_24"
+        android:src="@drawable/ic_image_256"
         android:contentDescription="@string/content_text_image"
         android:visibility="gone" />
 
