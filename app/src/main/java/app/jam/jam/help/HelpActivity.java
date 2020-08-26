@@ -47,14 +47,19 @@ public class HelpActivity extends AppCompatActivity {
      */
     private void initializeData() {
         mData = new ArrayList<>();
+
+        // Online help
         mData.add(new HelpItem(getString(R.string.question_1), getString(R.string.answer_1)));
         mData.add(new HelpItem(getString(R.string.question_2), getString(R.string.answer_2)));
         mData.add(new HelpItem(getString(R.string.question_3), getString(R.string.answer_3)));
         mData.add(new HelpItem(getString(R.string.question_4), getString(R.string.answer_4)));
 
+        // Offline help
         mData.add(new HelpItem(getString(R.string.question_20), getString(R.string.answer_20)));
         mData.add(new HelpItem(getString(R.string.question_21), getString(R.string.answer_21)));
+        mData.add(new HelpItem(getString(R.string.question_22), getString(R.string.answer_22)));
 
+        // Others
         mData.add(new HelpItem(getString(R.string.question_40), getString(R.string.answer_40)));
     }
 

@@ -9,14 +9,15 @@
     <string name="question_3">Did not receive an email to recover password?</string>
     <string name="answer_3">It takes some time for us to process your request. So, please try again and if after a few minutes you still don’t receive an email, please contact us.</string>
     <string name="question_4">Can I only use offline mode?</string>
-    <string name="answer_4">Yes, you can.</string>
-
+    <string name="answer_4">Yes, you can. However you won\'t get many of the functionalities that are only provided in online mode.</string>
 
 
     <string name="question_20">Why cannot offline mode find any new devices?</string>
     <string name="answer_20">To find new devices, you need to give location permission.</string>
     <string name="question_21">Why cannot offline mode connect?</string>
     <string name="answer_21">Both you and the device you’re trying to connect must have same client, which is JAM app.\nAlso both devices need to try to connect at same time, which means that, if you are trying to connect to a device using offline chat, then receiver device needs to try to do the same.</string>
+    <string name="question_22">Why does offline chat shows connected but does not show my messages in receiver device?</string>
+    <string name="answer_22">It\'s most likely because both devices did not connect to same channel. Try to go back an connect again.</string>
 
 
     <string name="question_40">Can I help you to maintain this project?</string>
