@@ -154,6 +154,8 @@ public class OfflineActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        startLocationPermission();
+
         Set<BluetoothDevice> mPairedDevicesSet = mBluetoothAdapter.getBondedDevices();
 
         // If there are paired devices, add each one to the ArrayAdapter

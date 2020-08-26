@@ -71,18 +71,21 @@ public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     public static class MessageInViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView receiverMessageTextView;
+        MaterialTextView receiverMessageTextView, receiverTimeTextView;
 
         public MessageInViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            receiverMessageTextView = itemView.findViewById(R.id.receiver_message_textView1);
+            receiverMessageTextView = itemView.findViewById(R.id.receiver_message_textView);
+            receiverTimeTextView = itemView.findViewById(R.id.receiver_time_textView1);
         }
 
         void bind(Message message) {
             receiverMessageTextView.setVisibility(View.VISIBLE);
+            receiverTimeTextView.setVisibility(View.VISIBLE);
             String text = Cryptography.decrypt(message.getBody());  // decrypting message
-            receiverMessageTextView.setText(String.format("%s\n\n%s - %s", text, message.getTime(), message.getDate()));
+            receiverMessageTextView.setText(text);
+            receiverTimeTextView.setText(String.format("%s - %s", message.getTime(), message.getDate()));
         }
 
     }
@@ -93,17 +96,20 @@ public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     public static class MessageOutViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView senderMessageTextView;
+        MaterialTextView senderMessageTextView, senderTimeTextView;
 
         public MessageOutViewHolder(@NonNull View itemView) {
             super(itemView);
-            senderMessageTextView = itemView.findViewById(R.id.sender_message_textView2);
+            senderMessageTextView = itemView.findViewById(R.id.sender_message_textView);
+            senderTimeTextView = itemView.findViewById(R.id.sender_time_textView1);
         }
 
         void bind(Message message) {
             senderMessageTextView.setVisibility(View.VISIBLE);
+            senderTimeTextView.setVisibility(View.VISIBLE);
             String text = Cryptography.decrypt(message.getBody());  // decrypting message
-            senderMessageTextView.setText(String.format("%s\n\n%s - %s", text, message.getTime(), message.getDate()));
+            senderMessageTextView.setText(text);
+            senderTimeTextView.setText(String.format("%s - %s", message.getTime(), message.getDate()));
         }
 
     }

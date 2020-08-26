@@ -30,11 +30,14 @@ import app.jam.jam.methods.Cryptography;
 
 public class OfflineChatActivity extends AppCompatActivity {
 
+    /**
+     * Tag to use in {@link Log}
+     */
     private static final String TAG = "BluetoothChatFragment";
 
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothChatService mChatService = null;
-    private int maxConnectionAttemptTimes = 5;
+    private boolean mAttemptConnection = false;
 
     private MaterialToolbar mToolbar;
     private RecyclerView mConversationView;
@@ -59,6 +62,15 @@ public class OfflineChatActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.message_bluetooth_disabled_exit, Toast.LENGTH_LONG).show();
             finishThisActivity();
         }
+// TODO
+//  offline can not connect... and showing too many toast
+//  message seen
+//  set message width
+//  use long to set message time
+//  dark appbar color
+//  chat bg color
+//  password change, take old password.
+//  notification
 
         // For initializing views
         initializeViews();
@@ -104,20 +116,28 @@ public class OfflineChatActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if (maxConnectionAttemptTimes > 0) {
-            if (maxConnectionAttemptTimes % 2 == 0) {
-                connectDevice(getIntent(), true);
-            } else {
-                connectDevice(getIntent(), false);
-            }
-            maxConnectionAttemptTimes--;
-        }
+        // Setting it to be infinitely trying
+        mAttemptConnection = true;
+        connectDevice(getIntent(), false);
+        //        if (maxConnectionAttemptTimes > 0) {
+//            if (maxConnectionAttemptTimes % 2 == 0) {
+//                connectDevice(getIntent(), true);
+//            } else {
+//                connectDevice(getIntent(), false);
+//            }
+//            maxConnectionAttemptTimes--;
 
         if (mChatService != null) {
             if (mChatService.getState() == Constants.STATE_NONE) {
                 mChatService.start();
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAttemptConnection = false;
     }
 
     @Override
@@ -184,24 +204,31 @@ public class OfflineChatActivity extends AppCompatActivity {
     /**
      * The Handler that gets information back from the BluetoothChatService
      */
-    private final Handler mHandler = new Handler(Objects.requireNonNull(Looper.myLooper())) {
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(android.os.Message msg) {
+        public synchronized void handleMessage(android.os.Message msg) {
+            if (mChatService.getState() == Constants.STATE_CONNECTED) {
+                mAttemptConnection = false;
+            }
             switch (msg.what) {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case Constants.STATE_CONNECTED:
+                            mAttemptConnection = false;
                             setStatus(R.string.status_connected);
                             break;
-                        case Constants.STATE_CONNECTING:
-                            setStatus(R.string.status_connecting);
-                            break;
-                        case Constants.STATE_LISTEN:
                         case Constants.STATE_NONE:
-                            setStatus(R.string.subtitle_not_connected);
+                        case Constants.STATE_LISTEN:
+                        case Constants.STATE_CONNECTING:
+                            if (mAttemptConnection) {
+                                setStatus(R.string.status_connecting);
+                            } else {
+                                setStatus(R.string.subtitle_not_connected);
+                            }
                             break;
                     }
                     break;
+
                 case Constants.MESSAGE_WRITE:
                     byte[] writeBuf = (byte[]) msg.obj;
                     String writeMessage = new String(writeBuf);
@@ -210,9 +237,14 @@ public class OfflineChatActivity extends AppCompatActivity {
                     message.setTo(mConnectedDeviceAddress);
                     message.setFrom("");
 
+                    mConversationView.smoothScrollToPosition(
+                            Objects.requireNonNull(mConversationView.getAdapter())
+                                    .getItemCount());
+
                     allMessageList.add(message);
                     mChatAdapter.notifyDataSetChanged();
                     break;
+
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
@@ -223,7 +255,12 @@ public class OfflineChatActivity extends AppCompatActivity {
 
                     allMessageList.add(message);
                     mChatAdapter.notifyDataSetChanged();
+
+                    mConversationView.smoothScrollToPosition(
+                            Objects.requireNonNull(mConversationView.getAdapter())
+                                    .getItemCount());
                     break;
+
                 case Constants.MESSAGE_DEVICE_NAME:
                     String mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
                     Toast.makeText(OfflineChatActivity.this, getString(R.string.toast_connected_to, mConnectedDeviceName), Toast.LENGTH_SHORT).show();
@@ -231,13 +268,20 @@ public class OfflineChatActivity extends AppCompatActivity {
                         mToolbar.setTitle(mConnectedDeviceName);
                     break;
                 case Constants.MESSAGE_TOAST:
-                    if (maxConnectionAttemptTimes > 0) {
-                        if (maxConnectionAttemptTimes % 2 == 0) {
-                            connectDevice(getIntent(), true);
-                        } else {
-                            connectDevice(getIntent(), false);
-                        }
-                        maxConnectionAttemptTimes--;
+                    if (mAttemptConnection && mChatService.getState() != Constants.STATE_CONNECTED) {
+                        //if (maxConnectionAttemptTimes % 2 == 0) {
+                        //    connectDevice(getIntent(), true);
+                        //    // maxConnectionAttemptTimes--;
+                        //} else {
+                        // maxConnectionAttemptTimes++;
+                        //}
+                        Handler handler = new Handler(getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                connectDevice(getIntent(), false);
+                            }
+                        }, Constants.CONNECTION_OUT_TIME);
                     } else {
                         Toast.makeText(OfflineChatActivity.this, msg.getData().getString(Constants.TOAST), Toast.LENGTH_SHORT).show();
                     }
@@ -261,7 +305,7 @@ public class OfflineChatActivity extends AppCompatActivity {
      * @param data   An {@link Intent} with {@link Constants#EXTRA_DEVICE_ADDRESS} extra.
      * @param secure Socket Security type - Secure (true) , Insecure (false)
      */
-    private void connectDevice(Intent data, boolean secure) {
+    private synchronized void connectDevice(Intent data, boolean secure) {
         Bundle extras = data.getExtras();
         if (extras == null) {
             return;
@@ -271,7 +315,6 @@ public class OfflineChatActivity extends AppCompatActivity {
         if (device.getName() != null) {
             mToolbar.setTitle(device.getName());
         }
-
         // Attempt to connect to the device
         mChatService.connect(device, secure);
     }
