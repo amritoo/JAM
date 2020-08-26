@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,15 +63,6 @@ public class OfflineChatActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.message_bluetooth_disabled_exit, Toast.LENGTH_LONG).show();
             finishThisActivity();
         }
-// TODO
-//  offline can not connect... and showing too many toast
-//  message seen
-//  set message width
-//  use long to set message time
-//  dark appbar color
-//  chat bg color
-//  password change, take old password.
-//  notification
 
         // For initializing views
         initializeViews();
@@ -206,7 +198,7 @@ public class OfflineChatActivity extends AppCompatActivity {
      */
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
-        public synchronized void handleMessage(android.os.Message msg) {
+        public synchronized void handleMessage(@NonNull android.os.Message msg) {
             if (mChatService.getState() == Constants.STATE_CONNECTED) {
                 mAttemptConnection = false;
             }
