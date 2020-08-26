@@ -2,15 +2,19 @@
 <resources>
 
     <!--  All strings related to about us activity  -->
-    <string name="about_project">This is JAM project. We created this as our second year project.</string>
+    <string name="about_project">This is JAM project. We created this project for our second year Java course.</string>
+    <string name="subtitle_tem_members">Team members</string>
+
     <string name="about_first_member_name">Amrito Das Tipu</string>
     <string name="about_first_member_title">Project Lead and Developer</string>
-    <string name="about_first_member_message">Currently studying CSE at HSTU.</string>
+    <string name="about_first_member_message">Hi, I\'m am currently studying CSE at HSTU. Developing this project was so much fun and I learned a lot. I also like to think that good code is like an art.</string>
+
     <string name="about_second_member_name">Jannatul Ferdouse</string>
     <string name="about_second_member_title">Developer</string>
-    <string name="about_second_member_message">None given</string>
+    <string name="about_second_member_message">This is Jannatul Ferdouse, undergraduate student at CSE department of HSTU. From my passion I have taken this project as a challenge to do develop something great.</string>
+
     <string name="about_third_member_name">Md Mahadi Hasan</string>
     <string name="about_third_member_title">Tester</string>
-    <string name="about_third_member_message">None given</string>
+    <string name="about_third_member_message">This is Mahadi Hasan, undergraduate student at CSE department of HSTU. In this project I was a cooperative member. From my passion I have taken this as a challenge to get bright performance.</string>
 
 </resources>

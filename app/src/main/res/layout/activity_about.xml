@@ -40,6 +40,15 @@
                 android:text="@string/about_project"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                android:text="@string/subtitle_tem_members"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
             <!--  About first member  -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +60,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/profile_image" />
+                    android:src="@drawable/picture_member_1" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -89,7 +98,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/profile_image" />
+                    android:src="@drawable/picture_member_2" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -127,7 +136,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/profile_image" />
+                    android:src="@drawable/picture_member_3" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
