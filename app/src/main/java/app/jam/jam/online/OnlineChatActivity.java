@@ -76,6 +76,7 @@ public class OnlineChatActivity extends AppCompatActivity {
     private Map<String, Integer> messageIdPositionMap;
     private int count;
     private OnlineChatAdapter mOnlineChatAdapter;
+    private boolean mConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +138,9 @@ public class OnlineChatActivity extends AppCompatActivity {
                             messageIdPositionMap.put(message.getMessageId(), count);
                             count++;
                             messageList.add(message);
-                            mOnlineChatAdapter.notifyDataSetChanged();
+                            if (mConnected) {
+                                mOnlineChatAdapter.notifyItemInserted(messageList.size() - 1);
+                            }
                             mConversationView.smoothScrollToPosition(
                                     Objects.requireNonNull(mConversationView.getAdapter())
                                             .getItemCount());
@@ -164,6 +167,18 @@ public class OnlineChatActivity extends AppCompatActivity {
                         Log.e(TAG, "addChildEventListener:onCancelled", error.toException());
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mConnected = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mConnected = false;
     }
 
     private void initializeViews() {
