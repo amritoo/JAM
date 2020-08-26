@@ -140,10 +140,10 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         void bind(Message message) {
+            String text = Cryptography.decrypt(message.getBody());// decrypting message
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 receiverMessageTextView.setVisibility(View.VISIBLE);
                 receiverTimeTextView1.setVisibility(View.VISIBLE);
-                String text = Cryptography.decrypt(message.getBody());  // decrypting message
                 receiverMessageTextView.setText(text);
                 receiverTimeTextView1.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 // update seen status
@@ -154,10 +154,9 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 receiverTextSeen.setVisibility(View.VISIBLE);
             } else {
                 receiverImageView.setVisibility(View.VISIBLE);
-                String uri = Cryptography.decrypt(message.getBody());   // decrypting message
-                Picasso.get().load(uri).placeholder(R.drawable.ic_photo_24).into(receiverImageView);
-                receiverTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 receiverTimeTextView2.setVisibility(View.VISIBLE);
+                Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(receiverImageView);
+                receiverTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 // update seen status
                 if (message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
                     message.setSeen(Constants.MESSAGE_SEEN);
@@ -193,10 +192,10 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         void bind(Message message) {
+            String text = Cryptography.decrypt(message.getBody());// decrypting message
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 senderMessageTextView.setVisibility(View.VISIBLE);
                 senderTimeTextView1.setVisibility(View.VISIBLE);
-                String text = Cryptography.decrypt(message.getBody());  // decrypting message
                 senderMessageTextView.setText(text);
                 senderTimeTextView1.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
@@ -205,8 +204,7 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 senderImageView.setVisibility(View.VISIBLE);
                 senderTimeTextView2.setVisibility(View.VISIBLE);
-                String uri = Cryptography.decrypt(message.getBody());   // decrypting message
-                Picasso.get().load(uri).placeholder(R.drawable.ic_photo_24).into(senderImageView);
+                Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(senderImageView);
                 senderTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT))
                     senderImageSeen.setVisibility(View.VISIBLE);

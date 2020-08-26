@@ -141,9 +141,7 @@ public class OnlineChatActivity extends AppCompatActivity {
                             if (mConnected) {
                                 mOnlineChatAdapter.notifyItemInserted(messageList.size() - 1);
                             }
-                            mConversationView.smoothScrollToPosition(
-                                    Objects.requireNonNull(mConversationView.getAdapter())
-                                            .getItemCount());
+                            mConversationView.smoothScrollToPosition(mOnlineChatAdapter.getItemCount());
                         }
                     }
 
