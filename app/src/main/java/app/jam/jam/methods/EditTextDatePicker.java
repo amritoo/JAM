@@ -40,12 +40,13 @@ public class EditTextDatePicker implements OnClickListener, OnDateSetListener {
     @Override
     public void onClick(View v) {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        new DatePickerDialog(context,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                 this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH))
-                .show();
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 
     /**

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -73,9 +71,6 @@ public class OnlineChatActivity extends AppCompatActivity {
     private DatabaseReference mMessagesReference;
     private StorageReference mImageStorageReference;
     private String mReceiverID, mReceiverName, mReceiverImage, mCurrentUserId;
-
-
-    private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
 
     private List<Message> messageList;
     private Map<String, Integer> messageIdPositionMap;
@@ -169,34 +164,6 @@ public class OnlineChatActivity extends AppCompatActivity {
                         Log.e(TAG, "addChildEventListener:onCancelled", error.toException());
                     }
                 });
-    }
-
-    /**
-     * The view holder class that extends {@link RecyclerView.ViewHolder}
-     * for {@link OnlineChatAdapter}.
-     */
-    public static class MessageViewHolder extends RecyclerView.ViewHolder {
-
-        MaterialTextView senderMessageTextView, receiverMessageTextView;
-        ImageView senderImageView, receiverImageView;
-        ImageView senderTextSeen, senderImageSeen, receiverTextSeen, receiverImageSeen;
-
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            senderMessageTextView = itemView.findViewById(R.id.sender_message_textView);
-            senderTextSeen = itemView.findViewById(R.id.sender_message_textView_seen);
-
-            receiverMessageTextView = itemView.findViewById(R.id.receiver_message_textView);
-            receiverTextSeen = itemView.findViewById(R.id.receiver_message_textView_seen);
-
-            senderImageView = itemView.findViewById(R.id.sender_message_imageView);
-            senderImageSeen = itemView.findViewById(R.id.sender_message_imageView_seen);
-
-            receiverImageView = itemView.findViewById(R.id.receiver_message_imageView);
-            receiverImageSeen = itemView.findViewById(R.id.receiver_message_imageView_seen);
-        }
-
     }
 
     private void initializeViews() {
@@ -397,7 +364,7 @@ public class OnlineChatActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
-                        mImageStorageReference.getDownloadUrl()
+                        mImageStorageReference.child(messageName).getDownloadUrl()
                                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {

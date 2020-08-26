@@ -7,20 +7,21 @@
 
     <!--  Sent message text view  -->
     <ImageView
-        android:id="@+id/sender_message_textView_seen2"
+        android:id="@+id/sender_message_textView_seen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/sender_message_textView2"
-        android:layout_alignBottom="@id/sender_message_textView2"
+        android:layout_toStartOf="@id/sender_message_textView"
+        android:layout_alignBottom="@id/sender_message_textView"
         android:src="@drawable/ic_check_24"
         android:contentDescription="@string/content_text_seen"
         android:visibility="gone" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/sender_message_textView2"
+        android:id="@+id/sender_message_textView"
         android:layout_width="@dimen/message_image_size"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_tiny"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:paddingHorizontal="10dp"
@@ -32,21 +33,36 @@
         android:visibility="gone"
         tools:ignore="RelativeOverlap" />
 
-    <!--  Sent message image view  -->
-    <ImageView
-        android:id="@+id/sender_message_imageView_seen2"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sender_time_textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/sender_message_textView2"
-        android:layout_alignBottom="@id/sender_message_imageView2"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_tiny"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/sender_message_textView"
+        android:text="@string/placeholder_sender_message"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:visibility="gone"
+        tools:ignore="RelativeOverlap" />
+
+    <!--  Sent message image view  -->
+    <ImageView
+        android:id="@+id/sender_message_imageView_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/sender_message_textView"
+        android:layout_alignBottom="@id/sender_message_imageView"
         android:src="@drawable/ic_check_24"
         android:contentDescription="@string/content_text_seen"
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/sender_message_imageView2"
+        android:id="@+id/sender_message_imageView"
         android:layout_width="@dimen/message_image_size"
         android:layout_height="@dimen/message_image_size"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_tiny"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:padding="@dimen/image_view_padding"
@@ -54,5 +70,19 @@
         android:src="@drawable/ic_photo_24"
         android:contentDescription="@string/content_text_image"
         android:visibility="gone" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sender_time_textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_tiny"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/sender_message_imageView"
+        android:text="@string/placeholder_sender_message"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:visibility="gone"
+        tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

@@ -47,6 +47,7 @@ public interface Constants {
     int STATE_CONNECTED = 3;  // now connected to a remote device
 
     long SPLASH_OUT_TIME = 3000;
+    long CONNECTION_OUT_TIME = 300;
     long BLUETOOTH_DISCOVERABLE_TIME = 300;
 
 
@@ -100,7 +101,7 @@ public interface Constants {
     /**
      * The message that will be sent to all users after successfully adding admin as contact.
      */
-    String ADMIN_DEFAULT_MESSAGE = "Hello!\nThis is JAM admin.\nYou can give any feedback or review here. You can also reach us via email: jamapp1234@gmail.com.";
+    String ADMIN_DEFAULT_MESSAGE = "Hello!\nThis is JAM admin.\nYou can give any feedback or review here. You can also reach us via email:\njamapp1234@gmail.com.";
 
     String CHILD_REQUEST_TYPE = "requestType";
     String CHILD_USERNAME = "userName";

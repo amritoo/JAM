@@ -123,25 +123,29 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      */
     public static class MessageInViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView receiverMessageTextView;
+        MaterialTextView receiverMessageTextView, receiverTimeTextView1, receiverTimeTextView2;
         ImageView receiverImageView;
         ImageView receiverTextSeen, receiverImageSeen;
 
         public MessageInViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            receiverMessageTextView = itemView.findViewById(R.id.receiver_message_textView1);
-            receiverTextSeen = itemView.findViewById(R.id.receiver_message_textView_seen1);
+            receiverMessageTextView = itemView.findViewById(R.id.receiver_message_textView);
+            receiverTextSeen = itemView.findViewById(R.id.receiver_message_textView_seen);
+            receiverTimeTextView1 = itemView.findViewById(R.id.receiver_time_textView1);
 
-            receiverImageView = itemView.findViewById(R.id.receiver_message_imageView1);
-            receiverImageSeen = itemView.findViewById(R.id.receiver_message_imageView_seen1);
+            receiverImageView = itemView.findViewById(R.id.receiver_message_imageView);
+            receiverImageSeen = itemView.findViewById(R.id.receiver_message_imageView_seen);
+            receiverTimeTextView2 = itemView.findViewById(R.id.receiver_time_textView2);
         }
 
         void bind(Message message) {
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 receiverMessageTextView.setVisibility(View.VISIBLE);
+                receiverTimeTextView1.setVisibility(View.VISIBLE);
                 String text = Cryptography.decrypt(message.getBody());  // decrypting message
-                receiverMessageTextView.setText(String.format("%s\n\n%s - %s", text, message.getTime(), message.getDate()));
+                receiverMessageTextView.setText(text);
+                receiverTimeTextView1.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 // update seen status
                 if (message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
                     message.setSeen(Constants.MESSAGE_SEEN);
@@ -152,6 +156,8 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 receiverImageView.setVisibility(View.VISIBLE);
                 String uri = Cryptography.decrypt(message.getBody());   // decrypting message
                 Picasso.get().load(uri).placeholder(R.drawable.ic_photo_24).into(receiverImageView);
+                receiverTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
+                receiverTimeTextView2.setVisibility(View.VISIBLE);
                 // update seen status
                 if (message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
                     message.setSeen(Constants.MESSAGE_SEEN);
@@ -169,32 +175,39 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      */
     public static class MessageOutViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView senderMessageTextView;
+        MaterialTextView senderMessageTextView, senderTimeTextView1, senderTimeTextView2;
         ImageView senderImageView;
         ImageView senderTextSeen, senderImageSeen;
 
         public MessageOutViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            senderMessageTextView = itemView.findViewById(R.id.sender_message_textView2);
-            senderTextSeen = itemView.findViewById(R.id.sender_message_textView_seen2);
+            senderMessageTextView = itemView.findViewById(R.id.sender_message_textView);
+            senderTextSeen = itemView.findViewById(R.id.sender_message_textView_seen);
+            senderTimeTextView1 = itemView.findViewById(R.id.sender_time_textView1);
 
-            senderImageView = itemView.findViewById(R.id.sender_message_imageView2);
-            senderImageSeen = itemView.findViewById(R.id.sender_message_imageView_seen2);
+            senderImageView = itemView.findViewById(R.id.sender_message_imageView);
+            senderImageSeen = itemView.findViewById(R.id.sender_message_imageView_seen);
+            senderTimeTextView2 = itemView.findViewById(R.id.sender_time_textView2);
         }
 
 
         void bind(Message message) {
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 senderMessageTextView.setVisibility(View.VISIBLE);
+                senderTimeTextView1.setVisibility(View.VISIBLE);
                 String text = Cryptography.decrypt(message.getBody());  // decrypting message
-                senderMessageTextView.setText(String.format("%s\n\n%s - %s", text, message.getTime(), message.getDate()));
-                if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT))
+                senderMessageTextView.setText(text);
+                senderTimeTextView1.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
+                if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
                     senderTextSeen.setVisibility(View.VISIBLE);
+                }
             } else {
                 senderImageView.setVisibility(View.VISIBLE);
+                senderTimeTextView2.setVisibility(View.VISIBLE);
                 String uri = Cryptography.decrypt(message.getBody());   // decrypting message
                 Picasso.get().load(uri).placeholder(R.drawable.ic_photo_24).into(senderImageView);
+                senderTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT))
                     senderImageSeen.setVisibility(View.VISIBLE);
             }
