@@ -10,10 +10,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-<!--    <uses-feature-->
-<!--        android:name="android.hardware.bluetooth_le"-->
-<!--        android:required="false" />-->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
         <!-- Main -->
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -28,25 +25,42 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Authentication -->
+        </activity>
+        
+        <!-- Authentication -->
         <activity android:name=".auth.LoginActivity" />
-        <activity android:name=".auth.CreateAccountActivity" /> <!-- Online -->
+        <activity android:name=".auth.CreateAccountActivity" />
+        
+        <!-- Online -->
         <activity android:name=".online.OnlineActivity" />
         <activity android:name=".online.OnlineChatActivity" />
-        <activity android:name=".online.RequestsActivity" /> <!-- Offline -->
+        <activity android:name=".online.RequestsActivity" />
+        
+        <!-- Offline -->
         <activity android:name=".offline.OfflineActivity" />
-        <activity android:name=".offline.OfflineChatActivity" /> <!-- Profile -->
+        <activity android:name=".offline.OfflineChatActivity" />
+        
+        <!-- Profile -->
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.UpdateProfileActivity" />
         <activity
             android:name=".profile.ViewProfileActivity"
-            android:theme="@style/Theme.Dialog.NoActionBar" /> <!-- Settings -->
-        <activity android:name=".settings.SettingsActivity" /> <!-- Help -->
-        <activity android:name=".help.HelpActivity" /> <!-- About -->
-        <activity android:name=".about.AboutActivity" /> <!-- optional (needed if default theme has no action bar) -->
+            android:theme="@style/Theme.Dialog.NoActionBar" /> <!-- To make this activity appear as a dialog -->
+        
+        <!-- Settings -->
+        <activity android:name=".settings.SettingsActivity" />
+        
+        <!-- Help -->
+        <activity android:name=".help.HelpActivity" />
+        
+        <!-- About -->
+        <activity android:name=".about.AboutActivity" />
+        
+        <!-- For image cropping -->
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
+        
     </application>
 
 </manifest>
