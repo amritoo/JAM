@@ -38,7 +38,7 @@ public class RequestsActivity extends AppCompatActivity {
     /**
      * Tag to use to {@link Log} messages
      */
-    private String TAG = "Friend Requests";
+    private String TAG = "Requests";
 
     private DatabaseReference mRequestsReference, mUsersReference;
 

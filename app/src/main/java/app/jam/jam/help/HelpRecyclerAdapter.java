@@ -20,6 +20,7 @@ import com.github.aakira.expandablelayout.Utils;
 import java.util.List;
 
 import app.jam.jam.R;
+import app.jam.jam.data.Constants;
 import app.jam.jam.data.HelpItem;
 
 public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapter.HelpViewHolder> {
@@ -46,6 +47,7 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
     public void onBindViewHolder(final HelpViewHolder holder, final int position) {
         final HelpItem item = data.get(position);
         holder.setIsRecyclable(false);
+        // Setting data
         holder.question_textView.setText(item.getQuestion());
         holder.question_textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +56,7 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
             }
         });
         holder.answer_textView.setText(item.getAnswer());
+        // Setting expandable view
         holder.expandableLayout.setInRecyclerView(true);
         holder.expandableLayout.setExpanded(expandState.get(position));
         holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
@@ -90,7 +93,7 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
 
     public ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
-        animator.setDuration(300);  // animation duration
+        animator.setDuration(Constants.HELP_TOGGLE_ANIMATION_DURATION);  // animation duration
         animator.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
         return animator;
     }

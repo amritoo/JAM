@@ -30,8 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-import app.jam.jam.about.AboutActivity;
 import app.jam.jam.R;
+import app.jam.jam.about.AboutActivity;
 import app.jam.jam.auth.LoginActivity;
 import app.jam.jam.data.Constants;
 import app.jam.jam.help.HelpActivity;
@@ -161,12 +161,12 @@ public class OnlineActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                // Do nothing
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                // Do nothing
             }
         });
 

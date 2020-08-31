@@ -108,7 +108,7 @@ public class ContactsFragment extends Fragment {
                                         if (snapshot.exists()) {
                                             final String userName = Objects.requireNonNull(snapshot.child(Constants.CHILD_USERNAME)
                                                     .getValue()).toString();
-                                            String userAbout = getString(R.string.placeholder_text_not_given);
+                                            String userAbout = "";
                                             String userImage = Constants.RECEIVER_USER_IMAGE;
                                             if (snapshot.hasChild(Constants.CHILD_USER_ABOUT)) {
                                                 userAbout = Objects.requireNonNull(snapshot.child(Constants.CHILD_USER_ABOUT)
@@ -119,6 +119,7 @@ public class ContactsFragment extends Fragment {
                                                         .getValue()).toString();
                                                 Picasso.get().load(userImage).placeholder(R.drawable.profile_image).into(holder.userPicture);
                                             }
+                                            holder.setIsRecyclable(false);
                                             holder.userName.setText(userName);
                                             holder.userAbout.setText(userAbout);
 

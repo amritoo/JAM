@@ -6,14 +6,14 @@
     android:orientation="horizontal">
 
     <!--  Sent message text view  -->
-    <ImageView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sender_message_textView_seen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/sender_message_textView"
         android:layout_alignBottom="@id/sender_message_textView"
-        android:src="@drawable/ic_check_24"
-        android:contentDescription="@string/content_text_seen"
+        android:text="@string/content_text_seen"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:visibility="gone" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -48,14 +48,14 @@
         tools:ignore="RelativeOverlap" />
 
     <!--  Sent message image view  -->
-    <ImageView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sender_message_imageView_seen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/sender_message_textView"
+        android:layout_toStartOf="@id/sender_message_imageView"
         android:layout_alignBottom="@id/sender_message_imageView"
-        android:src="@drawable/ic_check_24"
-        android:contentDescription="@string/content_text_seen"
+        android:text="@string/content_text_seen"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:visibility="gone" />
 
     <ImageView
@@ -71,7 +71,6 @@
         android:src="@drawable/ic_image_256"
         android:contentDescription="@string/content_text_image"
         android:visibility="gone" />
-
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sender_time_textView2"

@@ -82,6 +82,7 @@ public class ExploreFragment extends Fragment {
                 new FirebaseRecyclerAdapter<Contact, ExploreViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ExploreViewHolder holder, final int position, @NonNull Contact model) {
+                        holder.setIsRecyclable(false);
                         holder.userName.setText(model.getUserName());
                         holder.userAbout.setText(model.getAbout());
                         Picasso.get().load(model.getImageUri()).placeholder(R.drawable.profile_image).into(holder.userPicture);
@@ -91,7 +92,7 @@ public class ExploreFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 String visitUserId = getRef(position).getKey();
-                                goToProfileView(visitUserId);
+                                goToViewProfile(visitUserId);
                             }
                         });
                     }
@@ -116,7 +117,7 @@ public class ExploreFragment extends Fragment {
      *
      * @param visitUserId the id of visited user
      */
-    private void goToProfileView(String visitUserId) {
+    private void goToViewProfile(String visitUserId) {
         Intent profileIntent = new Intent(getContext(), ViewProfileActivity.class);
         profileIntent.putExtra(Constants.RECEIVER_USER_ID, visitUserId);
         startActivity(profileIntent);
