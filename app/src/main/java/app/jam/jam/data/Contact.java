@@ -5,7 +5,6 @@ public class Contact {
     public String userName, about, imageUri;
 
     public Contact() {
-
     }
 
     public Contact(String userName, String about, String imageUri) {

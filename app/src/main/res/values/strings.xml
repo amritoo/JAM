@@ -18,6 +18,13 @@
     <string name="title_text_confirmation">Confirmation</string>
     <string name="title_text_about">About us</string>
     <string name="title_text_help">Help</string>
+    <string name="title_text_friend_requests">Friend requests</string>
+    <string name="title_text_done">Done</string>
+    <string name="title_text_select_picture">Select picture</string>
+    <string name="title_text_update_profile">Update Profile</string>
+    <string name="title_text_contact_us">Contact us</string>
+    <string name="title_text_location_permission">Location permission</string>
+    <string name="title_text_updating">Updating profile</string>
 
     <!--  Button texts  -->
     <string name="button_text_ok">OK</string>
@@ -41,6 +48,11 @@
     <string name="button_text_delete_request">Delete friend request</string>
     <string name="button_text_unfriend">Remove from contact</string>
     <string name="button_text_profile">Profile</string>
+    <string name="button_image_selector">Image Selector</string>
+    <string name="button_text_retry">Retry</string>
+    <string name="button_text_yes">Yes</string>
+    <string name="button_text_no">No</string>
+    <string name="button_text_contact_us">Contact us</string>
 
     <!--  Hint texts  -->
     <string name="hint_email">Email address</string>
@@ -51,6 +63,8 @@
     <string name="hint_work">Work</string>
     <string name="hint_address">Address</string>
     <string name="hint_date_of_birth">Date of Birth</string>
+    <string name="hint_new_password">New password</string>
+    <string name="hint_current_password">Current password</string>
 
     <!--  Help texts  -->
     <string name="help_recover_email">Enter your email</string>
@@ -60,8 +74,8 @@
     <string name="help_username">User name must be at least 3 characters long</string>
     <string name="help_create_email">Email address must be valid and not already registered</string>
     <string name="help_create_password">Password must be at least 6 characters long (including one upper-case letter and number)</string>
-    <string name="snackbar_invalid_email">Email address must be valid</string>
     <string name="help_password">Password is not valid</string>
+    <string name="help_change_password">To change your account password first enter your current password, then enter the new password that you want to change to.</string>
 
     <!--  Error texts  -->
     <string name="error_username">User name must be at least 3 characters long</string>
@@ -69,6 +83,9 @@
     <string name="error_create_password">Password must be at least 6 characters long (including one upper-case letter and number)</string>
     <string name="error_email">Email address must be valid</string>
     <string name="error_password">Password is not valid</string>
+    <string name="error_about">About can be at most <xliff:g id="length">%d</xliff:g> characters.</string>
+    <string name="error_work">Work can be at most <xliff:g id="length">%d</xliff:g> characters.</string>
+    <string name="error_address">Address can be at most <xliff:g id="length">%d</xliff:g> characters.</string>
 
     <!--  Message texts  -->
     <string name="message_recover_password">Don\'t worry. Just tell us the email address you registered with.</string>
@@ -78,6 +95,9 @@
     <string name="message_create_account">Creating new account</string>
     <string name="message_change_password">Want to change your password? Then enter your new password.</string>
     <string name="message_remove_contact_confirmation">Press OK if you want to remove this user from your contact list.</string>
+    <string name="message_logout_confirmation">Do you want to logout?</string>
+    <string name="message_contact_us">You can give any feedback or review in \'JAM (Admin)\' listed in your contact. It\'s our default contact available to all. You can also reach us via email: jamapp1234@gmail.com.</string>
+    <string name="message_location_access">This feature needs to access location permission to work correctly.</string>
 
     <!--  Subheading texts  -->
     <string name="subheading_recover_password">Recover Password</string>
@@ -97,14 +117,28 @@
     <string name="toast_create_account_success">Account Created Successfully.</string>
     <string name="toast_update_profile_success">Profile update successful</string>
     <string name="toast_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
-    <string name="snackbar_update_profile_failed">Could not update profile!</string>
     <string name="toast_change_password_success">Password changed successfully</string>
-    <string name="snackbar_change_password_failed">Password change failed!</string>
     <string name="toast_upload_image_success">Image uploaded</string>
+    <string name="toast_chat_message_empty">First write your message…</string>
+    <string name="toast_unfriend_success">Contact removed!</string>
+    <string name="toast_bluetooth_not_supported">Bluetooth is not supported in this device.</string>
+    <string name="toast_bluetooth_on_success">Bluetooth turned on successfully.</string>
+    <string name="toast_no_new_device_found">No new device found!</string>
+    <string name="toast_already_in_discoverable_mode">This device is already in discoverable mode.</string>
+    <string name="toast_request_sent_success">Successfully sent request</string>
+    <string name="toast_authentication_failed">Authentication failed</string>
+    <string name="toast_request_canceled">Canceled request!</string>
+
+    <!--  Snack bar texts  -->
+    <string name="snackbar_invalid_email">Email address must be valid</string>
+    <string name="snackbar_update_profile_failed">Could not update profile!</string>
+    <string name="snackbar_change_password_failed">Password change failed!</string>
     <string name="snackbar_upload_image_failed">Failed image upload</string>
     <string name="snackbar_reset_password_failed">Password reset failed!</string>
     <string name="snackbar_login_failed">Could not sign in.</string>
     <string name="snackbar_create_account_failed">Authentication failed!</string>
+    <string name="snackbar_message_send_failed">Couldn\'t send message!</string>
+    <string name="snackbar_unfriend_failed">Unfriend failed!</string>
 
     <!--  Menu Titles  -->
     <string name="menu_title_online">Go online</string>
@@ -123,53 +157,32 @@
     <string name="content_text_lock">Lock</string>
     <string name="content_text_active">Active</string>
     <string name="content_text_back">Back</string>
+    <string name="content_text_image">Image</string>
+    <string name="content_text_seen">Seen</string>
+
+    <!--  Placeholder texts  -->
+    <string name="placeholder_text_not_given">Not given</string>
+    <string name="placeholder_text_question">Question</string>
+    <string name="placeholder_text_answer">Answer</string>
+    <string name="placeholder_receiver_message">Receiver message</string>
+    <string name="placeholder_sender_message">Sender message</string>
 
     <!--  Others texts  -->
+    <string name="subtitle_not_connected">Not connected</string>
     <string name="text_remember_me">Remember me</string>
     <string name="tab_item_contacts">My contacts</string>
     <string name="tab_item_explore">Explore</string>
     <string name="no_devices_paired">No device is paired</string>
     <string name="no_devices_found">No other devices found nearby</string>
     <string name="not_connected">No device is connected</string>
-    <string name="off">OFF</string>
-    <string name="on">ON</string>
-    <string name="password_pattern_check">^(?=.*[A-Z])(?=.*\\d).+$</string>
-    <string name="text_theme">Theme:</string>
-    <string name="button_image_selector">Image Selector</string>
-    <string name="placeholder_text_not_given">Not given</string>
-    <string name="placeholder_text_question">Question</string>
-    <string name="placeholder_text_answer">Answer</string>
-    <string name="button_text_retry">Retry</string>
-    <string name="message_logout_confirmation">Do you want to logout?</string>
-    <string name="button_text_yes">Yes</string>
-    <string name="button_text_no">No</string>
-    <string name="snackbar_message_send_failed">Couldn\'t send message!</string>
-    <string name="title_text_friend_requests">Friend requests</string>
-    <string name="title_text_done">Done</string>
-    <string name="title_text_select_picture">Select picture</string>
-    <string name="toast_chat_message_empty">First write your message…</string>
-    <string name="toast_unfriend_success">Contact removed!</string>
-    <string name="content_text_image">Image</string>
-    <string name="placeholder_receiver_message">Receiver message</string>
-    <string name="placeholder_sender_message">Sender message</string>
-    <string name="snackbar_unfriend_failed">Unfriend failed!</string>
-    <string name="content_text_seen">Seen</string>
     <string name="friend_request_received_text">Wants to connect with you.</string>
     <string name="friend_request_sent_text">you have sent a request to <xliff:g id="username">%1$s</xliff:g></string>
-    <string name="title_text_update_profile">Update Profile</string>
-    <string name="button_text_contact_us">Contact us</string>
+    <string name="paired_and_discovered_devices_list">Paired and discovered devices list</string>
+    <string name="text_theme">Theme:</string>
     <string name="switch_text_light">Light</string>
     <string name="switch_text_dark">Dark</string>
-    <string name="title_text_contact_us">Contact us</string>
-    <string name="message_contact_us">You can give any feedback or review in JAM (Admin) listed in your contact. It\'s our default contact available to all. You can also reach us via email: jamapp1234@gmail.com.</string>
-    <string name="Toast_bluetooth_not_supported">Bluetooth is not supported in this device.</string>
-    <string name="toast_bluetooth_on_success">Bluetooth turned on successfully.</string>
-    <string name="toast_no_new_device_found">No new device found!</string>
-    <string name="toast_already_in_discoverable_mode">This device is already in discoverable mode.</string>
-    <string name="paired_and_discovered_devices_list">Paired and discovered devices list</string>
-    <string name="subtitle_not_connected">Not connected</string>
-    <string name="title_text_location_permisssion">Location permission</string>
-    <string name="meessage_location_access">This feature needs to access location permission to work correctly.</string>
-    <string name="title_text_updating">Updating profile</string>
 
+    <!--  Do not change  -->
+    <string name="password_pattern_check">^(?=.*[A-Z])(?=.*\\d).+$</string>
+    
 </resources>

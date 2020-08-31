@@ -1,5 +1,7 @@
 package app.jam.jam.data;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
@@ -24,6 +26,7 @@ public class User {
         this.imageUri = imageUri;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
