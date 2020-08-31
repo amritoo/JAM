@@ -36,7 +36,6 @@ public class BluetoothChatService {
     private int mState;
     private int mNewState;
 
-
     /**
      * Constructor. Prepares a new BluetoothChat session.
      *
@@ -494,4 +493,5 @@ public class BluetoothChatService {
             }
         }
     }
+
 }

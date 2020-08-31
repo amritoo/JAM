@@ -14,7 +14,6 @@ import java.util.List;
 import app.jam.jam.R;
 import app.jam.jam.data.Message;
 import app.jam.jam.methods.Cryptography;
-import app.jam.jam.online.OnlineChatAdapter;
 
 public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -67,7 +66,7 @@ public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     /**
      * The view holder class that extends {@link RecyclerView.ViewHolder}
-     * for {@link OnlineChatAdapter}. It's for receiver message.
+     * for {@link OfflineChatAdapter}. It's for receiver message.
      */
     public static class MessageInViewHolder extends RecyclerView.ViewHolder {
 
@@ -85,7 +84,7 @@ public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             receiverTimeTextView.setVisibility(View.VISIBLE);
             String text = Cryptography.decrypt(message.getBody());  // decrypting message
             receiverMessageTextView.setText(text);
-            receiverTimeTextView.setText(String.format("%s - %s", message.getTime(), message.getDate()));
+            receiverTimeTextView.setText(message.getTime());
         }
 
     }
@@ -109,7 +108,7 @@ public class OfflineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             senderTimeTextView.setVisibility(View.VISIBLE);
             String text = Cryptography.decrypt(message.getBody());  // decrypting message
             senderMessageTextView.setText(text);
-            senderTimeTextView.setText(String.format("%s - %s", message.getTime(), message.getDate()));
+            senderTimeTextView.setText(message.getTime());
         }
 
     }

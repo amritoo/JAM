@@ -67,7 +67,7 @@ public class OfflineActivity extends AppCompatActivity {
         // Get the local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(), R.string.Toast_bluetooth_not_supported, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.toast_bluetooth_not_supported, Toast.LENGTH_LONG).show();
             finishThisActivity();
         } else if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -278,8 +278,8 @@ public class OfflineActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 new MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.title_text_location_permisssion)
-                        .setMessage(R.string.meessage_location_access)
+                        .setTitle(R.string.title_text_location_permission)
+                        .setMessage(R.string.message_location_access)
                         .setPositiveButton(R.string.button_text_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -328,7 +328,6 @@ public class OfflineActivity extends AppCompatActivity {
      * For going from this activity, {@link OfflineActivity}, to {@link SettingsActivity}
      * and passes offline flag
      */
-
     private void goToSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.putExtra(Constants.CONNECTION_FLAG, Constants.CONNECTION_OFFLINE);
@@ -338,7 +337,6 @@ public class OfflineActivity extends AppCompatActivity {
     /**
      * For going from this activity, {@link OfflineActivity}, to {@link HelpActivity}
      */
-
     private void goToHelpActivity() {
         Intent intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
@@ -347,7 +345,6 @@ public class OfflineActivity extends AppCompatActivity {
     /**
      * For going from this activity, {@link OfflineActivity}, to {@link AboutActivity}
      */
-
     private void goToAboutActivity() {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
