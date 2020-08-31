@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ import java.util.Objects;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.User;
+import app.jam.jam.methods.Checker;
 import app.jam.jam.methods.EditTextDatePicker;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -145,6 +148,75 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 selectPicture();
             }
         });
+
+        Objects.requireNonNull(mUsernameTextInputLayout.getEditText())
+                .addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mUsernameTextInputLayout.setErrorEnabled(false);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // Do nothing
+                    }
+                });
+        Objects.requireNonNull(mAboutTextInputLayout.getEditText())
+                .addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mAboutTextInputLayout.setErrorEnabled(false);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // Do nothing
+                    }
+                });
+        Objects.requireNonNull(mWorkTextInputLayout.getEditText())
+                .addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mWorkTextInputLayout.setErrorEnabled(false);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // Do nothing
+                    }
+                });
+        Objects.requireNonNull(mAddressTextInputLayout.getEditText())
+                .addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mAddressTextInputLayout.setErrorEnabled(false);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // Do nothing
+                    }
+                });
     }
 
     /**
@@ -166,7 +238,27 @@ public class UpdateProfileActivity extends AppCompatActivity {
         String birthDate = Objects
                 .requireNonNull(mBirthDateTextInputLayout.getEditText())
                 .getText().toString();
-        // TODO check length
+
+        if (!Checker.isValidUsername(this, username)) {
+            mUsernameTextInputLayout.setError(getString(R.string.error_username));
+            mUsernameTextInputLayout.setErrorEnabled(true);
+            return;
+        }
+        if (!Checker.isValidAbout(this, about)) {
+            mAboutTextInputLayout.setError(getString(R.string.error_about, R.integer.about_max_length));
+            mAboutTextInputLayout.setErrorEnabled(true);
+            return;
+        }
+        if (!Checker.isValidWork(this, work)) {
+            mWorkTextInputLayout.setError(getString(R.string.error_work, R.integer.work_max_length));
+            mWorkTextInputLayout.setErrorEnabled(true);
+            return;
+        }
+        if (!Checker.isValidAddress(this, address)) {
+            mAddressTextInputLayout.setError(getString(R.string.error_address, R.integer.address_max_length));
+            mAddressTextInputLayout.setErrorEnabled(true);
+            return;
+        }
 
         User user = new User();
         user.setUserName(username);

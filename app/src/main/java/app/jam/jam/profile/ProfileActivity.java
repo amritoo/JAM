@@ -1,23 +1,15 @@
 package app.jam.jam.profile;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,9 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
-import app.jam.jam.methods.Checker;
 import app.jam.jam.R;
 import app.jam.jam.data.Constants;
 import app.jam.jam.data.User;
@@ -42,8 +31,6 @@ public class ProfileActivity extends AppCompatActivity {
      * Tag to use to {@link Log} messages
      */
     private static final String TAG = "Profile";
-
-    private FirebaseUser mCurrentUser;
 
     private MaterialToolbar mToolbar;
     private CircleImageView mProfileImageView;
@@ -64,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (flag) {
             mUpdateProfileButton.setVisibility(View.VISIBLE);
             mChangePasswordButton.setVisibility(View.VISIBLE);
-            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
             assert mCurrentUser != null;
             currentUserId = mCurrentUser.getUid();
         }
@@ -85,12 +72,6 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.e(TAG, "onCreate:addValueEventListener:onCancelled", error.toException());
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-
-        super.onStart();
     }
 
     /**
@@ -150,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
         mChangePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startChangePassword();
+                goToChangePassword();
             }
         });
     }
@@ -167,65 +148,15 @@ public class ProfileActivity extends AppCompatActivity {
      */
     private void goToUpdateProfile() {
         Intent updateIntent = new Intent(this, UpdateProfileActivity.class);
-        startActivityForResult(updateIntent, Constants.UPDATE_PROFILE_CODE);
+        startActivity(updateIntent);
     }
 
     /**
-     * For change password option. This method creates and shows the dialog to enter new password.
+     * For going from this activity, {@link ProfileActivity}, to {@link ChangePasswordActivity}
      */
-    private void startChangePassword() {
-        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_change_password, null);
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.title_text_change_password)
-                .setMessage(R.string.message_change_password)
-                .setView(view)
-                .setPositiveButton(R.string.button_text_change, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        TextInputLayout textInputLayout = view.findViewById(R.id.change_password_textInputLayout);
-                        final String newPassword = Objects
-                                .requireNonNull(textInputLayout.getEditText())
-                                .getText().toString();
-                        if (Checker.isValidPassword(ProfileActivity.this, newPassword)) {
-                            changePassword(newPassword);
-                        } else {
-                            textInputLayout.setError(getString(R.string.help_create_password));
-                            textInputLayout.setErrorEnabled(true);
-                        }
-                    }
-                })
-                .setNeutralButton(R.string.button_text_cancel, null)
-                .show();
-    }
-
-    /**
-     * Sends password update request to server using {@link FirebaseUser#updatePassword}
-     *
-     * @param newPassword the new password
-     */
-    private void changePassword(String newPassword) {
-        mCurrentUser.updatePassword(newPassword)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "changePassword:success");
-                        Toast.makeText(ProfileActivity.this, R.string.toast_change_password_success, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "changePassword:failure", e);
-                        Snackbar.make(mUsernameTextView, R.string.snackbar_change_password_failed, Snackbar.LENGTH_LONG)
-                                .setAction(R.string.button_text_retry, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        startChangePassword();
-                                    }
-                                })
-                                .show();
-                    }
-                });
+    private void goToChangePassword() {
+        Intent changeIntent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(changeIntent);
     }
 
 }

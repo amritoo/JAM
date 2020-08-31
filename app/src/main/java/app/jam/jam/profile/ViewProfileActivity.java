@@ -1,5 +1,6 @@
 package app.jam.jam.profile;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -166,7 +168,18 @@ public class ViewProfileActivity extends AppCompatActivity {
                         text.equals(getString(R.string.button_text_delete_request))) {
                     deleteFriendRequest();
                 } else if (text.equals(getString(R.string.button_text_unfriend))) {
-                    unFriendContact();
+                    new MaterialAlertDialogBuilder(ViewProfileActivity.this)
+                            .setTitle(R.string.title_text_confirmation)
+                            .setMessage(R.string.message_remove_contact_confirmation)
+                            .setIcon(R.drawable.ic_warning_24)
+                            .setPositiveButton(R.string.button_text_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    unFriendContact();
+                                }
+                            })
+                            .setNeutralButton(R.string.button_text_cancel, null)
+                            .show();
                 }
             }
         });
@@ -194,9 +207,8 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(ViewProfileActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ViewProfileActivity.this, R.string.toast_request_sent_success, Toast.LENGTH_SHORT).show();
                                         setButtonText(States.REQUEST_SENT);
-                                        // TODO: add notification
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -255,7 +267,7 @@ public class ViewProfileActivity extends AppCompatActivity {
      */
     private void deleteFriendRequest() {
         removeRequest(States.NEW);
-        Toast.makeText(ViewProfileActivity.this, "Canceled request!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ViewProfileActivity.this, R.string.toast_request_canceled, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -309,7 +321,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(ViewProfileActivity.this, "Contact removed!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ViewProfileActivity.this, R.string.toast_unfriend_success, Toast.LENGTH_SHORT).show();
                                         setButtonText(States.NEW);
                                     }
                                 })
@@ -368,7 +380,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-                                            Log.w(TAG, "manageRequests:onCancelled", error.toException());
+                                            Log.e(TAG, "manageRequests:onCancelled", error.toException());
                                         }
                                     });
                         }
@@ -376,7 +388,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Log.w(TAG, "manageRequests:onCancelled", error.toException());
+                        Log.e(TAG, "manageRequests:onCancelled", error.toException());
                     }
                 });
     }
