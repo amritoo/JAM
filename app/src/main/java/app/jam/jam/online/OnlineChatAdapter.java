@@ -58,6 +58,12 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         String currentUserId = mCurrentUser.getUid();
         Message message = userMessageList.get(position);
+
+        // setting recyclerview to not be recycled if it's image
+        if (message.getType().equals(Constants.MESSAGE_TYPE_IMAGE)) {
+            holder.setIsRecyclable(false);
+        }
+
         if (message.getFrom().equals(currentUserId)) {
             ((MessageOutViewHolder) holder).bind(message);
         } else {
@@ -125,7 +131,7 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         MaterialTextView receiverMessageTextView, receiverTimeTextView1, receiverTimeTextView2;
         ImageView receiverImageView;
-        ImageView receiverTextSeen, receiverImageSeen;
+        MaterialTextView receiverTextSeen, receiverImageSeen;
 
         public MessageInViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -140,7 +146,7 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         void bind(Message message) {
-            String text = Cryptography.decrypt(message.getBody());// decrypting message
+            final String text = Cryptography.decrypt(message.getBody());    // decrypting message
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 receiverMessageTextView.setVisibility(View.VISIBLE);
                 receiverTimeTextView1.setVisibility(View.VISIBLE);
@@ -155,7 +161,12 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 receiverImageView.setVisibility(View.VISIBLE);
                 receiverTimeTextView2.setVisibility(View.VISIBLE);
-                Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(receiverImageView);
+                receiverImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(receiverImageView);
+                    }
+                });
                 receiverTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
                 // update seen status
                 if (message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
@@ -175,8 +186,8 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static class MessageOutViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView senderMessageTextView, senderTimeTextView1, senderTimeTextView2;
+        MaterialTextView senderTextSeen, senderImageSeen;
         ImageView senderImageView;
-        ImageView senderTextSeen, senderImageSeen;
 
         public MessageOutViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -192,7 +203,7 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         void bind(Message message) {
-            String text = Cryptography.decrypt(message.getBody());// decrypting message
+            final String text = Cryptography.decrypt(message.getBody());    // decrypting message
             if (message.getType().equals(Constants.MESSAGE_TYPE_TEXT)) {
                 senderMessageTextView.setVisibility(View.VISIBLE);
                 senderTimeTextView1.setVisibility(View.VISIBLE);
@@ -204,10 +215,16 @@ public class OnlineChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 senderImageView.setVisibility(View.VISIBLE);
                 senderTimeTextView2.setVisibility(View.VISIBLE);
-                Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(senderImageView);
+                senderImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Picasso.get().load(text).placeholder(R.drawable.ic_image_256).into(senderImageView);
+                    }
+                });
                 senderTimeTextView2.setText(String.format("at %s - %s", message.getTime(), message.getDate()));
-                if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT))
+                if (!message.getSeen().equals(Constants.MESSAGE_SEEN_DEFAULT)) {
                     senderImageSeen.setVisibility(View.VISIBLE);
+                }
             }
         }
 
