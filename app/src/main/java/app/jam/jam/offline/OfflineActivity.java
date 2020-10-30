@@ -115,6 +115,7 @@ public class OfflineActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(OfflineActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     doDiscovery();
+                    mScanButton.setText(R.string.button_text_scanning);
                     v.setEnabled(false);
                 } else {
                     startLocationPermission();
@@ -166,6 +167,7 @@ public class OfflineActivity extends AppCompatActivity {
                     Device device1 = new Device();
                     device1.setName(device.getName());
                     device1.setAddress(address);
+                    device1.setPaired(true);
                     mAllDevicesList.add(device1);
                     mDevicesAddressSet.add(address);
                 }
@@ -241,11 +243,15 @@ public class OfflineActivity extends AppCompatActivity {
                     mDevicesAddressSet.add(device.getAddress());
 
                     Device device1 = new Device();
-                    device1.setName(device.getName());
+                    String name = device.getName();
+                    if (name == null || name.length() == 0)
+                        name = "Unknown";
+                    device1.setName(name);
                     device1.setAddress(device.getAddress());
                     mDiscoveredDeviceList.add(device1);
                 }
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                mScanButton.setText(R.string.button_text_scan);
                 mScanButton.setEnabled(true);
                 if (mDiscoveredDeviceList.size() == 0)
                     Toast.makeText(OfflineActivity.this, R.string.toast_no_new_device_found, Toast.LENGTH_SHORT).show();
