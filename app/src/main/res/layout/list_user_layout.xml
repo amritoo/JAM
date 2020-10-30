@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/button_padding_vertical"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_picture"
