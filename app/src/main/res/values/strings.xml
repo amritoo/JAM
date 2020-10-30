@@ -33,6 +33,7 @@
     <string name="button_text_create_account">Create account</string>
     <string name="button_text_recover">Recover</string>
     <string name="button_text_scan">Scan</string>
+    <string name="button_text_scanning">Scanning…</string>
     <string name="button_text_make_discoverable">Make discoverable</string>
     <string name="button_text_send">Send</string>
     <string name="button_text_change_password">Change password</string>
@@ -184,5 +185,5 @@
 
     <!--  Do not change  -->
     <string name="password_pattern_check">^(?=.*[A-Z])(?=.*\\d).+$</string>
-    
+
 </resources>
