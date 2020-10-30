@@ -60,19 +60,18 @@ public class LoginActivity extends AppCompatActivity {
         // For initializing views from layout and setting listeners
         InitializeViews();
         setListeners();
+    }
 
-        FirebaseUser user = mAuth.getCurrentUser();
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         // For checking preference for saved data
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
         boolean checkbox = preferences.getBoolean(Constants.REMEMBER_ME, false);
-        if (checkbox) {
-            if (user != null) {
-                startOnlineActivity();
-            } else {
-                String email = preferences.getString(Constants.PREFERENCE_EMAIL, "");
-                String password = preferences.getString(Constants.PREFERENCE_PASSWORD, "");
-                loginWithEmailAndPassword(email, password);
-            }
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (checkbox && user != null) {
+            startOnlineActivity();
         }
     }
 
@@ -214,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         Log.i(TAG, "loginWithEmailAndPassword:success");
                         // Goto online activity
-                        saveLoginInfo(mRememberCheckBox.isChecked() ? email : null, password);
+                        saveLoginInfo(mRememberCheckBox.isChecked());
                         startOnlineActivity();
                         mProgressDialog.dismiss();
                     }
@@ -239,23 +238,15 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * For saving email and password to Preference if remember me is selected.
      *
-     * @param email    the email address to save, if email is null then it removes preferences
-     * @param password the password to save
+     * @param remember saves the given value
      */
-    private void saveLoginInfo(String email, String password) {
+    private void saveLoginInfo(boolean remember) {
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCE_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if (email == null) {
-            editor.putBoolean(Constants.REMEMBER_ME, false);
-            editor.remove(Constants.PREFERENCE_EMAIL);
-            editor.remove(Constants.PREFERENCE_PASSWORD);
-            Log.i(TAG, "saveLoginInfo:cleared");
-        } else {
-            editor.putBoolean(Constants.REMEMBER_ME, true);
-            editor.putString(Constants.PREFERENCE_EMAIL, email);
-            editor.putString(Constants.PREFERENCE_PASSWORD, password);
-            Log.i(TAG, "saveLoginInfo:saved");
-        }
+        editor.putBoolean(Constants.REMEMBER_ME, remember);
+        editor.remove(Constants.PREFERENCE_EMAIL);
+        editor.remove(Constants.PREFERENCE_PASSWORD);
+        Log.i(TAG, "saveLoginInfo:updated");
         editor.apply();
     }
 
