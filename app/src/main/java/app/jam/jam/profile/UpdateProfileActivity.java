@@ -32,8 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import com.canhub.cropper.CropImage;
+import com.canhub.cropper.CropImageView;
 
 import java.util.Objects;
 
@@ -426,7 +426,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             assert result != null;
             if (resultCode == RESULT_OK) {
-                mImageUri = result.getUri();
+                mImageUri = result.getUriContent();
                 mProfileImageView.setImageURI(mImageUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Log.e(TAG, "CropImage:failure", result.getError());

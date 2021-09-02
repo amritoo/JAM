@@ -25,21 +25,21 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        MaterialToolbar toolbar = findViewById(R.id.help_toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        RecyclerView mRecyclerView = findViewById(R.id.help_recyclerView);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        initializeData();
-        HelpRecyclerAdapter adapter = new HelpRecyclerAdapter(mData);
-        mRecyclerView.setAdapter(adapter);
+//        MaterialToolbar toolbar = findViewById(R.id.help_toolbar);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//
+//        RecyclerView mRecyclerView = findViewById(R.id.help_recyclerView);
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        initializeData();
+//        HelpRecyclerAdapter adapter = new HelpRecyclerAdapter(mData);
+//        mRecyclerView.setAdapter(adapter);
     }
 
     /**

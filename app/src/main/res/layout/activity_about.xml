@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".about.AboutActivity">
 
+<!--    TODO: add member pictures -->
     <!--  Toolbar  -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -60,7 +61,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/picture_member_1" />
+                    android:src="@drawable/profile_image" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -98,7 +99,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/picture_member_2" />
+                    android:src="@drawable/profile_image" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -136,7 +137,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/update_profile_picture_size"
                     android:layout_height="@dimen/update_profile_picture_size"
-                    android:src="@drawable/picture_member_3" />
+                    android:src="@drawable/profile_image" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"

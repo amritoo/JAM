@@ -32,28 +32,28 @@
             android:background="@drawable/triangle" />
     </RelativeLayout>
 
-    <com.github.aakira.expandablelayout.ExpandableLinearLayout
-        android:id="@+id/help_expandableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_below="@id/question_textView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:orientation="vertical"
-        app:ael_duration="100"
-        app:ael_expanded="false"
-        android:background="?attr/colorSurface">
+<!--    <com.github.aakira.expandablelayout.ExpandableLinearLayout-->
+<!--        android:id="@+id/help_expandableLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/activity_vertical_margin"-->
+<!--        android:layout_below="@id/question_textView"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:orientation="vertical"-->
+<!--        app:ael_duration="100"-->
+<!--        app:ael_expanded="false"-->
+<!--        android:background="?attr/colorSurface">-->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/answer_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_centerInParent="true"
-            android:padding="@dimen/margin_medium"
-            android:text="@string/placeholder_text_answer"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/answer_textView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:padding="@dimen/margin_medium"-->
+<!--            android:text="@string/placeholder_text_answer"-->
+<!--            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />-->
+<!--    </com.github.aakira.expandablelayout.ExpandableLinearLayout>-->
 
 </RelativeLayout>
